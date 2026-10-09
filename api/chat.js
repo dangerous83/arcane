@@ -27,7 +27,7 @@ module.exports=async function chat(req,res){
  if(messages.reduce((sum,m)=>sum+m.content.length,0)>10000)return res.status(400).json({error:'Please start a new conversation.'});
  const now=Date.now();for(const [id,bucket]of limits)if(now-bucket.start>60000)limits.delete(id);if(limits.size>1000)limits.clear();
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0];let bucket=limits.get(ip);if(!bucket){bucket={start:now,count:0};limits.set(ip,bucket);}if(++bucket.count>8){res.setHeader('Retry-After','60');return res.status(429).json({error:'Please wait a minute before asking another question, or contact our team.',contact:true});}
- const fallback=guide.answer(messages.at(-1).content);const connection=provider();if(!connection)return res.status(200).json(fallback);
+ const fallback=guide.answer(messages.at(-1).content,typeof body.page==='string'?body.page:'');const connection=provider();if(!connection)return res.status(200).json(fallback);
  try{
   const upstream=await fetch(connection.url,{method:'POST',headers:{Authorization:'Bearer '+connection.key,'Content-Type':'application/json'},body:JSON.stringify({model:connection.model,instructions:instructions+'\n'+pageContext(body.page),input:messages.map(m=>({role:m.role,content:m.content})),max_output_tokens:700,reasoning:{effort:'low'},store:false}),signal:AbortSignal.timeout(15000)});
   if(upstream.ok){const data=await upstream.json();const reply=(data.output||[]).flatMap(item=>item.content||[]).filter(part=>part.type==='output_text').map(part=>part.text).join('\n').trim();if(reply)return res.status(200).json({reply,mode:'ai',contact:/info@arcane|971|contact (our|the) team|cannot confirm|can.t confirm|not (listed|provided)/i.test(reply)});}

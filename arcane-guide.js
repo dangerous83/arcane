@@ -3,10 +3,12 @@
 const knowledge=typeof module!=='undefined'&&module.exports?require('./arcane-knowledge.js'):window.ArcaneKnowledge;
 const normalize=text=>text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
 const contactText='Email info@arcane.ae, WhatsApp +971 58 892 3604, or call +971 4 570 7248.';
-function answer(message){
- const q=normalize(message);const result=(reply,contact=false)=>({reply,contact,mode:'site-guide'});
+function answer(message,page=''){
+ let q=normalize(message);
+ if(/\b(this|it|tell me more|more details)\b/.test(q)){const [kind,id]=page.replace(/^#/,'').split('/');const item=(kind==='project'?knowledge.projects:kind==='expertise'?knowledge.services:[]).find(p=>p.id===id);if(item)q+=' '+normalize(item.name);}
+const result=(reply,contact=false)=>({reply,contact,mode:'site-guide'});
  const refer=reason=>result(reason+'\n\nOur team can help with the details. '+contactText,true);
- if(/\b(price|pricing|cost|quote|quotation|budget|schedule|availability|available|guarantee|warranty|certification|certifications|certified|iso|accreditation|vacancy|vacancies|job|jobs|salary|book|booking|discount|payment|owner|ceo|insurance)\b/.test(q)||/how (much|long)|when.*(finish|complete|start)|completed|completion|timeline/.test(q))return refer('That detail needs confirmation from the Arcane team. The website does not provide current pricing, availability or confirmed delivery dates.');
+ if(/\b(price|pricing|cost|quote|quotation|budget|schedule|availability|available|guarantee|warranty|certification|certifications|certified|iso|accreditation|vacancy|vacancies|job|jobs|salary|book|booking|discount|payment|owner|ceo|insurance)\b/.test(q)||/how (much|long)|when.*(finish|complete|start)|completed|completion|timeline/.test(q))return refer('That detail needs confirmation from the Arcane team. The website does not verify that detail.');
  const project=knowledge.projects.find(p=>q.includes(normalize(p.name))||q.includes(p.id.replaceAll('-',' ')))||knowledge.projects.find(p=>{const distinctive=normalize(p.name).split(' ').filter(w=>w.length>4&&!['tower','towers','residences','headquarters','showroom','heights'].includes(w));return distinctive.length&&distinctive.every(w=>q.includes(w));});
  if(project)return result(project.name+' — '+project.location+'.\n'+project.scope+'\nClient / developer: '+project.client+'.\nContractor: '+project.contractor+'.\nThe project hero is an illustrative interior concept. Ask our team for the latest project status.',true);
  const serviceIds=[];

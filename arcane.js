@@ -175,7 +175,10 @@ $('#assistant-form').addEventListener('submit',async e=>{
  const pending=assistantMessage('Reviewing your question','assistant pending');const typing=document.createElement('span');typing.className='typing-dots';typing.setAttribute('aria-hidden','true');typing.innerHTML='<i></i><i></i><i></i>';pending.append(typing);$('#assistant-send').disabled=true;$('#assistant-messages').setAttribute('aria-busy','true');
  const delay=new Promise(resolve=>setTimeout(resolve,2000));
  try{
-  const request=(async()=>{try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12),page:location.hash||'#home'}),signal:AbortSignal.timeout(20000)});const data=await r.json();if(r.ok&&typeof data.reply==='string')return data;if(r.status===429)return{reply:data.error,mode:'site-guide',contact:true};}catch{}return window.ArcaneGuide.answer(text);})();
+  const request=(async()=>{try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12),page:location.hash||'#home'}),signal:AbortSignal.timeout(20000)});const data=await r.json();if(r.ok&&typeof data.reply==='string')return data;if(r.status===429)return{reply:data.error,mode:'site-guide',contact:true};}catch{}return window.ArcaneGuide.answer(text,location.hash||'#home');})();
   const [data]=await Promise.all([request,delay]);pending.textContent=data.reply;pending.classList.remove('pending');$('#assistant-connection').textContent=data.mode==='ai'?'AI assistant · informed by Arcane’s website.':'Answers from Arcane’s website.';assistantHistory.push({role:'assistant',content:data.reply});if(data.contact)addContactOptions();
  }finally{assistantBusy=false;$('#assistant-send').disabled=false;$('#assistant-messages').setAttribute('aria-busy','false');scrollChat();}
 });
+
+function compactContactWidgets(){document.body.classList.toggle('compact-widgets',window.scrollY>160);}
+window.addEventListener('scroll',compactContactWidgets,{passive:true});compactContactWidgets();
