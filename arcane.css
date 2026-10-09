@@ -99,7 +99,7 @@ html.is-loading body>:not(#site-loader){pointer-events:none}
 #site-loader{position:fixed;inset:0;height:100dvh;z-index:1000;overflow:hidden;background:#18241d;color:#fffefa;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease;pointer-events:auto}
 .site-loaded #site-loader,html:not(.is-loading) #site-loader{opacity:0;visibility:hidden;pointer-events:none}
 .loader-room,.loader-room-shade,.loader-wall-panels,.loader-interior-lines{position:absolute;inset:0;width:100%;height:100%}
-.loader-room img{width:100%;height:100%;display:block;object-fit:cover;object-position:65% center;animation:interior-emerge 3s cubic-bezier(.22,.61,.36,1) both}
+.loader-room img{width:100%;height:100%;display:block;object-fit:cover;object-position:65% center;animation:interior-emerge 2.2s cubic-bezier(.22,.61,.36,1) both}
 .loader-room-shade{background:linear-gradient(90deg,rgba(15,29,22,.87),rgba(15,29,22,.64) 35%,rgba(15,29,22,.16) 75%),linear-gradient(0deg,rgba(15,29,22,.36),transparent 55%)}
 .loader-interior-lines{fill:none;stroke:#dccfbf;stroke-width:1;opacity:.22;animation:interior-outline 3s ease both}
 .loader-interior-lines g{stroke-dasharray:2000;stroke-dashoffset:2000;animation:interior-plan 2.2s ease both}
@@ -116,7 +116,9 @@ html.is-loading body>:not(#site-loader){pointer-events:none}
 .loader-progress>span{display:block;width:100%;height:100%;background:#dccfbf;transform-origin:left;animation:interior-progress 3s linear both}
 .loader-caption{font-size:8px;letter-spacing:1.6px;color:#dccfbf;animation:interior-copy .7s .65s both}
 html.is-loading .hero-copy{animation:none}
-.site-loaded .hero-copy{animation:hero-arrive .9s ease both}
+html.is-loading:not(.intro-bridging) .hero-copy{opacity:0}
+html.intro-bridging .hero-copy{animation:hero-arrive .6s .2s ease both}
+.site-loaded .hero-copy{animation:none}
 @keyframes interior-emerge{0%{opacity:.1;transform:scale(1.09)}45%{opacity:.85}100%{opacity:1;transform:scale(1)}}
 @keyframes interior-plan{0%{stroke-dashoffset:2000}100%{stroke-dashoffset:0}}
 @keyframes interior-outline{0%,35%{opacity:.65}100%{opacity:.13}}
@@ -125,3 +127,18 @@ html.is-loading .hero-copy{animation:none}
 @keyframes interior-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media(max-width:760px){.craft-motion{height:166px;max-width:320px}.editorial-hero h1{font-size:48px}.loader-interior-copy{left:7%;width:86%}.loader-logo{width:122px;height:69px}.loader-tagline{font-size:50px}.loader-room img{object-position:65% center}.loader-room-shade{background:linear-gradient(90deg,rgba(15,29,22,.85),rgba(15,29,22,.4)),linear-gradient(0deg,rgba(15,29,22,.4),transparent)}.loader-kicker{font-size:8px;letter-spacing:2px}.loader-caption{font-size:7px;letter-spacing:1.1px}}
 @media(prefers-reduced-motion:reduce){.craft-layer{opacity:1;transform:none}.craft-highlight{opacity:0}.craft-shadow{opacity:.08}#site-loader{transition:none}.loader-room img,.loader-logo,.loader-tagline,.loader-kicker,.loader-caption{opacity:1;transform:none}.loader-wall-panels>span{transform:scaleX(0)}.loader-interior-lines{opacity:.13}.loader-interior-lines g{stroke-dashoffset:0}.loader-progress>span{transform:none}.site-loaded .hero-copy{animation:none}}
+
+/* Match the intro camera, image and lighting to the incoming hero. */
+html{scrollbar-gutter:stable}
+.loader-room{bottom:auto;right:auto;top:0;left:0;width:100%;height:100%;transition:top .8s cubic-bezier(.22,.61,.36,1),left .8s cubic-bezier(.22,.61,.36,1),width .8s cubic-bezier(.22,.61,.36,1),height .8s cubic-bezier(.22,.61,.36,1)}
+.loader-matched-shade{opacity:0;transition:opacity .8s ease}
+.loader-room-shade{transition:opacity .8s ease}
+.loader-interior-lines{transition:opacity .45s ease}
+.loader-interior-copy{transition:opacity .35s ease}
+html.intro-bridging #site-loader{background:var(--paper);animation:intro-handoff .8s ease both}
+html.intro-bridging .loader-room{top:var(--intro-hero-top,0px);left:var(--intro-hero-left,0px);width:var(--intro-hero-width,100%);height:var(--intro-hero-height,100%)}
+html.intro-bridging .loader-matched-shade{opacity:1}
+html.intro-bridging .loader-room-shade,html.intro-bridging .loader-interior-copy{opacity:0}
+html.intro-bridging .loader-interior-lines{animation:none;opacity:0}
+@keyframes intro-handoff{0%,60%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.loader-room,.loader-matched-shade,.loader-room-shade,.loader-interior-copy,.loader-interior-lines{transition:none}html.intro-bridging .hero-copy{animation:none;opacity:1}}

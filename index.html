@@ -5,22 +5,26 @@
  const root=document.documentElement;
  root.classList.add('is-loading');
  window.arcaneIntroStarted=performance.now();
- window.finishArcaneIntro=function(){
-  root.classList.remove('is-loading');
+ window.releaseArcaneIntro=function(){
+  root.classList.remove('is-loading','intro-bridging');
   root.classList.add('site-loaded');
   document.querySelectorAll('[data-intro-inert]').forEach(function(el){el.inert=false;el.removeAttribute('data-intro-inert');});
   const loader=document.getElementById('site-loader');
   if(loader)loader.setAttribute('aria-hidden','true');
   clearTimeout(window.arcaneIntroTimer);
  };
- // Release the page even if the main script fails or arrives late.
- window.arcaneIntroTimer=setTimeout(window.finishArcaneIntro,3600);
+ window.finishArcaneIntro=function(){
+  if(window.beginArcaneReveal)window.beginArcaneReveal();
+  else window.releaseArcaneIntro();
+ };
+ // A failed or delayed main script must never trap visitors behind the intro.
+ window.arcaneIntroTimer=setTimeout(window.releaseArcaneIntro,3600);
 })();
 </script><link rel="stylesheet" href="arcane.css"><script defer src="arcane.js"></script></head>
 <body>
 <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><filter id="brand-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -0.2126 -0.7152 -0.0722 0 1"/><feComposite in2="SourceAlpha" operator="in"/></filter></defs></svg>
 <div id="site-loader" role="status" aria-live="polite" aria-label="An interior taking shape. Opening Arcane.">
- <div class="loader-room" aria-hidden="true"><img src="arcane-company-hero.jpg" alt="" width="1672" height="941" fetchpriority="high"></div>
+ <div class="loader-room" aria-hidden="true"><img src="arcane-home.png" alt="" width="1672" height="941" fetchpriority="high"><div class="hero-shade loader-matched-shade"></div></div>
  <div class="loader-room-shade" aria-hidden="true"></div>
  <svg class="loader-interior-lines" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g><path d="M0 0 430 205h740L1600 0M430 205v475L0 900M1170 205v475l430 220M430 680h740M0 270l430 130h740l430-130M690 205v475M930 205v475M1170 290l280-66v510l-280-54M100 270v540M250 316v421"/><path d="M700 720h380l110 68H590zM735 788v40M1050 788v40M560 650v-95q0-30 35-30h460q35 0 35 30v95M560 596h530M585 650v40M1065 650v40"/><path d="M430 205l-155-74M1170 205l155-74M500 238h600"/></g></svg>
  <div class="loader-wall-panels" aria-hidden="true"><span></span><span></span><span></span></div>

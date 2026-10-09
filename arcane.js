@@ -1,16 +1,48 @@
 'use strict';
-// Keep the opening screen close to three seconds, independent of media loading.
-if(window.finishArcaneIntro&&document.documentElement.classList.contains('is-loading')){
+// The interior opening becomes the visible page hero within three seconds.
+function introHero(){
+ const hero=document.querySelector('body.project-view #project-page .hero')||
+  document.querySelector('body.editorial-view .editorial-page:not([hidden]) .hero')||
+  document.querySelector('#home');
+ if(!hero)return null;
+ const bounds=hero.getBoundingClientRect();
+ return bounds.bottom>0&&bounds.top<window.innerHeight?hero:null;
+}
+function syncIntroScene(){
+ if(!document.documentElement.classList.contains('is-loading'))return;
+ const hero=introHero();const image=hero?.querySelector('.hero-image');
+ const roomImage=document.querySelector('.loader-room img');
+ if(image&&roomImage){
+  const source=image.getAttribute('src');
+  if(source&&roomImage.getAttribute('src')!==source)roomImage.src=source;
+  roomImage.style.objectPosition=getComputedStyle(image).objectPosition;
+ }
+}
+if(window.releaseArcaneIntro&&document.documentElement.classList.contains('is-loading')){
  for(const el of document.body.children){
-  if(!['site-loader'].includes(el.id)&&!['SCRIPT','SVG','AUDIO'].includes(el.tagName)&&!el.inert){
+  if(el.id!=='site-loader'&&!['SCRIPT','SVG','AUDIO'].includes(el.tagName)&&!el.inert){
    el.inert=true;el.setAttribute('data-intro-inert','');
   }
  }
+ window.beginArcaneReveal=function(){
+  const root=document.documentElement;
+  if(!root.classList.contains('is-loading')||root.classList.contains('intro-bridging'))return;
+  syncIntroScene();
+  const hero=introHero();
+  if(hero){
+   const bounds=hero.getBoundingClientRect();
+   for(const [name,value]of Object.entries({top:bounds.top,left:bounds.left,width:bounds.width,height:bounds.height})){
+    root.style.setProperty('--intro-hero-'+name,value+'px');
+   }
+  }
+  root.classList.add('intro-bridging');
+  clearTimeout(window.arcaneIntroTimer);
+  window.arcaneIntroTimer=setTimeout(window.releaseArcaneIntro,800);
+ };
  clearTimeout(window.arcaneIntroTimer);
- const remaining=Math.max(0,3000-(performance.now()-window.arcaneIntroStarted));
- window.arcaneIntroTimer=setTimeout(window.finishArcaneIntro,remaining);
+ const remaining=Math.max(0,2200-(performance.now()-window.arcaneIntroStarted));
+ window.arcaneIntroTimer=setTimeout(window.beginArcaneReveal,remaining);
 }
-
 const projects=[
 {id:'wynn-al-marjan',name:'Wynn Al Marjan Island',location:'Ras Al Khaimah',group:'landmark',scope:'Specialist GRG, ceiling and wall partition works across hospitality venues.',client:'Island AMI 3',contractor:'ALEC Fit Out',status:'Ongoing in the supplied profile'},
 {id:'burj-binghatti',name:'Burj Binghatti Jacob & Co Residences',location:'Business Bay, Dubai',group:'landmark',scope:'200,000 sqm of gypsum ceilings and partitions.',client:'Binghatti Properties Investments Limited',contractor:'Granada Europe Engineering Construction LLC',status:'Ongoing in the supplied profile; target October 2026'},
@@ -94,7 +126,7 @@ function showRoute(){
 // Project details are part of the page; section navigation returns to the main website.
 $('#project-page a[href="#project-details"]').addEventListener('click',e=>{e.preventDefault();$('#project-details').scrollIntoView({behavior:'smooth'});});
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-window.addEventListener('hashchange',showRoute);showRoute();
+window.addEventListener('hashchange',showRoute);showRoute();syncIntroScene();
 const sectionObserver=new IntersectionObserver(entries=>{
  if(document.body.classList.contains('project-view')||document.body.classList.contains('editorial-view'))return;
  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
