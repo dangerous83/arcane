@@ -20,13 +20,26 @@ const projects=[
 ];
 const icons={landmark:'<path d="M4 21V7l8-4 8 4v14M9 21v-4h6v4M8 9h1m6 0h1M8 12h1m6 0h1M2 21h20"/>',residential:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 10h1m6 0h1"/>',workplace:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'};
 const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'project-'+p.id+'.png';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');const dialog=$('#project-dialog');
-function closeMenus(){for(const b of menuButtons){b.setAttribute('aria-expanded','false');$('#'+b.dataset.menu).hidden=true;}}
+let menuCloseTimer;let pinnedMenu=null;
+const hoverNavigation=window.matchMedia('(hover: hover) and (pointer: fine)');
+function closeMenus(){clearTimeout(menuCloseTimer);pinnedMenu=null;for(const b of menuButtons){b.setAttribute('aria-expanded','false');$('#'+b.dataset.menu).hidden=true;}}
 function closeNavigation(){navigation.classList.remove('open');$('.mobile-toggle').setAttribute('aria-expanded','false');}
 function loadHero(img,p){img.dataset.loaded='false';img.setAttribute('aria-busy','true');img.onload=()=>{img.dataset.loaded='true';img.setAttribute('aria-busy','false');};img.onerror=()=>{img.dataset.loaded='error';img.setAttribute('aria-busy','false');};img.alt='Illustrative interior concept for '+p.name;img.src=asset(p);}
 function menuHero(p){loadHero($('#menu-image'),p);$('#menu-caption').textContent=p.name;$('.menu-hero').hidden=false;}
 for(const p of projects){const button=document.createElement('button');button.className='menu-project';button.dataset.project=p.id;button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[p.group]+'</svg>';const name=document.createElement('span');name.textContent=p.name;const location=document.createElement('small');location.textContent=p.location;name.append(location);button.append(name);button.addEventListener('pointerenter',()=>menuHero(p));button.addEventListener('focus',()=>menuHero(p));button.addEventListener('click',()=>openProject(p));$('#menu-'+p.group).append(button);
 const tile=document.createElement('button');tile.className='project-tile';tile.dataset.group=p.group;tile.dataset.project=p.id;const small=document.createElement('small');small.textContent=p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out';const heading=document.createElement('h3');heading.textContent=p.name;const loc=document.createElement('p');loc.textContent=p.location;const arrow=document.createElement('span');arrow.textContent='↗';arrow.setAttribute('aria-hidden','true');tile.append(small,heading,loc,arrow);tile.addEventListener('click',()=>openProject(p));$('#project-grid').append(tile);}
-for(const b of menuButtons)b.addEventListener('click',()=>{const opening=b.getAttribute('aria-expanded')!=='true';closeMenus();if(opening){b.setAttribute('aria-expanded','true');$('#'+b.dataset.menu).hidden=false;if(b.dataset.menu==='projects-menu')menuHero(projects[0]);}});
+function openMenu(b){clearTimeout(menuCloseTimer);if(b.getAttribute('aria-expanded')==='true')return;closeMenus();b.setAttribute('aria-expanded','true');$('#'+b.dataset.menu).hidden=false;if(b.dataset.menu==='projects-menu')menuHero(projects[0]);}
+function scheduleMenuClose(){clearTimeout(menuCloseTimer);menuCloseTimer=setTimeout(()=>{if(!pinnedMenu)closeMenus();},220);}
+for(const b of menuButtons){
+ const panel=$('#'+b.dataset.menu);
+ b.addEventListener('pointerenter',()=>{if(hoverNavigation.matches)openMenu(b);});
+ b.addEventListener('pointerleave',()=>{if(hoverNavigation.matches)scheduleMenuClose();});
+ panel.addEventListener('pointerenter',()=>clearTimeout(menuCloseTimer));
+ panel.addEventListener('pointerleave',()=>{if(hoverNavigation.matches)scheduleMenuClose();});
+ b.addEventListener('click',()=>{if(pinnedMenu===b){closeMenus();return;}openMenu(b);pinnedMenu=b;});
+ b.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();openMenu(b);pinnedMenu=b;panel.querySelector('a,button')?.focus();}});
+}
+ document.addEventListener('focusin',e=>{if(!e.target.closest('.mega')&&!e.target.closest('[data-menu]'))closeMenus();});
 document.addEventListener('click',e=>{if(!e.target.closest('.mega')&&!e.target.closest('[data-menu]'))closeMenus();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenus();closeNavigation();}});
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{closeMenus();closeNavigation();}));
