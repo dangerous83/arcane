@@ -199,3 +199,10 @@ body.compact-widgets :is(.assistant-toggle,.whatsapp-widget){padding:12px}
 @media(prefers-reduced-motion:reduce){.header-actions .profile-button::after{display:none}}
 
 @media(max-width:760px){.hero{height:auto;min-height:max(620px,calc(100svh - var(--header)));max-height:none}}
+
+/* Match the navigation logo to Arcane's dark green brand tone. */
+.brand{position:relative;height:59px}
+.brand img{opacity:0}
+.brand::after{content:"";position:absolute;inset:0;background:#2d4234;-webkit-mask:url('/arcane-logo.jpg') center/contain no-repeat;mask:url('/arcane-logo.jpg') center/contain no-repeat}
+body.dark .brand::after{background:#b3c6a2}
+@media(max-width:760px){.brand{height:49px}}
