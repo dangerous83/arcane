@@ -105,7 +105,6 @@ function showRoute(){
  if(editorial){
   document.title=(editorial==='company'?'The company':'Our approach')+' | Arcane Interior Decorations';
   markSection(editorial);
-  $('#'+editorial+'-page').querySelectorAll('.reveal').forEach(el=>el.classList.add('revealed'));
   if(hash.endsWith('-details'))$('#'+hash).scrollIntoView({behavior:'instant'});
   else{window.scrollTo({top:0,behavior:'instant'});$('#'+editorial+'-title').focus({preventScroll:true});}
   return;
@@ -120,13 +119,13 @@ function showRoute(){
  }else{
   document.title='Arcane Interior Decorations | Shaping spaces. Defining detail.';
   const target=document.getElementById(hash||'home');if(target){target.querySelectorAll('.reveal').forEach(el=>el.classList.add('revealed'));target.scrollIntoView({behavior:'instant'});}
-  markSection(['grg','ceilings','fitout'].includes(hash)?'expertise':hash);
+  if(['grg','ceilings','fitout'].includes(hash)){window.dispatchEvent(new CustomEvent('arcane-expertise-select',{detail:['grg','ceilings','fitout'].indexOf(hash)}));$('#expertise').scrollIntoView({behavior:'instant'});}markSection(['grg','ceilings','fitout'].includes(hash)?'expertise':hash);
  }
 }
 // Project details are part of the page; section navigation returns to the main website.
 $('#project-page a[href="#project-details"]').addEventListener('click',e=>{e.preventDefault();$('#project-details').scrollIntoView({behavior:'smooth'});});
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-window.addEventListener('hashchange',showRoute);showRoute();syncIntroScene();
+window.addEventListener('popstate',showRoute);window.addEventListener('hashchange',showRoute);showRoute();syncIntroScene();
 const sectionObserver=new IntersectionObserver(entries=>{
  if(document.body.classList.contains('project-view')||document.body.classList.contains('editorial-view'))return;
  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
@@ -143,13 +142,40 @@ document.addEventListener('pointerdown',startMusic,{passive:true});document.addE
 $('#lead-form').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const values=new FormData(form);const message='Hello Arcane, I would like to discuss a project.\n\nName: '+values.get('name')+'\nEmail: '+values.get('email')+'\nPhone: '+(values.get('phone')||'Not supplied')+'\nExpertise: '+values.get('service')+'\n\n'+values.get('message');window.open('https://wa.me/971588923604?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');$('#lead-status').textContent='Your enquiry is ready in WhatsApp. Send the message there to contact our team.';});
 // Scroll motion never blocks access to the page content.
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
- const revealTargets=$$('.section-heading,.company>div,.service-grid article,.project-tile,.steps article,.contact>div,.lead-section>div,.lead-section>form,.footer-grid>div');
+ const revealTargets=$$('.section-heading,.company>div,.service-grid article,.expertise-carousel,.project-tile,.steps article,.contact>div,.lead-section>div,.lead-section>form,.footer-grid>div');
  const revealObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}},{threshold:.08});
- for(const [i,el]of revealTargets.entries()){el.classList.add('reveal');el.style.setProperty('--reveal-delay',(i%3)*55+'ms');revealObserver.observe(el);}document.documentElement.classList.add('motion-ready');
+ for(const [i,el]of revealTargets.entries()){el.classList.add('reveal');el.style.setProperty('--reveal-delay',(i%4)*90+'ms');revealObserver.observe(el);}document.documentElement.classList.add('motion-ready');
 }
-const assistantToggle=$('#assistant-toggle');const assistantPanel=$('#assistant-panel');let assistantAvailable=false;let assistantBusy=false;const assistantHistory=[];
+
+const profileDialog=$('#profile-dialog');let profileOpener=null;
+$$('[data-profile-open]').forEach(button=>button.addEventListener('click',e=>{e.preventDefault();closeMenus();closeNavigation();profileOpener=button;profileDialog.showModal();document.body.classList.add('profile-open');$('#profile-email').focus();}));
+$('#profile-close').addEventListener('click',()=>profileDialog.close());
+profileDialog.addEventListener('click',e=>{if(e.target!==profileDialog)return;const r=profileDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)profileDialog.close();});
+profileDialog.addEventListener('close',()=>{document.body.classList.remove('profile-open');profileOpener?.focus();$('#profile-form').reset();$('#profile-status').textContent='';$('#profile-download-again').hidden=true;});
+$('#profile-form').addEventListener('submit',e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;const link=$('#profile-download-again');link.hidden=false;link.click();$('#profile-status').textContent='Your company profile download has started. Use the link below if you need it again.';});
+const carousel=$('.expertise-carousel');const slides=$$('.expertise-slide');const dots=$$('[data-slide-to]');const motionPreference=window.matchMedia('(prefers-reduced-motion: reduce)');
+let slideIndex=Math.max(0,['grg','ceilings','fitout'].indexOf(location.hash.slice(1)));let slideTimer;let slidePaused=motionPreference.matches;let slideHover=false;let slideFocused=false;let slideInView=false;
+function selectExpertise(index,announce=false){slideIndex=(index+slides.length)%slides.length;slides.forEach((slide,i)=>{const active=i===slideIndex;slide.classList.toggle('is-active',active);slide.inert=!active;slide.setAttribute('aria-hidden',String(!active));});dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===slideIndex)));if(announce)$('#expertise-slide-status').textContent=slides[slideIndex].querySelector('h3').textContent;}
+function syncSlideshow(){clearInterval(slideTimer);$('#expertise-pause').setAttribute('aria-pressed',String(slidePaused));$('#expertise-pause').setAttribute('aria-label',slidePaused?'Play expertise slideshow':'Pause expertise slideshow');$('#expertise-pause').textContent=slidePaused?'▶':'Ⅱ';if(slidePaused||slideHover||slideFocused||!slideInView||document.hidden||profileDialog.open)return;slideTimer=setInterval(()=>selectExpertise(slideIndex+1),4000);}
+function manualSlide(index){selectExpertise(index,true);syncSlideshow();}
+dots.forEach(dot=>dot.addEventListener('click',()=>manualSlide(Number(dot.dataset.slideTo))));$('#expertise-prev').addEventListener('click',()=>manualSlide(slideIndex-1));$('#expertise-next').addEventListener('click',()=>manualSlide(slideIndex+1));$('#expertise-pause').addEventListener('click',()=>{slidePaused=!slidePaused;syncSlideshow();});
+carousel.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'){slideHover=true;syncSlideshow();}});carousel.addEventListener('pointerleave',()=>{slideHover=false;syncSlideshow();});carousel.addEventListener('focusin',()=>{slideFocused=true;syncSlideshow();});carousel.addEventListener('focusout',()=>{setTimeout(()=>{slideFocused=carousel.contains(document.activeElement);syncSlideshow();},0);});document.addEventListener('visibilitychange',syncSlideshow);motionPreference.addEventListener('change',()=>{slidePaused=motionPreference.matches;syncSlideshow();});window.addEventListener('arcane-expertise-select',e=>manualSlide(e.detail));profileDialog.addEventListener('close',syncSlideshow);new MutationObserver(syncSlideshow).observe(profileDialog,{attributes:true,attributeFilter:['open']});
+if('IntersectionObserver' in window)new IntersectionObserver(entries=>{slideInView=entries[0].isIntersecting;syncSlideshow();},{threshold:.2}).observe(carousel);else slideInView=true;
+selectExpertise(slideIndex);syncSlideshow();
+const assistantToggle=$('#assistant-toggle');const assistantPanel=$('#assistant-panel');let assistantBusy=false;const assistantHistory=[];
 function closeAssistant(){assistantPanel.hidden=true;assistantToggle.setAttribute('aria-expanded','false');assistantToggle.focus();}
-function assistantMessage(text,role){const p=document.createElement('p');p.className='chat-message '+role;p.textContent=text;$('#assistant-messages').append(p);p.scrollIntoView({block:'nearest'});return p;}
-assistantToggle.addEventListener('click',async()=>{const opening=assistantPanel.hidden;assistantPanel.hidden=!opening;assistantToggle.setAttribute('aria-expanded',String(opening));if(!opening)return;$('#assistant-input').focus();try{const r=await fetch('/api/chat');const data=await r.json();assistantAvailable=!!data.configured;}catch{assistantAvailable=false;}$('#assistant-connection').textContent=assistantAvailable?'Ask about Arcane’s expertise and your project.':'AI replies are being connected. You can contact our team on WhatsApp.';$('#assistant-input').disabled=!assistantAvailable;$('#assistant-send').disabled=!assistantAvailable;});
-$('#assistant-close').addEventListener('click',closeAssistant);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!assistantPanel.hidden)closeAssistant();});
-$('#assistant-form').addEventListener('submit',async e=>{e.preventDefault();if(!assistantAvailable||assistantBusy)return;const text=$('#assistant-input').value.trim();if(!text)return;assistantBusy=true;$('#assistant-input').value='';assistantMessage(text,'user');assistantHistory.push({role:'user',content:text});const pending=assistantMessage('Thinking…','assistant pending');$('#assistant-send').disabled=true;try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12)})});const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to reply right now. Please contact our team on WhatsApp.');pending.textContent=data.reply;pending.classList.remove('pending');assistantHistory.push({role:'assistant',content:data.reply});}catch(error){pending.textContent=error.message;pending.classList.remove('pending');assistantHistory.pop();}finally{assistantBusy=false;$('#assistant-send').disabled=!assistantAvailable;}});
+function scrollChat(){const log=$('#assistant-messages');log.scrollTop=log.scrollHeight;}
+function assistantMessage(text,role){const p=document.createElement('p');p.className='chat-message '+role;p.textContent=text;$('#assistant-messages').append(p);scrollChat();return p;}
+function addContactOptions(){const wrap=document.createElement('div');wrap.className='chat-contact-options';for(const [label,href]of [['Email · info@arcane.ae','mailto:info@arcane.ae'],['WhatsApp · +971 58 892 3604','https://wa.me/971588923604'],['Landline · +971 4 570 7248','tel:+97145707248']]){const a=document.createElement('a');a.textContent=label;a.href=href;if(href.startsWith('https:')){a.target='_blank';a.rel='noopener';}wrap.append(a);}$('#assistant-messages').append(wrap);scrollChat();}
+assistantToggle.addEventListener('click',()=>{const opening=assistantPanel.hidden;assistantPanel.hidden=!opening;assistantToggle.setAttribute('aria-expanded',String(opening));if(opening)$('#assistant-input').focus();});
+$('#assistant-close').addEventListener('click',closeAssistant);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!assistantPanel.hidden&&!profileDialog.open)closeAssistant();});
+$('#assistant-form').addEventListener('submit',async e=>{
+ e.preventDefault();if(assistantBusy)return;const text=$('#assistant-input').value.trim();if(!text)return;
+ assistantBusy=true;$('#assistant-input').value='';assistantMessage(text,'user');assistantHistory.push({role:'user',content:text});
+ const pending=assistantMessage('Reviewing your question','assistant pending');const typing=document.createElement('span');typing.className='typing-dots';typing.setAttribute('aria-hidden','true');typing.innerHTML='<i></i><i></i><i></i>';pending.append(typing);$('#assistant-send').disabled=true;$('#assistant-messages').setAttribute('aria-busy','true');
+ const delay=new Promise(resolve=>setTimeout(resolve,2000));
+ try{
+  const request=(async()=>{try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12),page:location.hash||'#home'}),signal:AbortSignal.timeout(20000)});const data=await r.json();if(r.ok&&typeof data.reply==='string')return data;if(r.status===429)return{reply:data.error,mode:'site-guide',contact:true};}catch{}return window.ArcaneGuide.answer(text);})();
+  const [data]=await Promise.all([request,delay]);pending.textContent=data.reply;pending.classList.remove('pending');$('#assistant-connection').textContent=data.mode==='ai'?'AI assistant · informed by Arcane’s website.':'Answers from Arcane’s website.';assistantHistory.push({role:'assistant',content:data.reply});if(data.contact)addContactOptions();
+ }finally{assistantBusy=false;$('#assistant-send').disabled=false;$('#assistant-messages').setAttribute('aria-busy','false');scrollChat();}
+});
