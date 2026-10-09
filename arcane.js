@@ -1,4 +1,16 @@
 'use strict';
+// Keep the opening screen close to two seconds, independent of media loading.
+if(window.finishArcaneIntro&&document.documentElement.classList.contains('is-loading')){
+ for(const el of document.body.children){
+  if(!['site-loader'].includes(el.id)&&!['SCRIPT','SVG','AUDIO'].includes(el.tagName)&&!el.inert){
+   el.inert=true;el.setAttribute('data-intro-inert','');
+  }
+ }
+ clearTimeout(window.arcaneIntroTimer);
+ const remaining=Math.max(0,2000-(performance.now()-window.arcaneIntroStarted));
+ window.arcaneIntroTimer=setTimeout(window.finishArcaneIntro,remaining);
+}
+
 const projects=[
 {id:'wynn-al-marjan',name:'Wynn Al Marjan Island',location:'Ras Al Khaimah',group:'landmark',scope:'Specialist GRG, ceiling and wall partition works across hospitality venues.',client:'Island AMI 3',contractor:'ALEC Fit Out',status:'Ongoing in the supplied profile'},
 {id:'burj-binghatti',name:'Burj Binghatti Jacob & Co Residences',location:'Business Bay, Dubai',group:'landmark',scope:'200,000 sqm of gypsum ceilings and partitions.',client:'Binghatti Properties Investments Limited',contractor:'Granada Europe Engineering Construction LLC',status:'Ongoing in the supplied profile; target October 2026'},
@@ -86,9 +98,7 @@ musicButton.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)musi
 document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
 
 $('#lead-form').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const values=new FormData(form);const message='Hello Arcane, I would like to discuss a project.\n\nName: '+values.get('name')+'\nEmail: '+values.get('email')+'\nPhone: '+(values.get('phone')||'Not supplied')+'\nExpertise: '+values.get('service')+'\n\n'+values.get('message');window.open('https://wa.me/971588923604?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');$('#lead-status').textContent='Your enquiry is ready in WhatsApp. Send the message there to contact our team.';});
-// Loading and scroll motion never block access to the page content.
-function finishLoading(){document.documentElement.classList.add('site-loaded');}
-if(document.readyState==='complete')finishLoading();else window.addEventListener('load',finishLoading,{once:true});setTimeout(finishLoading,3500);
+// Scroll motion never blocks access to the page content.
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
  const revealTargets=$$('.section-heading,.company>div,.service-grid article,.project-tile,.steps article,.contact>div,.lead-section>div,.lead-section>form,.footer-grid>div');
  const revealObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}},{threshold:.08});
