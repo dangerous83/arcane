@@ -18,13 +18,18 @@ const projects=[
 {id:'boulevard-heights',name:'Boulevard Heights',location:'Downtown Dubai',group:'workplace',scope:'Wallpaper, carpet and wood cladding.',client:'Emaar',contractor:'Target',status:'2018, as stated in the supplied profile'},
 {id:'sheikh-zayed-showroom',name:'Sheikh Zayed Showroom',location:'Dubai, UAE',group:'workplace',scope:'Wood flooring and wood cladding at Sheikh Zayed Showroom, Plot 21.',client:'Omniyat',contractor:'Arcane Interior Decorations',status:'2021, as stated in the supplied profile'}
 ];
+const services=[
+{id:'grg',name:'Sculptural GRG',image:'expertise-grg.png',location:'FORM · SPECIALIST CRAFTSMANSHIP',group:'expertise',scope:'Precision moulding, decorative ceilings and sculptural architectural forms, developed through specialist casting and careful on-site assembly.',facts:[['Specialist work','Curved surfaces, decorative columns, mouldings and wall panels'],['Our process','Mould development, precision casting and coordinated installation']]},
+{id:'ceilings',name:'Ceilings & partitions',image:'expertise-ceilings.png',location:'STRUCTURE · COORDINATED SYSTEMS',group:'expertise',scope:'Integrated ceilings and partition systems, coordinated with architecture, structure and embedded services for a precisely resolved interior.',facts:[['Specialist systems','Gypsum, metal, acoustic systems, cement board, glass and composite partitions'],['Our process','Technical coordination, installation and detailed inspection']]},
+{id:'fitout',name:'Interior fit-out',image:'expertise-fitout.png',location:'FINISH · MATERIAL & DETAIL',group:'expertise',scope:'Complete interior finishing packages, from bespoke joinery and wall coverings to flooring and carefully resolved material interfaces.',facts:[['Specialist work','Joinery, wood cladding, wall coverings, raised floors, wood and vinyl flooring, carpets'],['Our process','Material coordination, specialist execution and finish inspection']]}
+];
 const icons={landmark:'<path d="M4 21V7l8-4 8 4v14M9 21v-4h6v4M8 9h1m6 0h1M8 12h1m6 0h1M2 21h20"/>',residential:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 10h1m6 0h1"/>',workplace:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'};
 const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'project-'+p.id+'.png';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');
 let menuCloseTimer;let pinnedMenu=null;
 const hoverNavigation=window.matchMedia('(hover: hover) and (pointer: fine)');
 function closeMenus(){clearTimeout(menuCloseTimer);pinnedMenu=null;for(const b of menuButtons){b.setAttribute('aria-expanded','false');$('#'+b.dataset.menu).hidden=true;}}
 function closeNavigation(){navigation.classList.remove('open');$('.mobile-toggle').setAttribute('aria-expanded','false');}
-function loadHero(img,p){img.dataset.loaded='false';img.setAttribute('aria-busy','true');img.onload=()=>{img.dataset.loaded='true';img.setAttribute('aria-busy','false');};img.onerror=()=>{img.dataset.loaded='error';img.setAttribute('aria-busy','false');};img.alt='Illustrative interior concept for '+p.name;img.src=asset(p);}
+function loadHero(img,p){img.dataset.loaded='false';img.setAttribute('aria-busy','true');img.onload=()=>{img.dataset.loaded='true';img.setAttribute('aria-busy','false');};img.onerror=()=>{img.dataset.loaded='error';img.setAttribute('aria-busy','false');};img.alt='Illustrative interior concept for '+p.name;img.src=p.image||asset(p);}
 function menuHero(p){loadHero($('#menu-image'),p);$('#menu-caption').textContent=p.name;$('.menu-hero').hidden=false;}
 for(const p of projects){const button=document.createElement('button');button.className='menu-project';button.dataset.project=p.id;button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[p.group]+'</svg>';const name=document.createElement('span');name.textContent=p.name;const location=document.createElement('small');location.textContent=p.location;name.append(location);button.append(name);button.addEventListener('pointerenter',()=>menuHero(p));button.addEventListener('focus',()=>menuHero(p));button.addEventListener('click',()=>openProject(p));$('#menu-'+p.group).append(button);
 const tile=document.createElement('button');tile.className='project-tile';tile.dataset.group=p.group;tile.dataset.project=p.id;const small=document.createElement('small');small.textContent=p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out';const heading=document.createElement('h3');heading.textContent=p.name;const loc=document.createElement('p');loc.textContent=p.location;const arrow=document.createElement('span');arrow.textContent='↗';arrow.setAttribute('aria-hidden','true');tile.append(small,heading,loc,arrow);tile.addEventListener('click',()=>openProject(p));$('#project-grid').append(tile);}
@@ -42,25 +47,25 @@ for(const b of menuButtons){
  document.addEventListener('focusin',e=>{if(!e.target.closest('.mega')&&!e.target.closest('[data-menu]'))closeMenus();});
 document.addEventListener('click',e=>{if(!e.target.closest('.mega')&&!e.target.closest('[data-menu]'))closeMenus();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenus();closeNavigation();}});
-$$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{closeMenus();closeNavigation();}));
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{closeMenus();closeNavigation();const href=a.getAttribute('href');if(href==='#project-details')return;e.preventDefault();if(location.hash!==href)history.pushState(null,'',href);showRoute();}));
 $('.mobile-toggle').addEventListener('click',()=>{const open=!navigation.classList.contains('open');navigation.classList.toggle('open',open);$('.mobile-toggle').setAttribute('aria-expanded',String(open));if(!open)closeMenus();});
 $$('[data-filter]').forEach(button=>button.addEventListener('click',()=>{$$('[data-filter]').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});$$('.project-tile').forEach(t=>t.hidden=button.dataset.filter!=='all'&&t.dataset.group!==button.dataset.filter);}));
-function openProject(p){const next='#project/'+p.id;if(location.hash===next)showRoute();else location.hash=next;}
+function openProject(p){const next='#project/'+p.id;if(location.hash!==next)history.pushState(null,'',next);showRoute();}
 function markSection(id){$$('[data-section]').forEach(el=>{if(el.dataset.section===id)el.setAttribute('aria-current','location');else el.removeAttribute('aria-current');});}
 function showRoute(){
  const hash=decodeURIComponent(location.hash.slice(1));
- const p=hash.startsWith('project/')?projects.find(p=>p.id===hash.slice(8)):null;
+ const p=hash.startsWith('project/')?projects.find(p=>p.id===hash.slice(8)):hash.startsWith('expertise/')?services.find(p=>p.id===hash.slice(10)):null;
  closeMenus();closeNavigation();document.body.classList.toggle('project-view',!!p);$('#project-page').hidden=!p;
  if(p){
   loadHero($('#project-hero-image'),p);$('#project-hero-title').textContent=p.name;
-  $('#project-hero-location').textContent=p.location+' · '+(p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out');
+  $('#project-hero-location').textContent=p.group==='expertise'?p.location:p.location+' · '+(p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out');$('#project-page .project-back').href=p.group==='expertise'?'#expertise':'#projects';$('#project-page .project-back').textContent=p.group==='expertise'?'← Our expertise':'← All projects';
   $('#project-hero-intro').textContent=p.scope;$('#project-scope').textContent=p.scope;
   const facts=$('#project-facts');facts.replaceChildren();
-  for(const [label,value] of [['Client / developer',p.client],['Contractor',p.contractor]]){const wrap=document.createElement('div');const dt=document.createElement('dt');dt.textContent=label;const dd=document.createElement('dd');dd.textContent=value;wrap.append(dt,dd);facts.append(wrap);}
-  document.title=p.name+' | Arcane Interior Decorations';markSection('projects');window.scrollTo({top:0,behavior:'instant'});$('#project-hero-title').focus({preventScroll:true});
+  for(const [label,value] of (p.facts||[['Client / developer',p.client],['Contractor',p.contractor]])){const wrap=document.createElement('div');const dt=document.createElement('dt');dt.textContent=label;const dd=document.createElement('dd');dd.textContent=value;wrap.append(dt,dd);facts.append(wrap);}
+  document.title=p.name+' | Arcane Interior Decorations';markSection(p.group==='expertise'?'expertise':'projects');window.scrollTo({top:0,behavior:'instant'});$('#project-hero-title').focus({preventScroll:true});
  }else{
   document.title='Arcane Interior Decorations | Shaping spaces. Defining detail.';
-  const target=document.getElementById(hash||'home');if(target)target.scrollIntoView({behavior:'instant'});
+  const target=document.getElementById(hash||'home');if(target){target.querySelectorAll('.reveal').forEach(el=>el.classList.add('revealed'));target.scrollIntoView({behavior:'instant'});}
   markSection(['grg','ceilings','fitout'].includes(hash)?'expertise':hash);
  }
 }
@@ -79,3 +84,19 @@ function syncMusic(){musicButton.setAttribute('aria-pressed',String(userMuted));
 function startMusic(){if(!userMuted&&music.paused)music.play().catch(()=>{});}
 musicButton.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
 document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
+
+$('#lead-form').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const values=new FormData(form);const message='Hello Arcane, I would like to discuss a project.\n\nName: '+values.get('name')+'\nEmail: '+values.get('email')+'\nPhone: '+(values.get('phone')||'Not supplied')+'\nExpertise: '+values.get('service')+'\n\n'+values.get('message');window.open('https://wa.me/971588923604?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');$('#lead-status').textContent='Your enquiry is ready in WhatsApp. Send the message there to contact our team.';});
+// Loading and scroll motion never block access to the page content.
+function finishLoading(){document.documentElement.classList.add('site-loaded');}
+if(document.readyState==='complete')finishLoading();else window.addEventListener('load',finishLoading,{once:true});setTimeout(finishLoading,3500);
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+ const revealTargets=$$('.section-heading,.company>div,.service-grid article,.project-tile,.steps article,.contact>div,.lead-section>div,.lead-section>form,.footer-grid>div');
+ const revealObserver=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('revealed');revealObserver.unobserve(entry.target);}},{threshold:.08});
+ for(const [i,el]of revealTargets.entries()){el.classList.add('reveal');el.style.setProperty('--reveal-delay',(i%3)*55+'ms');revealObserver.observe(el);}document.documentElement.classList.add('motion-ready');
+}
+const assistantToggle=$('#assistant-toggle');const assistantPanel=$('#assistant-panel');let assistantAvailable=false;let assistantBusy=false;const assistantHistory=[];
+function closeAssistant(){assistantPanel.hidden=true;assistantToggle.setAttribute('aria-expanded','false');assistantToggle.focus();}
+function assistantMessage(text,role){const p=document.createElement('p');p.className='chat-message '+role;p.textContent=text;$('#assistant-messages').append(p);p.scrollIntoView({block:'nearest'});return p;}
+assistantToggle.addEventListener('click',async()=>{const opening=assistantPanel.hidden;assistantPanel.hidden=!opening;assistantToggle.setAttribute('aria-expanded',String(opening));if(!opening)return;$('#assistant-input').focus();try{const r=await fetch('/api/chat');const data=await r.json();assistantAvailable=!!data.configured;}catch{assistantAvailable=false;}$('#assistant-connection').textContent=assistantAvailable?'Ask about Arcane’s expertise and your project.':'AI replies are being connected. You can contact our team on WhatsApp.';$('#assistant-input').disabled=!assistantAvailable;$('#assistant-send').disabled=!assistantAvailable;});
+$('#assistant-close').addEventListener('click',closeAssistant);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!assistantPanel.hidden)closeAssistant();});
+$('#assistant-form').addEventListener('submit',async e=>{e.preventDefault();if(!assistantAvailable||assistantBusy)return;const text=$('#assistant-input').value.trim();if(!text)return;assistantBusy=true;$('#assistant-input').value='';assistantMessage(text,'user');assistantHistory.push({role:'user',content:text});const pending=assistantMessage('Thinking…','assistant pending');$('#assistant-send').disabled=true;try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12)})});const data=await r.json();if(!r.ok)throw new Error(data.error||'Unable to reply right now. Please contact our team on WhatsApp.');pending.textContent=data.reply;pending.classList.remove('pending');assistantHistory.push({role:'assistant',content:data.reply});}catch(error){pending.textContent=error.message;pending.classList.remove('pending');assistantHistory.pop();}finally{assistantBusy=false;$('#assistant-send').disabled=!assistantAvailable;}});
