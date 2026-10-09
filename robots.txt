@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /templates/
+Disallow: /content/
+Disallow: /scripts/
+Sitemap: https://arcane-rp.online/sitemap.xml

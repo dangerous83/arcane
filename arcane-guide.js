@@ -18,7 +18,7 @@ const result=(reply,contact=false)=>({reply,contact,mode:'site-guide'});
  if(serviceIds.length)return result(knowledge.services.filter(s=>serviceIds.includes(s.id)).map(s=>s.name+'\n'+s.scope+'\n'+s.facts.map(([label,value])=>label+': '+value+'.').join('\n')).join('\n\n')+'\n\nWhat type of space are you planning?');
  if(/\b(contact|email|whatsapp|landline|telephone|phone|call|speak|human|person|help team)\b/.test(q))return result(contactText+'\nOur office is at '+knowledge.contact.address+'.',true);
  if(/\b(address|location|located|office|visit|where|dubai)\b/.test(q))return result('Visit Arcane at '+knowledge.contact.address+'.\n'+contactText,true);
- if(/\b(profile|brochure|download|pdf)\b/.test(q))return result('You can download the '+knowledge.profile.title+' using the Company profile button in the navigation. Enter your email in the dialog to start the PDF download. It covers the company, capabilities and project portfolio.');
+ if(/\b(profile|brochure|download|pdf)\b/.test(q))return result('You can download the '+knowledge.profile.title+' using the pulsing circular download button beside Discuss your project in the navigation. Enter your email in the dialog to start the PDF download. It covers the company, capabilities and project portfolio.');
  if(/\b(approach|process|steps|coordinate|coordination|inspection|quality|execute|execution)\b/.test(q))return result('Arcane’s approach has four stages:\n'+knowledge.approach.map(([name,detail],i)=>(i+1)+'. '+name+' — '+detail).join('\n'));
  if(/\b(projects|portfolio|landmark|landmarks|residential|hospitality|commercial|workplace)\b/.test(q)){
   const group=/landmark|hospitality/.test(q)?'landmark':/residential/.test(q)?'residential':/workplace|commercial/.test(q)?'workplace':null;
