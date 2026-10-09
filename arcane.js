@@ -19,7 +19,7 @@ const projects=[
 {id:'sheikh-zayed-showroom',name:'Sheikh Zayed Showroom',location:'Dubai, UAE',group:'workplace',scope:'Wood flooring and wood cladding at Sheikh Zayed Showroom, Plot 21.',client:'Omniyat',contractor:'Arcane Interior Decorations',status:'2021, as stated in the supplied profile'}
 ];
 const icons={landmark:'<path d="M4 21V7l8-4 8 4v14M9 21v-4h6v4M8 9h1m6 0h1M8 12h1m6 0h1M2 21h20"/>',residential:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 10h1m6 0h1"/>',workplace:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'};
-const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'project-'+p.id+'.png';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');const dialog=$('#project-dialog');
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'project-'+p.id+'.png';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');
 let menuCloseTimer;let pinnedMenu=null;
 const hoverNavigation=window.matchMedia('(hover: hover) and (pointer: fine)');
 function closeMenus(){clearTimeout(menuCloseTimer);pinnedMenu=null;for(const b of menuButtons){b.setAttribute('aria-expanded','false');$('#'+b.dataset.menu).hidden=true;}}
@@ -45,8 +45,37 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenus();closeN
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{closeMenus();closeNavigation();}));
 $('.mobile-toggle').addEventListener('click',()=>{const open=!navigation.classList.contains('open');navigation.classList.toggle('open',open);$('.mobile-toggle').setAttribute('aria-expanded',String(open));if(!open)closeMenus();});
 $$('[data-filter]').forEach(button=>button.addEventListener('click',()=>{$$('[data-filter]').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});$$('.project-tile').forEach(t=>t.hidden=button.dataset.filter!=='all'&&t.dataset.group!==button.dataset.filter);}));
-let projectTrigger;
-function openProject(p){projectTrigger=document.activeElement;closeMenus();closeNavigation();loadHero($('#dialog-image'),p);$('#dialog-title').textContent=p.name;$('#dialog-location').textContent=p.location;$('#dialog-scope').textContent=p.scope;const details=$('#dialog-details');details.replaceChildren();for(const [label,value]of [['CLIENT / DEVELOPER',p.client],['CONTRACTOR',p.contractor],['SOURCE PROGRAMME',p.status]]){const wrap=document.createElement('div');const dt=document.createElement('dt');dt.textContent=label;const dd=document.createElement('dd');dd.textContent=value;wrap.append(dt,dd);details.append(wrap);}document.body.classList.add('modal-open');dialog.showModal();}
-$('.dialog-close').addEventListener('click',()=>dialog.close());$('#dialog-contact').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});dialog.addEventListener('close',()=>{document.body.classList.remove('modal-open');projectTrigger?.focus();});
+function openProject(p){const next='#project/'+p.id;if(location.hash===next)showRoute();else location.hash=next;}
+function markSection(id){$$('[data-section]').forEach(el=>{if(el.dataset.section===id)el.setAttribute('aria-current','location');else el.removeAttribute('aria-current');});}
+function showRoute(){
+ const hash=decodeURIComponent(location.hash.slice(1));
+ const p=hash.startsWith('project/')?projects.find(p=>p.id===hash.slice(8)):null;
+ closeMenus();closeNavigation();document.body.classList.toggle('project-view',!!p);$('#project-page').hidden=!p;
+ if(p){
+  loadHero($('#project-hero-image'),p);$('#project-hero-title').textContent=p.name;
+  $('#project-hero-location').textContent=p.location+' · '+(p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out');
+  $('#project-hero-intro').textContent=p.scope;$('#project-scope').textContent=p.scope;
+  const facts=$('#project-facts');facts.replaceChildren();
+  for(const [label,value] of [['Client / developer',p.client],['Contractor',p.contractor]]){const wrap=document.createElement('div');const dt=document.createElement('dt');dt.textContent=label;const dd=document.createElement('dd');dd.textContent=value;wrap.append(dt,dd);facts.append(wrap);}
+  document.title=p.name+' | Arcane Interior Decorations';markSection('projects');window.scrollTo({top:0,behavior:'instant'});$('#project-hero-title').focus({preventScroll:true});
+ }else{
+  document.title='Arcane Interior Decorations | Shaping spaces. Defining detail.';
+  const target=document.getElementById(hash||'home');if(target)target.scrollIntoView({behavior:'instant'});
+  markSection(['grg','ceilings','fitout'].includes(hash)?'expertise':hash);
+ }
+}
+// Project details are part of the page; section navigation returns to the main website.
+$('#project-page a[href="#project-details"]').addEventListener('click',e=>{e.preventDefault();$('#project-details').scrollIntoView({behavior:'smooth'});});
+window.addEventListener('hashchange',showRoute);showRoute();
+const sectionObserver=new IntersectionObserver(entries=>{
+ if(document.body.classList.contains('project-view'))return;
+ const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+ if(visible.length)markSection(visible[0].target.id);
+},{rootMargin:'-20% 0px -55% 0px',threshold:[0,.1,.5]});
+$$('#main > section:not(#project-page)').forEach(section=>sectionObserver.observe(section));
 const theme=$('#theme');function applyTheme(dark){document.body.classList.toggle('dark',dark);theme.textContent=dark?'☀':'☾';theme.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme');}try{applyTheme(localStorage.getItem('arcane-theme')==='dark');}catch{}theme.addEventListener('click',()=>{const dark=!document.body.classList.contains('dark');applyTheme(dark);try{localStorage.setItem('arcane-theme',dark?'dark':'light');}catch{}});
-const music=$('#background-music');const musicButton=$('#music');music.volume=.2;function syncMusic(){const playing=!music.paused;musicButton.setAttribute('aria-pressed',String(playing));musicButton.setAttribute('aria-label',playing?'Pause background music':'Enable background music');$('#music-label').textContent=playing?'Pause music':'Enable music';$('#music-status').textContent=playing?'Lounge Vibe is playing on loop.':'Background music is paused.';}musicButton.addEventListener('click',async()=>{if(!music.paused){music.pause();return;}try{await music.play();}catch{$('#music-status').textContent='Unable to play background music. Please try again.';}});music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);music.addEventListener('error',()=>{$('#music-status').textContent='Background music could not be loaded.';});
+const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
+function syncMusic(){musicButton.setAttribute('aria-pressed',String(userMuted));musicButton.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
+function startMusic(){if(!userMuted&&music.paused)music.play().catch(()=>{});}
+musicButton.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
+document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
