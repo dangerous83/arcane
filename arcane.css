@@ -61,3 +61,6 @@ nav [aria-expanded="true"] .menu-indicator{transform:rotate(45deg)}
 .footer-brand img{filter:url(#brand-white);mix-blend-mode:normal}
 
 .footer-bottom{padding-right:170px}@media(max-width:760px){.footer-bottom{padding-right:65px}}
+
+/* Match the Projects architectural animation in the Expertise intro. */
+.expertise-intro .architecture{margin-top:24px}
