@@ -1,5 +1,5 @@
 'use strict';
-// Keep the opening screen close to two seconds, independent of media loading.
+// Keep the opening screen close to three seconds, independent of media loading.
 if(window.finishArcaneIntro&&document.documentElement.classList.contains('is-loading')){
  for(const el of document.body.children){
   if(!['site-loader'].includes(el.id)&&!['SCRIPT','SVG','AUDIO'].includes(el.tagName)&&!el.inert){
@@ -7,7 +7,7 @@ if(window.finishArcaneIntro&&document.documentElement.classList.contains('is-loa
   }
  }
  clearTimeout(window.arcaneIntroTimer);
- const remaining=Math.max(0,2000-(performance.now()-window.arcaneIntroStarted));
+ const remaining=Math.max(0,3000-(performance.now()-window.arcaneIntroStarted));
  window.arcaneIntroTimer=setTimeout(window.finishArcaneIntro,remaining);
 }
 
@@ -67,7 +67,17 @@ function markSection(id){$$('[data-section]').forEach(el=>{if(el.dataset.section
 function showRoute(){
  const hash=decodeURIComponent(location.hash.slice(1));
  const p=hash.startsWith('project/')?projects.find(p=>p.id===hash.slice(8)):hash.startsWith('expertise/')?services.find(p=>p.id===hash.slice(10)):null;
- closeMenus();closeNavigation();document.body.classList.toggle('project-view',!!p);$('#project-page').hidden=!p;
+ const editorial=hash==='company'||hash==='company-details'?'company':hash==='approach'||hash==='approach-details'?'approach':null;
+ closeMenus();closeNavigation();document.body.classList.toggle('project-view',!!p);document.body.classList.toggle('editorial-view',!!editorial);$('#project-page').hidden=!p;
+ for(const id of ['company','approach'])$('#'+id+'-page').hidden=id!==editorial;
+ if(editorial){
+  document.title=(editorial==='company'?'The company':'Our approach')+' | Arcane Interior Decorations';
+  markSection(editorial);
+  $('#'+editorial+'-page').querySelectorAll('.reveal').forEach(el=>el.classList.add('revealed'));
+  if(hash.endsWith('-details'))$('#'+hash).scrollIntoView({behavior:'instant'});
+  else{window.scrollTo({top:0,behavior:'instant'});$('#'+editorial+'-title').focus({preventScroll:true});}
+  return;
+ }
  if(p){
   loadHero($('#project-hero-image'),p);$('#project-hero-title').textContent=p.name;
   $('#project-hero-location').textContent=p.group==='expertise'?p.location:p.location+' · '+(p.group==='landmark'?'Landmark project':p.group==='residential'?'Residential portfolio':'Workplace & fit-out');$('#project-page .project-back').href=p.group==='expertise'?'#expertise':'#projects';$('#project-page .project-back').textContent=p.group==='expertise'?'← Our expertise':'← All projects';
@@ -83,9 +93,10 @@ function showRoute(){
 }
 // Project details are part of the page; section navigation returns to the main website.
 $('#project-page a[href="#project-details"]').addEventListener('click',e=>{e.preventDefault();$('#project-details').scrollIntoView({behavior:'smooth'});});
+if('scrollRestoration' in history)history.scrollRestoration='manual';
 window.addEventListener('hashchange',showRoute);showRoute();
 const sectionObserver=new IntersectionObserver(entries=>{
- if(document.body.classList.contains('project-view'))return;
+ if(document.body.classList.contains('project-view')||document.body.classList.contains('editorial-view'))return;
  const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
  if(visible.length)markSection(visible[0].target.id);
 },{rootMargin:'-20% 0px -55% 0px',threshold:[0,.1,.5]});
