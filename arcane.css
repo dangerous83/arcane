@@ -203,3 +203,12 @@ body.compact-widgets :is(.assistant-toggle,.whatsapp-widget){padding:12px}
 /* Use the supplied transparent brand logo assets in the navigation. */
 .brand img{opacity:1;mix-blend-mode:normal;filter:none}
 body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-mode:normal;filter:none}
+
+
+/* Mobile header order and a tighter home hero. */
+@media(max-width:760px){
+  .site-header .brand{order:1}
+  .site-header .header-actions{order:2;margin-left:auto}
+  .site-header .mobile-toggle{order:3;margin-left:0}
+  body[data-page-section="home"] #home.hero{height:clamp(520px,72svh,590px);min-height:520px;max-height:590px}
+}
