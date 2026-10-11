@@ -137,3 +137,18 @@ $('#assistant-form').addEventListener('submit',async e=>{
 
 function compactContactWidgets(){document.body.classList.toggle('compact-widgets',window.scrollY>160);}
 window.addEventListener('scroll',compactContactWidgets,{passive:true});compactContactWidgets();
+
+
+// Temporary social-media presence in the footer. Links can be added later.
+const footerBrand=$('.footer-brand');
+if(footerBrand&&!$('.footer-socials')){
+ const socials=[
+  ['Instagram','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
+  ['Facebook','<path class="social-fill" d="M14 8h3V4h-3c-3 0-5 2-5 5v3h-3v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1Z"/>'],
+  ['LinkedIn','<rect x="4" y="9" width="4" height="11"/><circle cx="6" cy="5.5" r="2" class="social-fill"/><path d="M12 20V9h4v1.8c1-1.4 4-1.8 4 2.8V20h-4v-5.4c0-1.5-1.8-1.5-1.8 0V20Z"/>'],
+  ['YouTube','<rect x="2.5" y="6" width="19" height="12" rx="4"/><path class="social-fill" d="m10 9 6 3-6 3Z"/>']
+ ];
+ const group=document.createElement('div');group.className='footer-socials';group.setAttribute('role','list');group.setAttribute('aria-label','Arcane social media');
+ socials.forEach(([name,icon])=>{const item=document.createElement('span');item.className='footer-social-icon';item.setAttribute('role','listitem');item.setAttribute('aria-label',name+' — link coming soon');item.title=name+' — coming soon';item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
+ footerBrand.append(group);
+}
