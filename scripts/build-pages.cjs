@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs');const path=require('node:path');const root=path.resolve(__dirname,'..');
 const generatePages=function generatePages(knowledge,copy,template){
-const base="https://arcane-rp.online";
+const base="https://www.arcane.ae";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 knowledge.company.content=copy.company;knowledge.approachContent=copy.approach;
 knowledge.profile.access="Use the pulsing circular download button beside Discuss your project in the navigation. Enter an email to download; the email stays in the browser and is not stored.";
