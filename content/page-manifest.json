@@ -1,14 +1,14 @@
 [
   {
     "url": "/",
-    "title": "GRG, Ceilings & Interior Fit-Out in UAE | Arcane",
-    "description": "Arcane Interior Decorations: specialist GRG, ceilings, partitions and interior fit-out in Dubai and the UAE. Established in 2004. Explore our project portfolio.",
+    "title": "GRG, Ceilings & Partitions in UAE | Arcane",
+    "description": "Arcane Interior Decorations: specialist GRG, ceiling and partition systems in Dubai and the UAE. Established in 2004. Explore our project portfolio.",
     "section": "home"
   },
   {
     "url": "/company/",
     "title": "Interior Decoration Specialists in Dubai & UAE | Arcane",
-    "description": "Established in 2004, Arcane Interior Decorations delivers specialist GRG, ceilings, partitions and interior fit-out packages across the UAE.",
+    "description": "Established in 2004, Arcane Interior Decorations delivers specialist GRG, ceiling and partition packages across the UAE.",
     "section": "company"
   },
   {
@@ -56,7 +56,7 @@
   {
     "url": "/projects/forte-towers/",
     "title": "Forte Towers, D1 / D2 | Specialist Interior Works | Arcane",
-    "description": "Explore Arcane’s specialist scope at Forte Towers, D1 / D2 in Downtown Dubai: False gypsum ceilings and fit-out works, including wall coverings, flooring and carpet packages. View project facts and related expertise.",
+    "description": "Explore Arcane’s specialist scope at Forte Towers, D1 / D2 in Downtown Dubai: False gypsum ceilings and finishing works, including wall coverings, flooring and carpet packages. View project facts and related expertise.",
     "section": "projects"
   },
   {
@@ -127,14 +127,14 @@
   },
   {
     "url": "/expertise/ceilings/",
-    "title": "Ceiling & Partition Systems in Dubai & UAE | Arcane",
-    "description": "Arcane’s ceiling and partition expertise covers gypsum, cement board, metal, acoustic, glass and composite systems for interior projects across the UAE.",
+    "title": "Ceiling Systems in Dubai & UAE | Arcane",
+    "description": "Arcane’s ceiling expertise covers gypsum, cement board, metal and acoustic systems for interior projects across the UAE.",
     "section": "expertise"
   },
   {
-    "url": "/expertise/fitout/",
-    "title": "Interior Fit-Out & Finishing in Dubai & UAE | Arcane",
-    "description": "Discover Arcane’s interior fit-out expertise in Dubai and the UAE: joinery, wood cladding, wall coverings, raised floors, wood and vinyl flooring, and carpets.",
+    "url": "/expertise/partitions/",
+    "title": "Partition Systems in Dubai & UAE | Arcane",
+    "description": "Discover Arcane’s partition expertise in Dubai and the UAE, including gypsum, cement board, glass and composite wall systems.",
     "section": "expertise"
   }
 ]
