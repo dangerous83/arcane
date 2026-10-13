@@ -22,7 +22,7 @@ const knowledge={
           "Craftsmanship supported by technical coordination",
           [
             "Traditional plaster-casting skills and modern mould development form the foundation of our GRG capability. Curved surfaces, decorative columns, mouldings, sculptural ceilings and wall panels call for close attention to form, assembly and the final surface.",
-            "Our ceiling capability covers gypsum, metal, acoustic and cement board systems. Our partition expertise includes gypsum, cement board, glass and composite systems. Each capability addresses a different layer of the interior while sharing a considered approach to coordination and inspection."
+            "Our ceiling capability covers gypsum, metal, acoustic, cement board and HPL applications. Our partition expertise includes gypsum partitions, wall cladding, cement board, glass and composite systems. Each capability addresses a different layer of the interior while sharing a considered approach to coordination and inspection."
           ]
         ],
         [
@@ -779,11 +779,11 @@ const knowledge={
       "image": "expertise-ceilings.png",
       "location": "OVERHEAD SYSTEMS · COORDINATED DETAIL",
       "group": "expertise",
-      "scope": "Integrated gypsum, metal, acoustic and cement board ceiling systems coordinated with architecture, structure and embedded services.",
+      "scope": "Integrated gypsum, metal, acoustic, cement board and HPL ceiling systems coordinated with architecture, structure and embedded services.",
       "facts": [
         [
           "Specialist systems",
-          "Gypsum, metal, acoustic systems and cement board applications"
+          "Gypsum, metal, acoustic systems, cement board and HPL applications"
         ],
         [
           "Our process",
@@ -791,14 +791,14 @@ const knowledge={
         ]
       ],
       "content": {
-        "title": "Ceiling Systems in Dubai & UAE | Arcane",
-        "description": "Arcane’s ceiling expertise covers gypsum, cement board, metal and acoustic systems for interior projects across the UAE.",
+        "title": "Ceiling Systems & HPL Finishes in Dubai | Arcane",
+        "description": "Arcane’s ceiling expertise covers gypsum, cement board, metal, acoustic systems and HPL finishes for interior projects across the UAE.",
         "sections": [
           [
             "Ceilings as part of the architecture",
             [
               "Ceilings shape the proportion and visual rhythm of an interior. Arcane coordinates ceiling systems with architecture, structure and embedded services, supporting a carefully resolved space rather than an isolated overhead layer.",
-              "The published capability includes gypsum, metal and acoustic systems, together with cement board applications. The intended use and technical specification guide the appropriate package. A capability list does not replace project-specific system selection or performance requirements."
+              "The published capability includes gypsum, metal and acoustic systems, together with cement board and HPL applications. The intended use and technical specification guide the appropriate package. A capability list does not replace project-specific system selection or performance requirements."
             ]
           ],
           [
@@ -826,7 +826,7 @@ const knowledge={
         "faqs": [
           [
             "Which systems are listed?",
-            "Our published ceiling expertise includes gypsum, metal, acoustic systems and cement board applications. The correct specification depends on the project requirements."
+            "Our published ceiling expertise includes gypsum, metal, acoustic systems, cement board and HPL applications. The correct specification depends on the project requirements."
           ],
           [
             "Are there large residential references?",
@@ -850,11 +850,11 @@ const knowledge={
       "image": "expertise-partitions.png",
       "location": "INTERIOR DIVISIONS · COORDINATED SYSTEMS",
       "group": "expertise",
-      "scope": "Precisely coordinated gypsum, cement board, glass and composite partition systems for resolved interior spaces.",
+      "scope": "Precisely coordinated gypsum partitions, wall cladding, cement board, glass and composite systems for resolved interior spaces.",
       "facts": [
         [
           "Specialist systems",
-          "Gypsum, cement board, glass and composite partitions"
+          "Gypsum partitions, wall cladding, cement board, glass and composite systems"
         ],
         [
           "Our process",
@@ -862,13 +862,13 @@ const knowledge={
         ]
       ],
       "content": {
-        "title": "Partition Systems in Dubai & UAE | Arcane",
-        "description": "Discover Arcane’s partition expertise in Dubai and the UAE, including gypsum, cement board, glass and composite wall systems.",
+        "title": "Gypsum Partitions & Wall Cladding in Dubai | Arcane",
+        "description": "Discover Arcane’s partition expertise in Dubai and the UAE, including gypsum partitions, wall cladding, cement board, glass and composite systems.",
         "sections": [
           [
             "Partition systems that define interior space",
             [
-              "Partitions shape enclosure, circulation and the relationship between rooms. Arcane’s capability includes gypsum, cement board, glass and composite partition systems developed with architects, contractors and specialist project teams.",
+              "Partitions shape enclosure, circulation and the relationship between rooms. Arcane’s capability includes gypsum partitions, wall cladding, cement board, glass and composite systems developed with architects, contractors and specialist project teams.",
               "A precisely resolved partition package considers layout, wall build-up, openings, junctions and connections to surrounding ceilings and finishes. The selected system follows the project brief and technical specification."
             ]
           ],
@@ -897,7 +897,7 @@ const knowledge={
         "faqs": [
           [
             "Which partition systems are included?",
-            "The published capability includes gypsum, cement board, glass and composite partition systems. The correct specification and build-up depend on the project requirements."
+            "The published capability includes gypsum partitions, wall cladding, cement board, glass and composite systems. The correct specification and build-up depend on the project requirements."
           ],
           [
             "Which portfolio references include partitions?",
