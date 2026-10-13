@@ -85,19 +85,19 @@ document.addEventListener('click',e=>{const link=e.target.closest('a[href]');if(
 markSection(document.body.dataset.pageSection||'home');syncIntroScene();
 if(document.body.dataset.pageSection==='home'&&'IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);if(visible.length)markSection(visible[0].target.id);},{rootMargin:'-20% 0px -55% 0px',threshold:[0,.1,.5]});$$('#main > section').forEach(section=>observer.observe(section));}
 const theme=$('#theme');
-function applyTheme(brown){
- document.body.classList.toggle('brown',brown);
- theme.classList.toggle('is-brown',brown);
+function applyTheme(grey){
+ document.body.classList.toggle('grey',grey);
+ theme.classList.toggle('is-grey',grey);
  theme.innerHTML='<span class="theme-swatch" aria-hidden="true"></span>';
- const destination=brown?'green':'brown';
+ const destination=grey?'green':'grey';
  theme.setAttribute('aria-label','Switch to '+destination+' brand theme');
  theme.title='Switch to '+destination+' brand theme';
 }
-try{applyTheme(localStorage.getItem('arcane-theme')==='brown');}catch{applyTheme(false);}
+try{applyTheme(localStorage.getItem('arcane-theme')==='grey');}catch{applyTheme(false);}
 theme.addEventListener('click',()=>{
- const brown=!document.body.classList.contains('brown');
- applyTheme(brown);
- try{localStorage.setItem('arcane-theme',brown?'brown':'green');}catch{}
+ const grey=!document.body.classList.contains('grey');
+ applyTheme(grey);
+ try{localStorage.setItem('arcane-theme',grey?'grey':'green');}catch{}
 });
 const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
 function syncMusic(){musicButton.setAttribute('aria-pressed',String(userMuted));musicButton.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
