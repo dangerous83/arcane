@@ -10,9 +10,26 @@ for(const s of knowledge.services)s.content=copy.services[s.id];
 const projects=knowledge.projects,services=knowledge.services;
 const projectUrl=p=>"/projects/"+p.id+"/",serviceUrl=s=>"/expertise/"+s.id+"/";
 const groupLabel=g=>g==="landmark"?"Landmark project":g==="residential"?"Residential portfolio":"Workplace interiors";
-const icons={landmark:'<path d="M4 21V7l8-4 8 4v14M9 21v-4h6v4M8 9h1m6 0h1M8 12h1m6 0h1M2 21h20"/>',residential:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 10h1m6 0h1"/>',workplace:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'};
+const icons={ongoing:'<path d="M12 3v5l4-2M5 12a7 7 0 1 0 2-5"/><path d="M12 12h5M12 12V8"/>',completed:'<path d="m4 13 4 4L20 5"/><path d="M5 21h14"/>'};
+const ongoingMenu=[
+ {label:"Wynn",id:"wynn-al-marjan"},
+ {label:"District One",id:"district-01-west"},
+ {label:"Palm Jebel Ali",location:"Dubai"},
+ {label:"Bugatti / Jacob",id:"burj-binghatti"},
+ {label:"Address Zabeel",location:"Dubai"},
+ {label:"Dubai Harbour",id:"dubai-harbour"},
+ {label:"Serena District",location:"Dubai"}
+];
+const ongoingIds=new Set(ongoingMenu.map(p=>p.id).filter(Boolean));
+const menuProject=item=>{
+ const p=item.id?projects.find(p=>p.id===item.id):null;
+ const label=item.label||(p&&p.name)||"",location=item.location||(p&&p.location)||"UAE";
+ if(p)return `<a class="menu-project" data-project="${p.id}" href="${projectUrl(p)}"><svg viewBox="0 0 24 24" aria-hidden="true">${icons.ongoing}</svg><span>${esc(label)}<small>${esc(location)}</small></span></a>`;
+ return `<span class="menu-project menu-project--listed" aria-label="${esc(label)}"><svg viewBox="0 0 24 24" aria-hidden="true">${icons.ongoing}</svg><span>${esc(label)}<small>${esc(location)} · Ongoing</small></span></span>`;
+};
 let shell=template;
-for(const g of Object.keys(icons))shell=shell.replace(`<div id="menu-${g}"></div>`,`<div id="menu-${g}">${projects.filter(p=>p.group===g).map(p=>`<a class="menu-project" data-project="${p.id}" href="${projectUrl(p)}"><svg viewBox="0 0 24 24" aria-hidden="true">${icons[g]}</svg><span>${esc(p.name)}<small>${esc(p.location)}</small></span></a>`).join("")}</div>`);
+shell=shell.replace('<div id="menu-ongoing"></div>',`<div id="menu-ongoing">${ongoingMenu.map(menuProject).join("")}</div>`);
+shell=shell.replace('<div id="menu-completed"></div>',`<div id="menu-completed" class="completed-projects">${projects.filter(p=>!ongoingIds.has(p.id)).map(p=>`<a class="menu-project" data-project="${p.id}" href="${projectUrl(p)}"><svg viewBox="0 0 24 24" aria-hidden="true">${icons.completed}</svg><span>${esc(p.name)}<small>${esc(p.location)}</small></span></a>`).join("")}</div>`);
 shell=shell.replace('<div id="project-grid" class="project-grid"></div>',`<div id="project-grid" class="project-grid">${projects.map(p=>`<a class="project-tile" data-group="${p.group}" data-project="${p.id}" href="${projectUrl(p)}"><small>${groupLabel(p.group)}</small><h3>${esc(p.name)}</h3><p>${esc(p.location)}</p><span aria-hidden="true">↗</span></a>`).join("")}</div>`);
 const allMain=shell.match(/<main id="main">([\s\S]*?)<\/main>/)[1];
 let companyMain=allMain.slice(0,allMain.indexOf('<section id="approach-page"'));

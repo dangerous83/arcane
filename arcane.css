@@ -233,3 +233,13 @@ body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-m
 .footer-social-icon .social-fill{fill:currentColor;stroke:none}
 .footer-social-icon .social-dot{fill:currentColor;stroke:none}
 @media(max-width:760px){.site-footer::before{background-position:65% center;opacity:.12}.site-footer::after{background:rgba(32,53,40,.9)}.footer-socials{margin-top:20px}.footer-social-icon{width:36px;height:36px}}
+
+/* Project menu status grouping. */
+.projects-menu{grid-template-columns:23% 24% 31% 22%}
+.menu-column--wide{padding-right:8px}
+.completed-projects{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.menu-project--listed{cursor:default;color:var(--ink)}
+.menu-project--listed:hover{color:var(--ink)}
+.menu-project--listed small{color:var(--sage)}
+@media(max-width:1050px){.projects-menu{grid-template-columns:1fr 1fr}.completed-projects{grid-template-columns:1fr}}
+@media(max-width:760px){.projects-menu{grid-template-columns:1fr}.completed-projects{grid-template-columns:1fr}.menu-column--wide{padding-right:0}}
