@@ -55,7 +55,7 @@ const knowledge={
         ],
         [
           "How do I discuss a new interior project?",
-          "Use the project enquiry form to prepare a WhatsApp message, email info@arcane.ae, call +971 4 570 7248 or contact WhatsApp at +971 58 892 3604."
+          "Use the project enquiry form to prepare a WhatsApp message, email info@arcane.ae, call +971 4 570 7248 or contact WhatsApp at +971 52 104 4958."
         ]
       ]
     }
@@ -64,8 +64,8 @@ const knowledge={
     "address": "United Arab Emirates",
     "email": "info@arcane.ae",
     "phone": "+971 4 570 7248",
-    "whatsapp": "+971 58 892 3604",
-    "whatsappUrl": "https://wa.me/971588923604"
+    "whatsapp": "+971 52 104 4958",
+    "whatsappUrl": "https://wa.me/971521044958"
   },
   "approach": [
     [

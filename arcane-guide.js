@@ -2,7 +2,7 @@
 (function(){
 const knowledge=typeof module!=='undefined'&&module.exports?require('./arcane-knowledge.js'):window.ArcaneKnowledge;
 const normalize=text=>text.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const contactText='Email info@arcane.ae, WhatsApp +971 58 892 3604, or call +971 4 570 7248.';
+const contactText='Email info@arcane.ae, WhatsApp +971 52 104 4958, or call +971 4 570 7248.';
 function answer(message,page=''){
  let q=normalize(message);
  if(/\b(this|it|tell me more|more details)\b/.test(q)){const [kind,id]=page.replace(/^#/,'').split('/');const item=(kind==='project'?knowledge.projects:kind==='expertise'?knowledge.services:[]).find(p=>p.id===id);if(item)q+=' '+normalize(item.name);}
