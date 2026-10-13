@@ -43,7 +43,7 @@ const knowledge={
       "faqs": [
         [
           "Where is Arcane based?",
-          "Arcane’s office is at Emaar Business Park, Building No. 1, Office No. 530, Sheikh Zayed Road, Dubai, UAE. The portfolio covers projects across the United Arab Emirates."
+          "Arcane supports interior decoration projects across the United Arab Emirates. For visits and project enquiries, please contact the team directly."
         ],
         [
           "What specialist services does Arcane provide?",
@@ -61,7 +61,7 @@ const knowledge={
     }
   },
   "contact": {
-    "address": "Emaar Business Park, Building No. 1, Office No. 530, Sheikh Zayed Road, Dubai, UAE",
+    "address": "United Arab Emirates",
     "email": "info@arcane.ae",
     "phone": "+971 4 570 7248",
     "whatsapp": "+971 58 892 3604",
