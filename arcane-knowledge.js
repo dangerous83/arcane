@@ -779,11 +779,11 @@ const knowledge={
       "image": "expertise-ceilings.png",
       "location": "OVERHEAD SYSTEMS · COORDINATED DETAIL",
       "group": "expertise",
-      "scope": "Integrated gypsum, metal, acoustic, cement board, HPL, wood and stretch wood ceiling systems coordinated with architecture, structure and embedded services.",
+      "scope": "Integrated gypsum, metal, acoustic, cement board, HPL, wood and stretch ceiling systems coordinated with architecture, structure and embedded services.",
       "facts": [
         [
           "Specialist systems",
-          "Gypsum, metal, acoustic systems, cement board, HPL, wood and stretch wood applications"
+          "Gypsum, metal, acoustic systems, cement board, HPL, wood and stretch ceiling applications"
         ],
         [
           "Our process",
@@ -792,13 +792,13 @@ const knowledge={
       ],
       "content": {
         "title": "Ceiling Systems & HPL Finishes in Dubai | Arcane",
-        "description": "Arcane’s ceiling expertise covers gypsum, cement board, metal, acoustic systems, HPL, wood and stretch wood finishes for interior projects across the UAE.",
+        "description": "Arcane’s ceiling expertise covers gypsum, cement board, metal, acoustic systems, HPL, wood and stretch ceiling finishes for interior projects across the UAE.",
         "sections": [
           [
             "Ceilings as part of the architecture",
             [
               "Ceilings shape the proportion and visual rhythm of an interior. Arcane coordinates ceiling systems with architecture, structure and embedded services, supporting a carefully resolved space rather than an isolated overhead layer.",
-              "The published capability includes gypsum, metal and acoustic systems, together with cement board, HPL, wood and stretch wood applications. The intended use and technical specification guide the appropriate package. A capability list does not replace project-specific system selection or performance requirements."
+              "The published capability includes gypsum, metal and acoustic systems, together with cement board, HPL, wood and stretch ceiling applications. The intended use and technical specification guide the appropriate package. A capability list does not replace project-specific system selection or performance requirements."
             ]
           ],
           [
@@ -826,7 +826,7 @@ const knowledge={
         "faqs": [
           [
             "Which systems are listed?",
-            "Our published ceiling expertise includes gypsum, metal, acoustic systems, cement board, HPL, wood and stretch wood applications. The correct specification depends on the project requirements."
+            "Our published ceiling expertise includes gypsum, metal, acoustic systems, cement board, HPL, wood and stretch ceiling applications. The correct specification depends on the project requirements."
           ],
           [
             "Are there large residential references?",
