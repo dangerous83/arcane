@@ -37,7 +37,7 @@ approachMain=approachMain.trim().replace(/<\/section>$/,"")+`<div class="section
 homeMain=homeMain.replace('<div class="stats">','<a class="text-link overview-link" href="/company/">More about the company ↗</a><div class="stats">');
 homeMain=homeMain.replace('<section id="contact"','<div class="section overview-process-link"><a class="text-link" href="/approach/">Explore our full approach ↗</a></div><section id="contact"');
 function detailMain(p,isService){
- const c=p.content,image="/"+(p.image||"project-"+p.id+".png");
+ const c=p.content,image=p.id==="ceilings"?"/expertise-ceilings-hero.webp":"/"+(p.image||"project-"+p.id+".png");
  const h1=esc(p.name);
  const facts=isService?p.facts:[["Location",p.location],["Client / developer",p.client],["Contractor",p.contractor]];
  const relatedBlock=isService?related("Relevant project references",projectLinks(c.projects)):(c.services&&c.services.length?related("Explore this specialist expertise",serviceLinks(c.services)):"");
@@ -50,7 +50,7 @@ const pages=[{url:"/",type:"WebPage",section:"home",title:"GRG, Ceilings & Parti
 {url:"/company/",type:"AboutPage",section:"company",title:copy.company.title,description:copy.company.description,name:"The company",main:companyMain,image:"/arcane-company-hero.jpg"},
 {url:"/approach/",type:"WebPage",section:"approach",title:copy.approach.title,description:copy.approach.description,name:"Our approach",main:approachMain,image:"/arcane-approach-hero.jpg"}];
 for(const p of projects)pages.push({url:projectUrl(p),type:"WebPage",section:"projects",title:p.name+" | Specialist Interior Works | Arcane",description:`Explore Arcane’s specialist scope at ${p.name} in ${p.location}: ${p.scope} View project facts and related expertise.`,name:p.name,main:detailMain(p,false),image:"/project-"+p.id+".png",record:p});
-for(const s of services)pages.push({url:serviceUrl(s),type:"WebPage",section:"expertise",title:s.content.title,description:s.content.description,name:s.name,main:detailMain(s,true),image:"/"+s.image,record:s});
+for(const s of services)pages.push({url:serviceUrl(s),type:"WebPage",section:"expertise",title:s.content.title,description:s.content.description,name:s.name,main:detailMain(s,true),image:s.id==="ceilings"?"/expertise-ceilings-hero.webp":"/"+s.image,record:s});
 const files={};
 for(const page of pages){
  const url=base+page.url;
