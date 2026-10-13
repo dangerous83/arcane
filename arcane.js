@@ -147,9 +147,9 @@ window.addEventListener('scroll',compactContactWidgets,{passive:true});compactCo
 const footerBrand=$('.footer-brand');
 if(footerBrand&&!$('.footer-socials')){
  const socials=[
-  ['Instagram','https://www.instagram.com/arcaneid.ae/?hl=en','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
-  ['Facebook','#','<path class="social-fill" d="M14 8h3V4h-3c-3 0-5 2-5 5v3h-3v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1Z"/>'],
-  ['LinkedIn','http://www.linkedin.com/in/arcane-interior-decorations-llc-5740903a6','<rect x="4" y="9" width="4" height="11"/><circle cx="6" cy="5.5" r="2" class="social-fill"/><path d="M12 20V9h4v1.8c1-1.4 4-1.8 4 2.8V20h-4v-5.4c0-1.5-1.8-1.5-1.8 0V20Z"/>']
+  ['Instagram','https://www.instagram.com/arcaneid.ae/?hl=en','<path class="social-fill" d="M7.2 2h9.6A5.2 5.2 0 0 1 22 7.2v9.6a5.2 5.2 0 0 1-5.2 5.2H7.2A5.2 5.2 0 0 1 2 16.8V7.2A5.2 5.2 0 0 1 7.2 2Zm-.1 2A3.1 3.1 0 0 0 4 7.1v9.8A3.1 3.1 0 0 0 7.1 20h9.8a3.1 3.1 0 0 0 3.1-3.1V7.1A3.1 3.1 0 0 0 16.9 4H7.1Zm10.3 1.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 6.9a5.1 5.1 0 1 1 0 10.2 5.1 5.1 0 0 1 0-10.2Zm0 2a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2Z"/>'],
+  ['Facebook','#','<path class="social-fill" d="M13.7 22v-9h3l.45-3.5H13.7V7.25c0-1.01.28-1.7 1.73-1.7h1.87V2.42c-.32-.04-1.43-.14-2.72-.14-2.69 0-4.53 1.64-4.53 4.66V9.5H7V13h3.05v9h3.65Z"/>'],
+  ['LinkedIn','http://www.linkedin.com/in/arcane-interior-decorations-llc-5740903a6','<path class="social-fill" d="M5.3 7.3A2.15 2.15 0 1 1 5.3 3a2.15 2.15 0 0 1 0 4.3ZM3.45 9h3.7v12h-3.7V9Zm5.85 0h3.55v1.65h.05c.5-.95 1.7-1.95 3.5-1.95 3.75 0 4.45 2.45 4.45 5.65V21h-3.7v-5.9c0-1.4-.03-3.2-1.95-3.2-1.95 0-2.25 1.52-2.25 3.1v6H9.3V9Z"/>']
  ];
  const group=document.createElement('div');group.className='footer-socials';group.setAttribute('role','list');group.setAttribute('aria-label','Arcane social media');
  socials.forEach(([name,href,icon])=>{const item=document.createElement('a');item.href=href;item.className='footer-social-icon';item.setAttribute('role','listitem');item.setAttribute('aria-label',href==='#'?name+' — link coming soon':name);item.title=href==='#'?name+' — coming soon':name;if(href!=='#'){item.target='_blank';item.rel='noopener noreferrer';}else{item.addEventListener('click',event=>event.preventDefault());}item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
