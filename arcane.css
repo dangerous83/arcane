@@ -279,7 +279,39 @@ body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-m
  display:block!important;
  transition:background .2s,box-shadow .2s,transform .2s!important;
 }
+.site-header .header-actions #theme.circle:has(.theme-swatch)::before{display:none!important}
 .site-header .header-actions #theme.circle:hover{background:#d3d7cf!important;border-color:#aeb6aa!important}
 body.dark .site-header .header-actions #theme.circle{background:#424a44!important;border-color:#606b63!important;color:transparent!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.16)!important}
 body.dark .site-header .header-actions #theme.circle::before{background:#e6ebdf!important;box-shadow:0 0 0 4px rgba(230,235,223,.2)!important;transform:scale(.74)!important}
 @media(max-width:760px){.site-header .header-actions #theme.circle{width:32px!important;height:32px!important;min-width:32px!important;font-size:18px!important}}
+
+/* Brand palette toggle: green by default, soft grey when selected. */
+body.grey{
+ --paper:#f4f4f1;
+ --white:#fff;
+ --ink:#343a35;
+ --sage:#727970;
+ --muted:#6d746d;
+ --line:#d8dbd4;
+ --wash:#eaebe6;
+}
+body.grey .hero-shade{background:linear-gradient(90deg,#f4f4f1eb 0%,#f4f4f1c5 30%,#f4f4f142 66%,transparent 92%)}
+body.grey .button,body.grey #assistant-send{background:#6f7770;color:#fff}
+body.grey .button:hover,body.grey #assistant-send:hover{background:#585f59}
+body.grey .whatsapp-widget{background:#6f7770}
+.site-header .header-actions #theme.circle .theme-swatch{
+ width:17px;
+ height:17px;
+ border-radius:50%;
+ background:#2d4234;
+ box-shadow:inset 0 0 0 3px rgba(255,255,255,.28);
+ display:block;
+}
+body.grey .site-header .header-actions #theme.circle{
+ background:#d8dbd4!important;
+ border-color:#b8beb5!important;
+}
+body.grey .site-header .header-actions #theme.circle .theme-swatch{
+ background:#8b918a;
+ box-shadow:inset 0 0 0 3px rgba(255,255,255,.42);
+}
