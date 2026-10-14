@@ -262,28 +262,28 @@ body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-m
  height:39px!important;
  min-width:39px!important;
  padding:0!important;
- border:1px solid #b9b9b9!important;
+ border:1px solid #b8b8b8!important;
  border-radius:50%!important;
- background:#e4e4e4!important;
+ background:#ececec!important;
  color:transparent!important;
  font-size:21px!important;
  line-height:1!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 2px 8px rgba(40,40,40,.12)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 8px rgba(40,40,40,.1)!important;
 }
 .site-header .header-actions #theme.circle::before{
  content:""!important;
  width:15px!important;
  height:15px!important;
  border-radius:50%!important;
- background:#555!important;
- box-shadow:5px -3px 0 0 #e4e4e4!important;
+ background:#8f8f8f!important;
+ box-shadow:5px -3px 0 0 #ececec!important;
  display:block!important;
  transition:background .2s,box-shadow .2s,transform .2s!important;
 }
 .site-header .header-actions #theme.circle:has(.theme-swatch)::before{display:none!important}
-.site-header .header-actions #theme.circle:hover{background:#d6d6d6!important;border-color:#9d9d9d!important}
-body.dark .site-header .header-actions #theme.circle{background:#424a44!important;border-color:#606b63!important;color:transparent!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.16)!important}
-body.dark .site-header .header-actions #theme.circle::before{background:#e6ebdf!important;box-shadow:0 0 0 4px rgba(230,235,223,.2)!important;transform:scale(.74)!important}
+.site-header .header-actions #theme.circle:hover{background:#cfcfcf!important;border-color:#9c9c9c!important}
+body.dark .site-header .header-actions #theme.circle{background:#555!important;border-color:#3f3f3f!important;color:transparent!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 8px rgba(0,0,0,.18)!important}
+body.dark .site-header .header-actions #theme.circle::before{background:#d8d8d8!important;box-shadow:0 0 0 4px rgba(216,216,216,.2)!important;transform:scale(.74)!important}
 @media(max-width:760px){.site-header .header-actions #theme.circle{width:32px!important;height:32px!important;min-width:32px!important;font-size:18px!important}}
 
 /* Brand palette toggle: green by default, soft grey when selected. */
@@ -304,16 +304,16 @@ body.grey .whatsapp-widget{background:#4e4e4e}
  width:17px;
  height:17px;
  border-radius:50%;
- background:#777;
- box-shadow:inset 0 0 0 3px rgba(255,255,255,.38);
+ background:#8f8f8f;
+ box-shadow:inset 0 0 0 3px rgba(255,255,255,.45);
  display:block;
 }
 body.grey .site-header .header-actions #theme.circle{
- background:#3f3f3f!important;
- border-color:#2f2f2f!important;
- box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 2px 10px rgba(0,0,0,.2)!important;
+ background:#555!important;
+ border-color:#3f3f3f!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 2px 10px rgba(0,0,0,.18)!important;
 }
 body.grey .site-header .header-actions #theme.circle .theme-swatch{
- background:#d7d7d7;
- box-shadow:inset 0 0 0 3px rgba(255,255,255,.22);
+ background:#d8d8d8;
+ box-shadow:inset 0 0 0 3px rgba(255,255,255,.26);
 }
