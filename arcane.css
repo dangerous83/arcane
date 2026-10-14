@@ -320,3 +320,24 @@ body.grey .site-header .header-actions #theme.circle:hover{background:#6d6e71!im
 
 body.grey .site-footer{background:#444444}
 body.grey .site-footer::after{background:linear-gradient(90deg,#444444fa 0%,#444444eb 45%,#444444c2 100%)}
+
+/* Light text on solid grey sections; white cards and fields retain dark text. */
+body.grey :is(.expertise,.approach,.lead-section,.editorial-next,.expertise-gallery,.related-links,.page-cta){
+ --ink:#ffffff;
+ --sage:#f2f2f2;
+ --muted:#eeeeee;
+ --line:#cccccc;
+ color:var(--ink);
+}
+body.grey :is(.service-grid article,.related-grid>a){
+ --ink:#111111;
+ --sage:#444444;
+ --muted:#222222;
+ --line:#6d6e71;
+ color:var(--ink);
+}
+body.grey #lead-form :is(input,select,textarea){
+ color:#222222;
+ border-color:#6d6e71;
+}
+body.grey #lead-form :is(input,textarea)::placeholder{color:#6d6e71;opacity:1}
