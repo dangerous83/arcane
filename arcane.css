@@ -287,15 +287,15 @@ body.dark .site-header .header-actions #theme.circle::before{background:#e6ebdf!
 
 /* Brand palette toggle: green by default, user's exact grey palette when selected. */
 body.grey{
- --paper:#999999;
- --white:#999999;
+ --paper:#ffffff;
+ --white:#ffffff;
  --ink:#111111;
  --sage:#444444;
  --muted:#222222;
  --line:#6d6e71;
  --wash:#999999;
 }
-body.grey .hero-shade{background:linear-gradient(90deg,#999999eb 0%,#999999c5 30%,#99999942 66%,transparent 92%)}
+body.grey .hero-shade{background:linear-gradient(90deg,#ffffffeb 0%,#ffffffc5 30%,#ffffff42 66%,transparent 92%)}
 body.grey .button,body.grey #assistant-send{background:#444444;color:#fff}
 body.grey .button:hover,body.grey #assistant-send:hover{background:#6d6e71}
 body.grey .whatsapp-widget{background:#444444}
