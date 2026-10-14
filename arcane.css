@@ -328,3 +328,30 @@ body.grey .site-header .header-actions #theme.circle .theme-swatch{
  background:#d8d8d8;
  box-shadow:inset 0 0 0 3px rgba(255,255,255,.26);
 }
+
+/* Compact footer controls and fixed resource book. */
+.footer-bottom{display:grid;grid-template-columns:1fr auto 1fr;gap:20px}
+.footer-social-slot{justify-self:end;margin-left:0}
+.footer-socials{gap:8px}.footer-social-icon{width:28px;height:28px}.footer-social-icon svg{width:13px;height:13px}
+.footer-profile{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 18px;border:1px solid #ffffff45;border-radius:3px;color:inherit;transition:background .2s,border-color .2s}
+.footer-bottom .footer-profile{font-size:12px}.footer-bottom .footer-profile span{font-size:12px;letter-spacing:.2px}.footer-profile:hover{background:#ffffff12;border-color:#ffffff80;text-decoration:none}
+.footer-profile svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.resource-dock{--resource-light:#c1d5b5;position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:90;width:52px;height:56px;border:0;border-radius:12px;padding:1px;background:var(--ink);color:var(--paper);isolation:isolate;box-shadow:0 5px 24px #0002;cursor:pointer;animation:resource-pulse 3.5s ease-in-out infinite}
+.resource-dock::before{content:"";position:absolute;inset:0;border:1px solid color-mix(in srgb,var(--resource-light) 35%,transparent);border-radius:inherit;pointer-events:none}
+.resource-dock-face{position:absolute;inset:1px;border-radius:11px;background:var(--ink);display:grid;place-items:center;overflow:hidden;z-index:1}
+.resource-dock-face::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0deg 270deg,var(--resource-light) 310deg,transparent 355deg);animation:resource-orbit 4s linear infinite}
+.resource-dock-face::after{content:"";position:absolute;inset:1px;background:var(--ink);border-radius:10px}
+.resource-dock svg{position:relative;z-index:2;width:23px;height:23px;stroke:currentColor;stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}
+.resource-dock-label{position:absolute;left:calc(100% + 12px);top:50%;transform:translate(-5px,-50%);opacity:0;pointer-events:none;white-space:nowrap;background:var(--ink);color:var(--paper);padding:9px 12px;border-radius:4px;font-size:11px;letter-spacing:.3px;transition:opacity .2s,transform .2s}
+.resource-dock:hover .resource-dock-label,.resource-dock:focus-visible .resource-dock-label{opacity:1;transform:translate(0,-50%)}
+.resource-dock:focus-visible{outline:2px solid var(--sage);outline-offset:5px}
+.profile-dialog{border-radius:12px;border-color:var(--sage);box-shadow:0 30px 100px #0006,0 0 28px color-mix(in srgb,var(--sage) 22%,transparent)}
+.profile-copy{position:relative;background-image:linear-gradient(color-mix(in srgb,var(--sage) 5%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--sage) 5%,transparent) 1px,transparent 1px);background-size:32px 32px}
+.profile-copy::before{content:"";position:absolute;left:30px;right:30px;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--sage),transparent);transform-origin:center;animation:resource-saber 3.5s ease-in-out infinite;box-shadow:0 0 12px var(--sage);pointer-events:none}
+.profile-copy>.eyebrow{font-family:monospace;letter-spacing:2px}.profile-copy .download-option{border-radius:6px}.profile-close{color:var(--ink)}
+body.grey .resource-dock{--resource-light:#dedede}
+@keyframes resource-orbit{to{transform:rotate(360deg)}}
+@keyframes resource-pulse{0%,100%{box-shadow:0 5px 24px #0002,0 0 0 0 color-mix(in srgb,var(--resource-light) 20%,transparent)}50%{box-shadow:0 5px 24px #0003,0 0 0 7px transparent}}
+@keyframes resource-saber{0%,100%{opacity:.35;transform:scaleX(.35)}50%{opacity:1;transform:scaleX(1)}}
+@media(max-width:760px){.resource-dock{left:12px;width:44px;height:48px;top:auto;bottom:25%;transform:none}.resource-dock svg{width:21px;height:21px}.footer-bottom{grid-template-columns:1fr auto;gap:18px}.footer-bottom>span{grid-column:1/-1}.footer-profile{justify-self:start;padding:9px 14px}.footer-social-slot{justify-self:end}.footer-social-icon{width:28px;height:28px}.footer-socials{gap:8px}}
+@media(prefers-reduced-motion:reduce){.resource-dock,.resource-dock-face::before,.profile-copy::before{animation:none}}
