@@ -355,3 +355,16 @@ body.grey #lead-form :is(input,textarea)::placeholder{color:#6d6e71;opacity:1}
 .footer-dropdown>a,.footer-dropdown>.footer-project{display:block;font-size:12px;line-height:1.65;margin:8px 0;color:#e6e6e6}
 .footer-dropdown>summary+a{margin-top:14px}
 .footer-dropdown>span.footer-project{color:#ccc}
+
+/* Override generic footer link styles so all social icons share one alignment. */
+.site-footer .footer-socials .footer-social-icon{
+ display:grid;
+ place-items:center;
+ flex:0 0 auto;
+ margin:0;
+ padding:0;
+ line-height:1;
+ color:#f8f7f2;
+ text-decoration:none;
+}
+.site-footer .footer-socials .footer-social-icon svg{display:block}
