@@ -170,3 +170,48 @@ if(footerBrand&&!$('.footer-socials')){
  socials.forEach(([name,icon])=>{const item=document.createElement('span');item.className='footer-social-icon';item.setAttribute('role','listitem');item.setAttribute('aria-label',name+' — link coming soon');item.title=name+' — coming soon';item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
  footerBrand.append(group);
 }
+
+/* Keep footer navigation titles and dropdown contents aligned with the navbar. */
+const footerColumns=$('.footer-grid');
+if(footerColumns&&navigation){
+ const footerNav=document.createElement('nav');
+ footerNav.className='footer-navigation';
+ footerNav.setAttribute('aria-label','Footer navigation');
+ for(const source of navigation.children){
+  if(source.tagName==='A'){
+   const link=source.cloneNode(true);link.removeAttribute('data-section');footerNav.append(link);
+  }else if(source.dataset.menu){
+   const details=document.createElement('details');details.className='footer-dropdown';
+   const summary=document.createElement('summary');
+   summary.textContent=source.textContent.replace(/\s*\+\s*$/,'').trim();
+   details.append(summary);
+   const panel=$('#'+source.dataset.menu);
+   if(source.dataset.menu==='expertise-menu'){
+    for(const card of panel.querySelectorAll('a.expertise-card')){
+     const link=document.createElement('a');link.href=card.getAttribute('href');
+     link.textContent=card.querySelector('h3').textContent;details.append(link);
+    }
+   }else{
+    for(const column of panel.querySelectorAll('.menu-column')){
+     const heading=document.createElement('h4');heading.textContent=column.querySelector('h3').textContent;details.append(heading);
+     for(const project of column.querySelectorAll('.menu-project')){
+      const item=document.createElement(project.tagName==='A'?'a':'span');
+      if(project.tagName==='A')item.href=project.getAttribute('href');
+      item.className='footer-project';
+      const label=project.querySelector('span').cloneNode(true);
+      label.querySelector('small')?.remove();item.textContent=label.textContent.trim();
+      details.append(item);
+     }
+    }
+   }
+   footerNav.append(details);
+  }
+ }
+ const utilities=document.createElement('div');utilities.className='footer-utilities';
+ const title=document.createElement('h3');title.textContent='Get in touch';utilities.append(title);
+ for(const link of footerColumns.children[1].querySelectorAll('a')){
+  if(link.getAttribute('href').includes('enquiry')||link.hasAttribute('data-profile-open'))utilities.append(link);
+ }
+ footerColumns.children[1].replaceWith(footerNav);
+ footerColumns.children[2].replaceWith(utilities);
+}
