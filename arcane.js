@@ -173,9 +173,8 @@ const footerBrand=$('.footer-brand');
 if(footerBrand&&!$('.footer-socials')){
  const socials=[
   ['Instagram','https://www.instagram.com/','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
-  ['Facebook','https://www.facebook.com/','<path class="social-fill" d="M14 8h3V4h-3c-3 0-5 2-5 5v3h-3v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1Z"/>'],
-  ['LinkedIn','https://www.linkedin.com/','<rect x="4" y="9" width="4" height="11"/><circle cx="6" cy="5.5" r="2" class="social-fill"/><path d="M12 20V9h4v1.8c1-1.4 4-1.8 4 2.8V20h-4v-5.4c0-1.5-1.8-1.5-1.8 0V20Z"/>'],
-  ['YouTube','https://www.youtube.com/','<rect x="2.5" y="6" width="19" height="12" rx="4"/><path class="social-fill" d="m10 9 6 3-6 3Z"/>']
+  ['Facebook','https://www.facebook.com/','<path class="social-fill" d="M13.6 21v-7h2.4l.5-3h-2.9V9.1c0-.8.3-1.4 1.5-1.4h1.6V5.1c-.8-.1-1.6-.2-2.4-.2-2.7 0-4.5 1.7-4.5 4.7V11H7.4v3h2.4v7h3.8Z"/>'],
+  ['LinkedIn','https://www.linkedin.com/','<path class="social-fill" d="M5.2 8.7h3.1V19H5.2V8.7Zm1.6-5a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6ZM10.4 8.7h3v1.4c.5-.8 1.6-1.7 3.3-1.7 3 0 3.9 2 3.9 4.8V19h-3.1v-5.2c0-1.4-.4-2.5-1.8-2.5-1.3 0-2.1.9-2.1 2.5V19h-3.2V8.7Z"/>']
  ];
  const group=document.createElement('div');group.className='footer-socials';group.setAttribute('role','list');group.setAttribute('aria-label','Arcane social media');
  socials.forEach(([name,url,icon])=>{const item=document.createElement('a');item.className='footer-social-icon';item.href=url;item.target='_blank';item.rel='noopener';item.setAttribute('role','listitem');item.setAttribute('aria-label','Open Arcane on '+name);item.title=name;item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
