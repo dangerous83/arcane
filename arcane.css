@@ -341,3 +341,17 @@ body.grey #lead-form :is(input,select,textarea){
  border-color:#6d6e71;
 }
 body.grey #lead-form :is(input,textarea)::placeholder{color:#6d6e71;opacity:1}
+
+/* Compact footer dropdowns use the same labels and links as main navigation. */
+.site-footer .footer-navigation{display:flex;flex-direction:column;align-items:stretch;gap:0}
+.footer-navigation>a,.footer-dropdown>summary{font-size:12px;font-weight:600;letter-spacing:.4px;color:#f2f2f2}
+.footer-dropdown{margin-bottom:10px}
+.footer-dropdown>summary{display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;list-style:none;padding:0}
+.footer-dropdown>summary::-webkit-details-marker{display:none}
+.footer-dropdown>summary::after{content:"+";font-size:18px;font-weight:400}
+.footer-dropdown[open]>summary::after{content:"−"}
+.footer-dropdown>summary:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.footer-dropdown>h4{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#ccc;margin:18px 0 10px}
+.footer-dropdown>a,.footer-dropdown>.footer-project{display:block;font-size:12px;line-height:1.65;margin:8px 0;color:#e6e6e6}
+.footer-dropdown>summary+a{margin-top:14px}
+.footer-dropdown>span.footer-project{color:#ccc}
