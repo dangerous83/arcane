@@ -285,20 +285,20 @@ body.dark .site-header .header-actions #theme.circle{background:#424a44!importan
 body.dark .site-header .header-actions #theme.circle::before{background:#e6ebdf!important;box-shadow:0 0 0 4px rgba(230,235,223,.2)!important;transform:scale(.74)!important}
 @media(max-width:760px){.site-header .header-actions #theme.circle{width:32px!important;height:32px!important;min-width:32px!important;font-size:18px!important}}
 
-/* Brand palette toggle: green by default, soft grey when selected. */
+/* Brand palette toggle: green by default, neutral grey when selected. */
 body.grey{
- --paper:#f4f4f1;
- --white:#fff;
- --ink:#343a35;
- --sage:#727970;
- --muted:#6d746d;
- --line:#d8dbd4;
- --wash:#eaebe6;
+ --paper:#d9d9d9;
+ --white:#eeeeee;
+ --ink:#292929;
+ --sage:#4a4a4a;
+ --muted:#555555;
+ --line:#b3b3b3;
+ --wash:#c6c6c6;
 }
-body.grey .hero-shade{background:linear-gradient(90deg,#f4f4f1eb 0%,#f4f4f1c5 30%,#f4f4f142 66%,transparent 92%)}
-body.grey .button,body.grey #assistant-send{background:#6f7770;color:#fff}
-body.grey .button:hover,body.grey #assistant-send:hover{background:#585f59}
-body.grey .whatsapp-widget{background:#6f7770}
+body.grey .hero-shade{background:linear-gradient(90deg,#d9d9d9eb 0%,#d9d9d9c5 30%,#d9d9d942 66%,transparent 92%)}
+body.grey .button,body.grey #assistant-send{background:#454545;color:#fff}
+body.grey .button:hover,body.grey #assistant-send:hover{background:#303030}
+body.grey .whatsapp-widget{background:#454545}
 .site-header .header-actions #theme.circle .theme-swatch{
  width:17px;
  height:17px;
@@ -308,10 +308,12 @@ body.grey .whatsapp-widget{background:#6f7770}
  display:block;
 }
 body.grey .site-header .header-actions #theme.circle{
- background:#d8dbd4!important;
- border-color:#b8beb5!important;
+ background:#454545!important;
+ border-color:#303030!important;
 }
 body.grey .site-header .header-actions #theme.circle .theme-swatch{
- background:#8b918a;
+ background:#d9d9d9;
  box-shadow:inset 0 0 0 3px rgba(255,255,255,.42);
 }
+
+body.grey .site-header .header-actions #theme.circle:hover{background:#303030!important;border-color:#292929!important}
