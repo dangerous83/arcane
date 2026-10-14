@@ -251,3 +251,23 @@ body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-m
 .menu-project--listed small{color:var(--sage)}
 @media(max-width:1050px){.projects-menu{grid-template-columns:1fr 1fr}.completed-projects{grid-template-columns:1fr}}
 @media(max-width:760px){.projects-menu{grid-template-columns:1fr}.completed-projects{grid-template-columns:1fr}.menu-column--wide{padding-right:0}}
+
+/* Keep the theme toggle visibly grey in the navbar. */
+.site-header .header-actions #theme.circle{
+ display:grid!important;
+ place-items:center!important;
+ width:39px!important;
+ height:39px!important;
+ min-width:39px!important;
+ padding:0!important;
+ border:1px solid #c3c8bf!important;
+ border-radius:50%!important;
+ background:#dfe2da!important;
+ color:#2d4234!important;
+ font-size:21px!important;
+ line-height:1!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 8px rgba(45,66,52,.08)!important;
+}
+.site-header .header-actions #theme.circle:hover{background:#d3d7cf!important;border-color:#aeb6aa!important}
+body.dark .site-header .header-actions #theme.circle{background:#424a44!important;border-color:#606b63!important;color:#e6ebdf!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.16)!important}
+@media(max-width:760px){.site-header .header-actions #theme.circle{width:32px!important;height:32px!important;min-width:32px!important;font-size:18px!important}}
