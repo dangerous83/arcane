@@ -55,7 +55,7 @@ const knowledge={
         ],
         [
           "How do I discuss a new interior project?",
-          "Use the project enquiry form to prepare a WhatsApp message, email info@arcane.ae, call +971 4 570 7248 or contact WhatsApp at +971 52 104 4958."
+          "Use the project enquiry form to prepare an email draft, email info@arcane.ae, call +971 4 570 7248 or contact WhatsApp at +971 52 104 4958."
         ]
       ]
     }
@@ -90,7 +90,7 @@ const knowledge={
     "url": "Arcane_Company_Profile_2026.pdf",
     "access": "Use the pulsing circular download button beside Discuss your project in the navigation. Enter an email to download; the email stays in the browser and is not stored."
   },
-  "enquiry": "The Start your project form asks for name, email, phone, expertise and a project message. It prepares a WhatsApp draft; the visitor sends it there to contact the team.",
+  "enquiry": "The Start your project form asks for name, email, phone, expertise and a project message. It prepares an email draft addressed to Arcane; the visitor reviews and sends it from their email app.",
   "imagery": "Dedicated hero and expertise concept images are illustrative, not photographs of completed works.",
   "projects": [
     {
@@ -953,7 +953,7 @@ const knowledge={
         "Start with the right information",
         [
           "Tell us which specialist package you need and what stage your project has reached. Include the location, type of space and drawings or material requirements where available. Name any existing portfolio reference that helps explain your scope.",
-          "The enquiry form prepares a WhatsApp draft for you to send. You can also reach the Dubai office by email or landline. Our team will discuss scope, pricing, availability and next steps directly with you."
+          "The enquiry form prepares an email draft for you to review and send. You can also reach the Dubai office by email or landline. Our team will discuss scope, pricing, availability and next steps directly with you."
         ]
       ]
     ],

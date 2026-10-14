@@ -140,77 +140,44 @@ function closeAssistant(){assistantPanel.hidden=true;assistantToggle.setAttribut
 function scrollChat(){const log=$('#assistant-messages');log.scrollTop=log.scrollHeight;}
 function assistantMessage(text,role){const p=document.createElement('p');p.className='chat-message '+role;p.textContent=text;$('#assistant-messages').append(p);scrollChat();return p;}
 function addContactOptions(){const wrap=document.createElement('div');wrap.className='chat-contact-options';for(const [label,href]of [['Email · info@arcane.ae','mailto:info@arcane.ae'],['WhatsApp · +971 52 104 4958','https://wa.me/971521044958'],['Landline · +971 4 570 7248','tel:+97145707248']]){const a=document.createElement('a');a.textContent=label;a.href=href;if(href.startsWith('https:')){a.target='_blank';a.rel='noopener';}wrap.append(a);}$('#assistant-messages').append(wrap);scrollChat();}
+let assistantVoiceEnabled=true;let arcaneVoice=null;const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;const assistantRecognition=SpeechRecognition?new SpeechRecognition():null;
+function voiceStatus(text){const status=$('#assistant-voice-status');if(status)status.textContent=text;}
+function chooseArcaneVoice(){const voices=speechSynthesis.getVoices();arcaneVoice=voices.find(v=>/Google UK English Female|Microsoft Sonia|Samantha|Serena|Ava|Jenny/i.test(v.name))||voices.find(v=>/^en[-_]/i.test(v.lang)&&/female|natural|premium/i.test(v.name))||voices.find(v=>/^en[-_]/i.test(v.lang))||voices[0]||null;}
+if('speechSynthesis'in window){chooseArcaneVoice();speechSynthesis.addEventListener?.('voiceschanged',chooseArcaneVoice);}else{assistantVoiceEnabled=false;}
+function speakArcane(text){if(!assistantVoiceEnabled||!('speechSynthesis'in window)||!text)return;speechSynthesis.cancel();const clean=text.replace(/https?:\/\/\S+/g,'').replace(/\s+/g,' ').trim();const utter=new SpeechSynthesisUtterance(clean);if(arcaneVoice)utter.voice=arcaneVoice;utter.lang=arcaneVoice?.lang||'en-GB';utter.rate=.88;utter.pitch=.92;utter.volume=.95;speechSynthesis.speak(utter);}
+function syncVoiceButton(){const btn=$('#assistant-voice-toggle');if(!btn)return;btn.setAttribute('aria-pressed',String(assistantVoiceEnabled));btn.textContent=assistantVoiceEnabled?'Voice on':'Voice off';voiceStatus(assistantVoiceEnabled?'Voice replies are enabled.':'Voice replies are muted.');}
+$('#assistant-voice-toggle')?.addEventListener('click',()=>{assistantVoiceEnabled=!assistantVoiceEnabled;if(!assistantVoiceEnabled&&'speechSynthesis'in window)speechSynthesis.cancel();syncVoiceButton();});
+if(assistantRecognition){assistantRecognition.lang='en-US';assistantRecognition.interimResults=false;assistantRecognition.maxAlternatives=1;assistantRecognition.addEventListener('start',()=>{$('#assistant-mic')?.classList.add('is-listening');$('#assistant-mic')?.setAttribute('aria-pressed','true');voiceStatus('Listening. Speak naturally about your project.');});assistantRecognition.addEventListener('end',()=>{$('#assistant-mic')?.classList.remove('is-listening');$('#assistant-mic')?.setAttribute('aria-pressed','false');});assistantRecognition.addEventListener('result',e=>{const text=e.results?.[0]?.[0]?.transcript?.trim();if(text){$('#assistant-input').value=text;voiceStatus('Question captured. Preparing Arcane’s answer.');sendAssistantMessage(text);}});assistantRecognition.addEventListener('error',()=>voiceStatus('Voice input is not available in this browser. Please type your question.'));}else{$('#assistant-mic')?.setAttribute('disabled','');voiceStatus('Voice input is not available in this browser. You can still receive spoken replies.');}
+$('#assistant-mic')?.addEventListener('click',()=>{if(!assistantRecognition){voiceStatus('Voice input is not available in this browser. Please type your question.');return;}if(assistantBusy)return;try{assistantRecognition.start();}catch{}});
 assistantToggle.addEventListener('click',()=>{const opening=assistantPanel.hidden;assistantPanel.hidden=!opening;assistantToggle.setAttribute('aria-expanded',String(opening));if(opening)$('#assistant-input').focus();});
 $('#assistant-close').addEventListener('click',closeAssistant);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!assistantPanel.hidden&&!profileDialog.open)closeAssistant();});
-$('#assistant-form').addEventListener('submit',async e=>{
- e.preventDefault();if(assistantBusy)return;const text=$('#assistant-input').value.trim();if(!text)return;
+syncVoiceButton();
+async function sendAssistantMessage(text){
+ if(assistantBusy)return;text=(text||'').trim();if(!text)return;
  assistantBusy=true;$('#assistant-input').value='';assistantMessage(text,'user');assistantHistory.push({role:'user',content:text});
  const pending=assistantMessage('Reviewing your question','assistant pending');const typing=document.createElement('span');typing.className='typing-dots';typing.setAttribute('aria-hidden','true');typing.innerHTML='<i></i><i></i><i></i>';pending.append(typing);$('#assistant-send').disabled=true;$('#assistant-messages').setAttribute('aria-busy','true');
  const delay=new Promise(resolve=>setTimeout(resolve,2000));
  try{
   const request=(async()=>{try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:assistantHistory.slice(-12),page:assistantPageContext()}),signal:AbortSignal.timeout(20000)});const data=await r.json();if(r.ok&&typeof data.reply==='string')return data;if(r.status===429)return{reply:data.error,mode:'site-guide',contact:true};}catch{}return window.ArcaneGuide.answer(text,assistantPageContext());})();
-  const [data]=await Promise.all([request,delay]);pending.textContent=data.reply;pending.classList.remove('pending');$('#assistant-connection').textContent=data.mode==='ai'?'AI assistant · informed by Arcane’s website.':'Answers from Arcane’s website.';assistantHistory.push({role:'assistant',content:data.reply});if(data.contact)addContactOptions();
+  const [data]=await Promise.all([request,delay]);pending.textContent=data.reply;pending.classList.remove('pending');$('#assistant-connection').textContent=data.mode==='ai'?'Professional voice assistant · informed by Arcane’s website.':'Voice and text answers from Arcane’s website.';assistantHistory.push({role:'assistant',content:data.reply});speakArcane(data.reply);if(data.contact)addContactOptions();
  }finally{assistantBusy=false;$('#assistant-send').disabled=false;$('#assistant-messages').setAttribute('aria-busy','false');scrollChat();}
-});
+}
+$('#assistant-form').addEventListener('submit',e=>{e.preventDefault();sendAssistantMessage($('#assistant-input').value);});
 
 function compactContactWidgets(){document.body.classList.toggle('compact-widgets',window.scrollY>160);}
 window.addEventListener('scroll',compactContactWidgets,{passive:true});compactContactWidgets();
 
 
-// Social-media links in the footer.
+// Temporary social-media presence in the footer. Links can be added later.
 const footerBrand=$('.footer-brand');
 if(footerBrand&&!$('.footer-socials')){
  const socials=[
-  ['Instagram','https://www.instagram.com/arcaneid.ae/','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
-  ['Facebook',null,'<path class="social-fill" d="M14 8h3V4h-3c-3 0-5 2-5 5v3h-3v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1Z"/>'],
-  ['LinkedIn','https://www.linkedin.com/in/arcane-interior-decorations-llc-5740903a6','<rect x="4" y="9" width="4" height="11"/><circle cx="6" cy="5.5" r="2" class="social-fill"/><path d="M12 20V9h4v1.8c1-1.4 4-1.8 4 2.8V20h-4v-5.4c0-1.5-1.8-1.5-1.8 0V20Z"/>'],
+  ['Instagram','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
+  ['Facebook','<path class="social-fill" d="M14 8h3V4h-3c-3 0-5 2-5 5v3h-3v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1Z"/>'],
+  ['LinkedIn','<rect x="4" y="9" width="4" height="11"/><circle cx="6" cy="5.5" r="2" class="social-fill"/><path d="M12 20V9h4v1.8c1-1.4 4-1.8 4 2.8V20h-4v-5.4c0-1.5-1.8-1.5-1.8 0V20Z"/>'],
+  ['YouTube','<rect x="2.5" y="6" width="19" height="12" rx="4"/><path class="social-fill" d="m10 9 6 3-6 3Z"/>']
  ];
  const group=document.createElement('div');group.className='footer-socials';group.setAttribute('role','list');group.setAttribute('aria-label','Arcane social media');
- socials.forEach(([name,href,icon])=>{const item=document.createElement(href?'a':'span');item.className='footer-social-icon';if(href){item.href=href;item.target='_blank';item.rel='noopener noreferrer';item.setAttribute('aria-label',name+' (opens in a new tab)');item.title=name;}else{item.setAttribute('aria-label',name+' — link needed');item.title=name+' — link needed';}item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
+ socials.forEach(([name,icon])=>{const item=document.createElement('span');item.className='footer-social-icon';item.setAttribute('role','listitem');item.setAttribute('aria-label',name+' — link coming soon');item.title=name+' — coming soon';item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
  footerBrand.append(group);
-}
-
-/* Keep footer navigation titles and dropdown contents aligned with the navbar. */
-const footerColumns=$('.footer-grid');
-if(footerColumns&&navigation){
- const footerNav=document.createElement('nav');
- footerNav.className='footer-navigation';
- footerNav.setAttribute('aria-label','Footer navigation');
- for(const source of navigation.children){
-  if(source.tagName==='A'){
-   const link=source.cloneNode(true);link.removeAttribute('data-section');footerNav.append(link);
-  }else if(source.dataset.menu){
-   const details=document.createElement('details');details.className='footer-dropdown';
-   const summary=document.createElement('summary');
-   summary.textContent=source.textContent.replace(/\s*\+\s*$/,'').trim();
-   details.append(summary);
-   const panel=$('#'+source.dataset.menu);
-   if(source.dataset.menu==='expertise-menu'){
-    for(const card of panel.querySelectorAll('a.expertise-card')){
-     const link=document.createElement('a');link.href=card.getAttribute('href');
-     link.textContent=card.querySelector('h3').textContent;details.append(link);
-    }
-   }else{
-    for(const column of panel.querySelectorAll('.menu-column')){
-     const sourceHeading=column.querySelector('h3');if(sourceHeading){const heading=document.createElement('h4');heading.textContent=sourceHeading.textContent;details.append(heading);}
-     for(const project of column.querySelectorAll('.menu-project')){
-      const item=document.createElement(project.tagName==='A'?'a':'span');
-      if(project.tagName==='A')item.href=project.getAttribute('href');
-      item.className='footer-project';
-      const label=project.querySelector('span').cloneNode(true);
-      label.querySelector('small')?.remove();item.textContent=label.textContent.trim();
-      details.append(item);
-     }
-    }
-   }
-   footerNav.append(details);
-  }
- }
- const utilities=document.createElement('div');utilities.className='footer-utilities';
- const title=document.createElement('h3');title.textContent='Get in touch';utilities.append(title);
- for(const link of footerColumns.children[1].querySelectorAll('a')){
-  if(link.getAttribute('href').includes('enquiry')||link.hasAttribute('data-profile-open'))utilities.append(link);
- }
- footerColumns.children[1].replaceWith(footerNav);
- footerColumns.children[2].replaceWith(utilities);
 }
