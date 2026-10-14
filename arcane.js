@@ -100,9 +100,9 @@ theme.addEventListener('click',()=>{
  try{localStorage.setItem('arcane-theme',grey?'grey':'green');}catch{}
 });
 const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
-function syncMusic(){musicButton.setAttribute('aria-pressed',String(userMuted));musicButton.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
+function syncMusic(){musicButton?.setAttribute('aria-pressed',String(userMuted));musicButton?.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');if(musicButton)musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
 function startMusic(){if(!userMuted&&music.paused)music.play().catch(()=>{});}
-musicButton.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
+musicButton?.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
 document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
 
 $('#lead-form')?.addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const values=new FormData(form);const subject='Project enquiry — '+values.get('service');const message='Hello Arcane team,\n\nI would like to discuss a project.\n\nName: '+values.get('name')+'\nEmail: '+values.get('email')+'\nPhone: '+(values.get('phone')||'Not supplied')+'\nExpertise: '+values.get('service')+'\n\nProject details:\n'+values.get('message');window.location.href='mailto:info@arcane.ae?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);$('#lead-status').textContent='Your email draft is ready. Review the details and select Send in your email app.';});
