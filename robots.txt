@@ -4,4 +4,4 @@ Disallow: /api/
 Disallow: /templates/
 Disallow: /content/
 Disallow: /scripts/
-Sitemap: https://www.arcane.ae/sitemap.xml
+Sitemap: https://arcane-rp.online/sitemap.xml
