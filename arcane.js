@@ -169,8 +169,8 @@ window.addEventListener('scroll',compactContactWidgets,{passive:true});compactCo
 
 
 // Temporary social-media presence in the footer.
-const footerBrand=$('.footer-brand');
-if(footerBrand&&!$('.footer-socials')){
+const footerSocialSlot=$('.footer-social-slot')||$('.footer-brand');
+if(footerSocialSlot&&!$('.footer-socials')){
  const socials=[
   ['Instagram','https://www.instagram.com/arcaneid.ae/','<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" class="social-dot"/>'],
   ['Facebook','https://www.facebook.com/','<path class="social-fill" d="M13.6 21v-7h2.4l.5-3h-2.9V9.1c0-.8.3-1.4 1.5-1.4h1.6V5.1c-.8-.1-1.6-.2-2.4-.2-2.7 0-4.5 1.7-4.5 4.7V11H7.4v3h2.4v7h3.8Z"/>'],
@@ -178,5 +178,5 @@ if(footerBrand&&!$('.footer-socials')){
  ];
  const group=document.createElement('div');group.className='footer-socials';group.setAttribute('role','list');group.setAttribute('aria-label','Arcane social media');
  socials.forEach(([name,url,icon])=>{const item=document.createElement('a');item.className='footer-social-icon';item.href=url;item.target='_blank';item.rel='noopener';item.setAttribute('role','listitem');item.setAttribute('aria-label','Open Arcane on '+name);item.title=name;item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
- footerBrand.append(group);
+ footerSocialSlot.append(group);
 }
