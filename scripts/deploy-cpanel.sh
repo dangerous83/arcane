@@ -26,7 +26,7 @@ done < <(find "$repository_root" -maxdepth 1 -type f \( \
   -name '*.mp3' -o -name '*.pdf' -o -name 'robots.txt' -o \
   -name 'sitemap.xml' \) -print0)
 
-for page_directory in company approach expertise projects; do
+for page_directory in assets company approach expertise projects; do
   test -d "$repository_root/$page_directory"
   cp -R -- "$repository_root/$page_directory" "$deploy_root/"
 done
