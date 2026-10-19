@@ -401,3 +401,7 @@ body.grey .resource-dock{--resource-light:#dedede}
 .company-office-card h3{font:22px/1.25 Georgia,serif;letter-spacing:-.02em;margin:0 0 7px;color:var(--ink)}
 .company-office-card p{font-size:12px;line-height:1.65;margin:0;color:var(--muted)}
 @media(max-width:760px){.company-office-grid{grid-template-columns:minmax(0,1fr);gap:18px}.company-office-card.company-office-lead{grid-column:auto}.company-office-card figcaption{padding:17px 18px;gap:12px}.company-office-card h3{font-size:21px}}
+
+/* Company facts: four balanced columns, with two per row on small screens. */
+.stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}}
