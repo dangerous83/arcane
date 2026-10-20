@@ -39,7 +39,8 @@ nav [aria-expanded="true"] .menu-indicator{transform:rotate(45deg)}
 .expertise-menu{grid-template-columns:.9fr 1fr 1fr 1fr;gap:24px;padding:32px}
 .expertise-intro{padding:8px 20px 0 0}.expertise-intro h2{font-size:35px}.expertise-intro>p:not(.eyebrow){font-size:13px}.expertise-intro .text-link{font-size:12px;margin-top:10px}
 .expertise-menu>a.expertise-card{padding:0;border:0;background:var(--paper);border-radius:4px;overflow:hidden;transition:transform .3s,box-shadow .3s}
-.expertise-card-image{aspect-ratio:4/3;overflow:hidden;background:var(--wash)}.expertise-card-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
+.expertise-card-image{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--wash)}.expertise-card-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
+.expertise-project-label{position:absolute;right:14px;bottom:14px;padding:5px 10px;border:1px solid rgba(255,255,255,.24);border-radius:3px;background:rgba(28,31,29,.82);color:#fff;font-family:inherit;font-size:12px;font-weight:500;line-height:1.4;letter-spacing:.04em;pointer-events:none}
 .expertise-card-copy{padding:20px}.expertise-menu .expertise-card h3{font:22px Georgia;margin:0 0 12px}.expertise-card-copy p{font-size:12px;line-height:1.7;margin-bottom:18px}.expertise-card-copy>span{font-size:11px;color:var(--sage);border-bottom:1px solid var(--line);padding-bottom:3px}
 .expertise-card-list{display:flex;flex-wrap:wrap;gap:6px 8px;list-style:none;margin:-7px 0 18px;padding:0}.expertise-card-list li{padding:4px 8px;border:1px solid var(--line);border-radius:20px;color:var(--sage);font-size:9px;line-height:1.2;letter-spacing:.35px}
 .expertise-card:hover{transform:translateY(-3px);box-shadow:0 10px 25px #17291b14}.expertise-card:hover img{transform:scale(1.035)}
@@ -503,3 +504,4 @@ body.gallery-preview-open{overflow:hidden}
 .expertise-video-help,.expertise-video-status{margin:0;padding:13px 22px;font-size:12px;line-height:1.5;color:var(--muted)}
 .expertise-video-status{padding-bottom:0;color:var(--ink)}
 @media(max-width:760px){.expertise-video-card{max-width:420px}.expertise-video-heading{padding:13px 16px}.expertise-video-heading h2{font-size:21px}.expertise-video-help,.expertise-video-status{padding-left:16px;padding-right:16px}}
+
