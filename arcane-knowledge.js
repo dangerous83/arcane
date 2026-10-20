@@ -701,6 +701,111 @@ const knowledge={
         ],
         "services": []
       }
+    },
+    {
+      "id": "palm-jebel-ali",
+      "name": "Palm Jebel Ali",
+      "location": "Dubai",
+      "group": "landmark",
+      "scope": "Specialist interior works associated with the ongoing project.",
+      "client": "Contact Arcane for project details",
+      "contractor": "Contact Arcane for project details",
+      "status": "Ongoing",
+      "content": {
+        "sections": [
+          [
+            "Specialist delivery for Palm Jebel Ali",
+            [
+              "Palm Jebel Ali is included in Arcane's ongoing portfolio. This page presents the supplied project visual and provides a direct route for enquiries about the specialist package."
+            ]
+          ],
+          [
+            "Coordinated interior execution",
+            [
+              "Arcane coordinates specialist interior work with the wider architectural programme, resolving interfaces, finishes and installation requirements with the project team."
+            ]
+          ],
+          [
+            "Discuss this project reference",
+            [
+              "Contact Arcane for the confirmed package, programme and project-specific information."
+            ]
+          ]
+        ],
+        "services": [
+          "ceilings"
+        ]
+      }
+    },
+    {
+      "id": "address-zabeel",
+      "name": "Address Zabeel",
+      "location": "Dubai",
+      "group": "landmark",
+      "scope": "Specialist interior works associated with the ongoing project.",
+      "client": "Contact Arcane for project details",
+      "contractor": "Contact Arcane for project details",
+      "status": "Ongoing",
+      "content": {
+        "sections": [
+          [
+            "Specialist delivery for Address Zabeel",
+            [
+              "Address Zabeel is included in Arcane's ongoing portfolio. This page presents the supplied project visual and provides a direct route for enquiries about the specialist package."
+            ]
+          ],
+          [
+            "Carefully coordinated finishes",
+            [
+              "Specialist ceiling, wall and finish packages depend on clear setting out, coordinated interfaces and close inspection throughout installation."
+            ]
+          ],
+          [
+            "Discuss this project reference",
+            [
+              "Contact Arcane for the confirmed package, programme and project-specific information."
+            ]
+          ]
+        ],
+        "services": [
+          "ceilings"
+        ]
+      }
+    },
+    {
+      "id": "serena-district",
+      "name": "Serena District",
+      "location": "Dubai",
+      "group": "landmark",
+      "scope": "Specialist interior works associated with the ongoing project.",
+      "client": "Contact Arcane for project details",
+      "contractor": "Contact Arcane for project details",
+      "status": "Ongoing",
+      "content": {
+        "sections": [
+          [
+            "Specialist delivery for Serena District",
+            [
+              "Serena District is included in Arcane's ongoing portfolio. This page presents the supplied project visual and provides a direct route for enquiries about the specialist package."
+            ]
+          ],
+          [
+            "From coordinated layout to finish",
+            [
+              "Arcane's delivery approach connects technical coordination, experienced installation and detailed inspection across the identified interior scope."
+            ]
+          ],
+          [
+            "Discuss this project reference",
+            [
+              "Contact Arcane for the confirmed package, programme and project-specific information."
+            ]
+          ]
+        ],
+        "services": [
+          "ceilings"
+        ]
+      }
     }
   ],
   "services": [
