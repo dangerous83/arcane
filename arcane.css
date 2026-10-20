@@ -221,7 +221,7 @@ body.dark .header-actions #theme.circle{background:#3d443f;border-color:#5a655c;
 
 /* Use the supplied transparent brand logo assets in the navigation. */
 .brand img{opacity:1;mix-blend-mode:normal;filter:none}
-body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-mode:normal;filter:none}
+body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.webp');mix-blend-mode:normal;filter:none}
 
 
 /* Mobile header order and a tighter home hero. */
@@ -235,7 +235,7 @@ body.dark .brand img{content:url('/Arcane%20logo-Light%20Green.png');mix-blend-m
 
 /* Soft architectural image overlay and temporary social icons. */
 .site-footer{position:relative;isolation:isolate;overflow:hidden;background:#263b2e}
-.site-footer::before{content:"";position:absolute;inset:0;z-index:-2;background:url('/arcane-company-hero.jpg') center 48%/cover no-repeat;opacity:.16;filter:saturate(.65) contrast(.9)}
+.site-footer::before{content:"";position:absolute;inset:0;z-index:-2;background:url('/arcane-company-hero.webp') center 48%/cover no-repeat;opacity:.16;filter:saturate(.65) contrast(.9)}
 .site-footer::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(32,53,40,.98) 0%,rgba(38,59,46,.92) 45%,rgba(38,59,46,.76) 100%)}
 .footer-socials{display:flex;align-items:center;gap:11px;margin:0}
 .footer-social-slot{display:flex;align-items:center;justify-content:flex-end;margin-left:auto}

@@ -812,7 +812,7 @@ const knowledge={
     {
       "id": "grg",
       "name": "Sculptural GRG",
-      "image": "expertise-grg.png",
+      "image": "expertise-grg.webp",
       "location": "FORM · SPECIALIST CRAFTSMANSHIP",
       "group": "expertise",
       "scope": "Precision moulding, decorative ceilings and sculptural architectural forms, developed through specialist casting and careful on-site assembly.",
@@ -881,7 +881,7 @@ const knowledge={
     {
       "id": "ceilings",
       "name": "Ceilings",
-      "image": "expertise-ceilings.png",
+      "image": "expertise-ceilings.webp",
       "location": "OVERHEAD SYSTEMS · COORDINATED DETAIL",
       "group": "expertise",
       "scope": "Integrated gypsum, metal, acoustic, cement board, HPL, wood and stretch ceiling systems coordinated with architecture, structure and embedded services.",
@@ -952,7 +952,7 @@ const knowledge={
     {
       "id": "partitions",
       "name": "Partitions",
-      "image": "expertise-partitions.png",
+      "image": "expertise-partitions.webp",
       "location": "INTERIOR DIVISIONS · COORDINATED SYSTEMS",
       "group": "expertise",
       "scope": "Precisely coordinated gypsum partitions, wall cladding, cement board, glass and composite systems for resolved interior spaces.",

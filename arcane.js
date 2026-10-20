@@ -44,7 +44,7 @@ if(window.releaseArcaneIntro&&document.documentElement.classList.contains('is-lo
 const projects=window.ArcaneKnowledge.projects;
 const services=window.ArcaneKnowledge.services;
 const icons={landmark:'<path d="M4 21V7l8-4 8 4v14M9 21v-4h6v4M8 9h1m6 0h1M8 12h1m6 0h1M2 21h20"/>',residential:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-7h6v7M8 10h1m6 0h1"/>',workplace:'<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12h18M10 12v3h4v-3"/>'};
-const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'/project-'+p.id+'.png';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];const asset=p=>'/assets/projects/'+p.id+'-hero.webp';const navigation=$('#navigation');const menuButtons=$$('[data-menu]');
 let menuCloseTimer;let pinnedMenu=null;
 const hoverNavigation=window.matchMedia('(hover: hover) and (pointer: fine)');
 function closeMenus(){clearTimeout(menuCloseTimer);pinnedMenu=null;for(const b of menuButtons){b.setAttribute('aria-expanded','false');$('#'+b.dataset.menu).hidden=true;}}
