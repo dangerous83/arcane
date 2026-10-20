@@ -4,7 +4,11 @@
   const player = document.getElementById('expertise-video-player');
   const closeButton = document.getElementById('expertise-video-close');
   const status = document.getElementById('expertise-video-status');
-  if (!dialog || !player || !closeButton || !status) return;
+  const title = document.getElementById('expertise-video-title');
+  if (!dialog || !player || !closeButton || !status || !title) return;
+  const defaultPoster = player.getAttribute('poster');
+  const defaultTitle = title.textContent;
+  const defaultLabel = player.getAttribute('aria-label');
   let opener = null;
 
   function showStatus(message) {
@@ -16,11 +20,17 @@
     button.addEventListener('click', function () {
       if (dialog.open) return;
       opener = button;
+      const source = button.dataset.videoSrc || player.dataset.src;
+      player.poster = button.dataset.videoPoster || defaultPoster;
+      title.textContent = button.dataset.videoTitle || defaultTitle;
+      player.setAttribute('aria-label', button.dataset.videoLabel || defaultLabel);
+      const fallback = player.querySelector('a');
+      if (fallback) fallback.href = source;
       showStatus('');
       dialog.showModal();
       document.body.classList.add('expertise-video-open');
       document.getElementById('background-music')?.pause();
-      if (!player.getAttribute('src') || player.error) player.src = player.dataset.src;
+      if (player.getAttribute('src') !== source || player.error) player.src = source;
       player.muted = false;
       player.volume = 1;
       if (player.readyState > 0) player.currentTime = 0;
@@ -47,7 +57,10 @@
     document.body.classList.remove('expertise-video-open');
     showStatus('');
     if (opener?.getClientRects().length) opener.focus();
-    else document.querySelector('[data-menu="expertise-menu"]')?.focus();
+    else {
+      const menu = opener?.dataset.videoMenu === 'projects-menu' ? 'projects-menu' : 'expertise-menu';
+      document.querySelector('[data-menu="' + menu + '"]')?.focus();
+    }
   });
   player.addEventListener('playing', function () { showStatus(''); });
   player.addEventListener('error', function () {
