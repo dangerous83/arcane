@@ -4,9 +4,10 @@ set -euo pipefail
 umask 077
 
 main() {
-  local repository_root state_root git_bin current_commit deployed_commit
+  local repository_root state_root git_bin current_commit deployed_commit deploy_root release_file published_matches
   repository_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
   state_root="${ARCANE_AUTO_DEPLOY_STATE:-/home/arcane/.arcane-auto-deploy}"
+  deploy_root="${ARCANE_DEPLOY_ROOT:-/home/arcane/public_html}"
   mkdir -p -- "$state_root"
   chmod 700 "$state_root"
   command -v flock >/dev/null || { echo "ERROR: flock is required; ask your host to enable it."; return 1; }
@@ -27,7 +28,26 @@ main() {
   "$git_bin" merge --quiet --ff-only origin/main
   current_commit="$("$git_bin" rev-parse HEAD)"
   deployed_commit="$(cat "$state_root/deployed-commit" 2>/dev/null || true)"
-  [[ "$current_commit" != "$deployed_commit" ]] || return 0
+  # A manual deployment can overwrite public files without changing this state.
+  # Compare the actual release too, so the next sync repairs that older copy.
+  published_matches=true
+  for release_file in index.html arcane.css arcane.js arcane-video.js arcane-gallery.js gallery/index.html; do
+    if ! cmp -s -- "$repository_root/$release_file" "$deploy_root/$release_file"; then
+      published_matches=false
+      break
+    fi
+  done
+  if [[ "$published_matches" == true ]]; then
+    while IFS= read -r -d '' release_file; do
+      if ! cmp -s -- "$release_file" "$deploy_root/${release_file#"$repository_root/"}"; then
+        published_matches=false
+        break
+      fi
+    done < <(find "$repository_root/company" "$repository_root/approach" "$repository_root/expertise" "$repository_root/projects" "$repository_root/gallery" -type f -name '*.html' -print0)
+  fi
+  if [[ "$current_commit" == "$deployed_commit" && "$published_matches" == true ]]; then
+    return 0
+  fi
 
   printf '[%s] Deploying %s\n' "$(date -u +%FT%TZ)" "$current_commit"
   (umask 022; /bin/bash "$repository_root/scripts/deploy-cpanel.sh")
@@ -36,3 +56,4 @@ main() {
   printf '[%s] Deployment complete\n' "$(date -u +%FT%TZ)"
 }
 main "$@"
+

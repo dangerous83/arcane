@@ -1,4 +1,5 @@
 ---
 deployment:
   tasks:
-    - /bin/bash scripts/deploy-cpanel.sh
+    - /bin/bash scripts/auto-deploy-cpanel.sh
+
