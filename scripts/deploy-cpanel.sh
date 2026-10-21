@@ -32,7 +32,7 @@ for required_file in index.html arcane.css arcane.js arcane-video.js arcane-gall
     printf 'ERROR: Required release file is missing: %s. Published files were not changed.\n' "$required_file"; exit 1;
   }
 done
-for page_directory in assets company approach expertise projects gallery; do
+for page_directory in assets company approach careers expertise projects gallery; do
   [[ -d "$repository_root/$page_directory" ]] || {
     printf 'ERROR: Required release directory is missing: %s. Published files were not changed.\n' "$page_directory"; exit 1;
   }
@@ -61,7 +61,7 @@ done < <(find "$repository_root" -maxdepth 1 -type f \( \
   -name '*.mp3' -o -name '*.pdf' -o -name 'robots.txt' -o \
   -name 'sitemap.xml' \) -print0)
 
-for page_directory in assets company approach expertise projects gallery; do
+for page_directory in assets company approach careers expertise projects gallery; do
   test -d "$repository_root/$page_directory"
   cp -R -- "$repository_root/$page_directory" "$deploy_root/"
 done

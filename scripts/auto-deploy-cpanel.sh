@@ -43,7 +43,7 @@ main() {
         published_matches=false
         break
       fi
-    done < <(find "$repository_root/company" "$repository_root/approach" "$repository_root/expertise" "$repository_root/projects" "$repository_root/gallery" -type f -name '*.html' -print0)
+    done < <(find "$repository_root/company" "$repository_root/approach" "$repository_root/careers" "$repository_root/expertise" "$repository_root/projects" "$repository_root/gallery" -type f -name '*.html' -print0)
   fi
   if [[ "$current_commit" == "$deployed_commit" && "$published_matches" == true ]]; then
     return 0

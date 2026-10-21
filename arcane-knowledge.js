@@ -1076,6 +1076,17 @@ const knowledge={
         "New-project pricing, availability and delivery dates need direct confirmation from the Arcane team. Contact us with the specialist scope to discuss your requirements."
       ]
     ]
+  },
+  "careers": {
+    "url": "/careers/",
+    "email": "info@arcane.ae",
+    "application": "Email your CV to info@arcane.ae for current or future opportunities. Include your preferred role or discipline, years of experience and current location.",
+    "areas": [
+      "Site and craft teams",
+      "Engineering and technical",
+      "Project and commercial",
+      "Office and support"
+    ]
   }
 };
 if(typeof module!=='undefined'&&module.exports)module.exports=knowledge;else window.ArcaneKnowledge=knowledge;
