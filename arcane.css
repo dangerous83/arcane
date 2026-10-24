@@ -546,3 +546,34 @@ body.grey .career-apply h2 em{color:#d7d7d7}
 @media(max-width:760px){.career-hero .hero-image{object-position:58% center}.career-intro,.career-section-heading,.career-culture,.career-apply{grid-template-columns:minmax(0,1fr)}.career-intro,.career-culture,.career-apply{gap:30px}.career-section-heading{gap:18px;margin-bottom:28px}.career-grid{grid-template-columns:minmax(0,1fr)}.career-grid article{min-height:0;padding:25px 22px 27px}.career-grid article>span{margin-bottom:34px}.career-grid article::after{left:22px;right:22px}.career-culture{align-items:start}.career-culture figure{order:2}.career-culture li{grid-template-columns:minmax(0,1fr);gap:7px}.career-apply{padding-top:58px;padding-bottom:58px}}
 @media(prefers-reduced-motion:reduce){.career-grid article::after{transition:none}}
 
+
+/* Home: office image, linked expertise and project category dropdowns. */
+#home.home-office-hero .hero-image{object-position:center;animation:none;transform:none}
+#home.home-office-hero .hero-shade{background:linear-gradient(0deg,rgba(20,30,23,.48),transparent 36%)}
+#home.home-office-hero .hero-copy{position:absolute;inset:auto 0 0;max-width:none;padding:0 8% 64px}
+#home.home-office-hero .hero-buttons{justify-content:center;margin:0;gap:16px}
+#home .home-secondary-cta{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.home-expertise-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.home-expertise-card{display:block;border:1px solid var(--line);background:var(--white);border-radius:4px;overflow:hidden}
+.home-expertise-card>img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;transition:filter .25s}
+.home-expertise-card>div{display:flex;justify-content:space-between;align-items:center;padding:22px;gap:12px}
+.home-expertise-card h3{font:26px/1.2 Georgia,serif;margin:0}
+.home-expertise-card span{color:var(--sage);font-size:24px}
+.home-expertise-card:hover>img{filter:brightness(1.06)}
+.home-expertise-card:focus-visible,.home-project-links a:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+.home-projects{background:var(--wash)}
+.home-project-categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}
+.home-project-category{border:1px solid var(--line);border-radius:4px;background:var(--white);overflow:hidden}
+.home-project-category>img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.home-project-category summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:24px;font:25px/1.25 Georgia,serif;color:var(--ink)}
+.home-project-category summary::-webkit-details-marker{display:none}
+.home-project-category summary::after{content:'+';font:26px/1 Arial,sans-serif;color:var(--sage)}
+.home-project-category details[open]>summary::after{content:'−'}
+.home-project-category summary:focus-visible{outline:3px solid var(--sage);outline-offset:-4px}
+.home-project-links{padding:0 24px 16px}
+.home-project-links a{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.5}
+.home-project-links a:hover{color:var(--sage)}
+.home-project-links span{flex-shrink:0;color:var(--sage)}
+.home-careers .career-invitation{align-self:center}
+@media(max-width:1050px){.home-project-categories,.home-expertise-grid{gap:16px}.home-project-category summary{padding:20px;font-size:22px}.home-project-links{padding:0 20px 16px}}
+@media(max-width:760px){#home.home-office-hero{min-height:340px;height:65svh;max-height:620px}#home.home-office-hero .hero-copy{padding:0 6% 32px}#home.home-office-hero .hero-buttons{gap:12px}#home .hero-buttons .button{font-size:13px;padding:12px 16px}.home-expertise-grid,.home-project-categories{grid-template-columns:1fr;gap:24px}.home-expertise-card>img{aspect-ratio:16/10}.home-project-category>img{aspect-ratio:16/9}}
