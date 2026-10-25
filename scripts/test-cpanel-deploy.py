@@ -35,6 +35,7 @@ class CpanelDeployment(unittest.TestCase):
         self.write("index.html", (SOURCE / "index.html").read_text())
         self.write("gallery/index.html", (SOURCE / "gallery/index.html").read_text())
         self.write("gallery.html", (SOURCE / "gallery.html").read_text())
+        self.write("approach.html", (SOURCE / "approach.html").read_text())
         for name in ["arcane.css", "arcane.js", "arcane-video.js", "arcane-gallery.js"]:
             self.write(name, "/* fixture browser asset */\n")
         for directory in ["assets", "company", "approach", "careers", "expertise", "projects"]:

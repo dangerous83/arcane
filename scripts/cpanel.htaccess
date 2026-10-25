@@ -3,6 +3,8 @@ Options -Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Bypass any old Approach folder and serve the current shared-layout page.
+  RewriteRule ^approach(?:/index\.html)?/?$ approach.html [L]
   # Serve the Gallery from a root file even if the nested folder is absent.
   RewriteRule ^gallery/?$ gallery.html [L]
   RewriteCond %{HTTP_HOST} ^(?:www\.)?arcane-rp\.online$ [NC]

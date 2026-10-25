@@ -73,8 +73,10 @@ function markSection(id){$$('[data-section]').forEach(el=>{if(el.dataset.section
 function legacyDestination(){
  if(location.pathname!=='/')return null;
  const key=location.hash.slice(1);
- if(key==='company'||key==='approach')return '/'+key+'/';
- if(key==='company-details'||key==='approach-details')return '/'+key.split('-')[0]+'/#'+key;
+ if(key==='approach')return '/approach.html';
+ if(key==='company')return '/company/';
+ if(key==='approach-details')return '/approach.html#approach-details';
+ if(key==='company-details')return '/company/#company-details';
  if(key.startsWith('project/')&&projects.some(p=>p.id===key.slice(8)))return '/projects/'+key.slice(8)+'/';
  if(key.startsWith('expertise/')&&services.some(p=>p.id===key.slice(10)))return '/'+key+'/';
  return null;

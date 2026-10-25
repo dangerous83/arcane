@@ -31,7 +31,7 @@ main() {
   # A manual deployment can overwrite public files without changing this state.
   # Compare the actual release too, so the next sync repairs that older copy.
   published_matches=true
-  for release_file in index.html arcane.css arcane.js arcane-video.js arcane-gallery.js gallery.html gallery/index.html; do
+  for release_file in index.html arcane.css arcane.js arcane-video.js arcane-gallery.js approach.html gallery.html gallery/index.html; do
     if ! cmp -s -- "$repository_root/$release_file" "$deploy_root/$release_file"; then
       published_matches=false
       break
