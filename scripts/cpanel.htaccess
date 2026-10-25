@@ -1,6 +1,18 @@
 DirectoryIndex index.html
 Options -Indexes
 
+# Revalidate page and application files instead of using a heuristic cache age.
+# Images retain their normal caching behavior.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:html?|css|js)$">
+    Header onsuccess unset Cache-Control
+    Header always set Cache-Control "no-cache, max-age=0, must-revalidate"
+    Header onsuccess unset Expires
+    Header always set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
+    Header always set X-Arcane-Release "browser-consistency-20261025"
+  </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Bypass any old Approach folder and serve the current shared-layout page.

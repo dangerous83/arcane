@@ -93,6 +93,21 @@ class CpanelDeployment(unittest.TestCase):
         self.assertSuccess(self.deploy())
         self.assertEqual((self.public / "gallery.html").read_text(), (self.writer / "gallery.html").read_text())
 
+    def test_auto_sync_restores_overwritten_cache_configuration(self):
+        self.assertSuccess(self.deploy())
+        (self.public / ".htaccess").write_text("DirectoryIndex old.html\n")
+        self.assertSuccess(self.deploy())
+        self.assertEqual((self.public / ".htaccess").read_text(),
+                         (self.writer / "scripts/cpanel.htaccess").read_text())
+
+    def test_published_html_does_not_keep_old_checkout_timestamp(self):
+        old_time = 1_600_000_000
+        os.utime(self.checkout / "index.html", (old_time, old_time))
+        os.utime(self.checkout / "gallery/index.html", (old_time, old_time))
+        self.assertSuccess(self.deploy())
+        self.assertGreater((self.public / "index.html").stat().st_mtime, old_time)
+        self.assertGreater((self.public / "gallery/index.html").stat().st_mtime, old_time)
+
     def test_outdated_direct_deployment_is_rejected_before_writes(self):
         self.write("new.txt", "Later upstream release\n")
         self.publish("Advance upstream")

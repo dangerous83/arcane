@@ -53,7 +53,7 @@ chmod 600 "$backup_file"
 
 # Publish browser assets only; never expose Git metadata, server code or tooling.
 while IFS= read -r -d '' source_file; do
-  cp -p -- "$source_file" "$deploy_root/"
+  cp -- "$source_file" "$deploy_root/"
 done < <(find "$repository_root" -maxdepth 1 -type f \( \
   -name '*.html' -o -name '*.css' -o -name '*.js' -o \
   -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o \
@@ -66,7 +66,11 @@ for page_directory in assets company approach careers expertise projects gallery
   cp -R -- "$repository_root/$page_directory" "$deploy_root/"
 done
 
+# A changed page must have the publication time, rather than an older checkout
+# timestamp that could make a browser incorrectly reuse its previous response.
+find "$deploy_root" -type f -name '*.html' -exec touch -- {} +
+
 # Replace the old WordPress routing after its configuration has been backed up.
-cp -p -- "$repository_root/scripts/cpanel.htaccess" "$deploy_root/.htaccess"
+cp -- "$repository_root/scripts/cpanel.htaccess" "$deploy_root/.htaccess"
 printf 'Arcane deployed to %s; previous site saved at %s\n' "$deploy_root" "$backup_file"
 
