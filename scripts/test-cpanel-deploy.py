@@ -34,9 +34,10 @@ class CpanelDeployment(unittest.TestCase):
         self.write("scripts/cpanel.htaccess", "DirectoryIndex index.html\nOptions -Indexes\n")
         self.write("index.html", (SOURCE / "index.html").read_text())
         self.write("gallery/index.html", (SOURCE / "gallery/index.html").read_text())
+        self.write("gallery.html", (SOURCE / "gallery.html").read_text())
         for name in ["arcane.css", "arcane.js", "arcane-video.js", "arcane-gallery.js"]:
             self.write(name, "/* fixture browser asset */\n")
-        for directory in ["assets", "company", "approach", "expertise", "projects"]:
+        for directory in ["assets", "company", "approach", "careers", "expertise", "projects"]:
             self.write(directory + "/fixture.txt", "release content\n")
         self.write("expertise/grg/index.html", "Current GRG gallery without the moved ceiling photos\n")
         self.publish("Initial complete release")
@@ -81,8 +82,15 @@ class CpanelDeployment(unittest.TestCase):
         self.assertEqual((self.public / "index.html").read_text(), (self.writer / "index.html").read_text())
         self.assertTrue((self.public / "arcane-video.js").is_file())
         self.assertTrue((self.public / "gallery/index.html").is_file())
+        self.assertEqual((self.public / "gallery.html").read_text(), (self.writer / "gallery.html").read_text())
         with tarfile.open(next(self.backups.glob("*.tar.gz"))) as archive:
             self.assertEqual(archive.extractfile("./index.html").read(), b"Previous published website\n")
+
+    def test_auto_sync_restores_missing_gallery_entry(self):
+        self.assertSuccess(self.deploy())
+        (self.public / "gallery.html").unlink()
+        self.assertSuccess(self.deploy())
+        self.assertEqual((self.public / "gallery.html").read_text(), (self.writer / "gallery.html").read_text())
 
     def test_outdated_direct_deployment_is_rejected_before_writes(self):
         self.write("new.txt", "Later upstream release\n")

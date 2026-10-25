@@ -27,7 +27,7 @@ read -r remote_commit remote_ref <<< "$remote_line"
 [[ "$remote_ref" == refs/heads/main && "$remote_commit" == "$current_commit" ]] || {
   echo "ERROR: This checkout is outdated. Run Update from Remote before deploying. Published files were not changed."; exit 1;
 }
-for required_file in index.html arcane.css arcane.js arcane-video.js arcane-gallery.js gallery/index.html scripts/cpanel.htaccess; do
+for required_file in index.html arcane.css arcane.js arcane-video.js arcane-gallery.js gallery.html gallery/index.html scripts/cpanel.htaccess; do
   [[ -s "$repository_root/$required_file" ]] || {
     printf 'ERROR: Required release file is missing: %s. Published files were not changed.\n' "$required_file"; exit 1;
   }

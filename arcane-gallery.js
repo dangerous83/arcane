@@ -1,9 +1,10 @@
 /* Filter the photo collection and preview the original photograph. */
 (()=>{
  'use strict';
- const grid=document.querySelector('.collection-grid');
+ const grid=document.querySelector('#gallery-collection');
  if(!grid)return;
  const cards=[...grid.querySelectorAll('[data-gallery-category]')];
+ const groups=[...grid.querySelectorAll('[data-gallery-group]')];
  const filters=[...document.querySelectorAll('[data-gallery-filter]')];
  const count=document.getElementById('gallery-count');
  const dialog=document.getElementById('gallery-dialog');
@@ -11,21 +12,21 @@
  let visible=cards.map(card=>card.querySelector('[data-gallery-photo]'));
  let position=0,opener=null;
  document.querySelector('.collection-filters').hidden=false;
- filters.forEach(button=>button.addEventListener('click',()=>{
+ function selectCategory(button){
   const category=button.dataset.galleryFilter;
   filters.forEach(filter=>filter.setAttribute('aria-pressed',String(filter===button)));
-  cards.forEach(card=>{card.hidden=category!=='all'&&card.dataset.galleryCategory!==category;});
-  visible=cards.filter(card=>!card.hidden).map(card=>card.querySelector('[data-gallery-photo]'));
-  const label=category==='all'?'All disciplines':button.childNodes[0].textContent.trim();
-  count.textContent=`${visible.length} photographs · ${label}`;
- }));
+  groups.forEach(group=>{group.hidden=group.dataset.galleryGroup!==category;});
+  visible=cards.filter(card=>card.dataset.galleryCategory===category).map(card=>card.querySelector('[data-gallery-photo]'));
+  count.textContent=`${visible.length} photographs · ${button.textContent.trim()}`;
+ }
+ filters.forEach(button=>button.addEventListener('click',()=>selectCategory(button)));
+ selectCategory(filters[0]);
  function show(index){
   position=(index+visible.length)%visible.length;
   const link=visible[position];
   preview.src=link.href;
   preview.alt=link.dataset.description;
   document.getElementById('gallery-preview-title').textContent=link.dataset.title;
-  document.getElementById('gallery-preview-description').textContent=link.dataset.description;
   document.getElementById('gallery-position').textContent=`${position+1} / ${visible.length}`;
  }
  grid.addEventListener('click',event=>{
