@@ -595,3 +595,5 @@ body.grey .career-apply h2 em{color:#d7d7d7}
 .project-simple .hero-copy{max-width:1100px}
 @media(max-width:1000px){.gallery-simple-collection .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
 @media(max-width:760px){.gallery-simple-intro{padding-top:40px;padding-bottom:24px}.gallery-simple-intro .collection-filters{gap:8px}.gallery-simple-intro .collection-filters button{min-width:80px;padding:10px 14px}.gallery-simple-collection{padding-top:28px}.gallery-simple-collection .collection-grid{gap:12px}.gallery-simple-collection .collection-image{aspect-ratio:1}.collection-category>h2{font-size:24px}.collection-dialog-caption h2{font-size:22px}}
+
+@media(max-width:760px){.gallery-simple-intro .collection-filters{flex-wrap:wrap}.gallery-simple-intro .collection-filters button{min-width:0;padding:10px 12px}}
