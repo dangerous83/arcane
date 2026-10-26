@@ -8,14 +8,22 @@ One-time activation:
 1. Upload `arcane-auto-update.php` to `/home/arcane/`, outside `public_html`.
 2. In CWP Settings > Crontab, create a job every five minutes (`*/5 * * * *`):
 
-   `/usr/local/bin/php /home/arcane/arcane-auto-update.php >> /home/arcane/arcane-live-sync.log 2>&1`
+   `/usr/local/bin/php /home/arcane/arcane-auto-update.php`
 
    Use the PHP CLI path supplied by CWP if it differs. PHP 5.6 or newer with
    cURL and working CA certificates is required; TLS verification stays enabled.
-3. Run the job with CWP's Run action. View `arcane-live-sync.log` in the home
-   folder. Activation is verified only after it reports `Up to date:` or
-   `Published` with the current GitHub main commit. Confirm a subsequent small
-   website change reaches the live site after the next scheduled execution.
+   This CWP account rejects shell redirection such as `>>` and `2>&1` with
+   `Malicious command detected`. Keep the command above as written; it does
+   not create `arcane-live-sync.log`.
+3. Confirm the job appears in the saved list and is enabled. If Save redirects
+   an AJAX request to the login page, sign in again and reopen the form.
+4. Verify a small committed test change reaches the live site after the next
+   scheduled execution. The panel's Run action can return HTTP 500 even when
+   scheduled execution works; that button alone is not a deployment check.
+   For this installation, `release-check.html` is an unlinked, noindex test
+   page. Change its marker in GitHub main, then fetch it live with a unique
+   query string and confirm the new marker arrives. Creating a cron entry
+   alone does not verify publication.
 
 Future changes must be committed and pushed to `dangerous83/arcane` main.
 Regenerate the public HTML using `node scripts/build-pages.cjs` after template
