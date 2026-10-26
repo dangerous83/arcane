@@ -385,6 +385,7 @@ body.grey .resource-dock{--resource-light:#dedede}
 .grg-site-number{flex-shrink:0;font:18px Georgia,serif;color:var(--sage);padding-top:2px}
 .grg-site-card h3{font:22px/1.25 Georgia,serif;letter-spacing:-.02em;margin:0 0 7px;color:var(--ink)}
 .grg-site-card p{font-size:12px;line-height:1.65;margin:0;color:var(--muted)}
+.grg-site-gallery .grg-site-card:nth-last-child(-n+2)>img{aspect-ratio:3/4!important;object-fit:cover}
 @media(max-width:760px){.grg-site-grid{grid-template-columns:minmax(0,1fr);gap:18px}.grg-site-card figcaption{padding:17px 18px;gap:12px}.grg-site-card h3{font-size:21px}}
 
 .ceiling-site-gallery{background:linear-gradient(180deg,var(--paper),var(--wash));border-top:1px solid var(--line);padding-top:clamp(42px,5vw,72px)}
