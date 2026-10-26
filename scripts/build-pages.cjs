@@ -212,8 +212,8 @@ for(const page of pages){
   html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-motion-2"><script defer src="/arcane-enquiry.js?v=concierge-1"></script></head>');
   html=html.replace('</body>',fs.readFileSync(path.join(root,'templates/enquiry-dialog.html'),'utf8')+'\n</body>');
  }
- if(page.section==="expertise"&&page.record.id==="partitions")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=sculptural-photo-sort-30");
- if(page.section==="expertise"&&page.record.id==="grg")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=grg-gallery-layout-31");
+ if(page.section==="expertise"&&page.record.id==="partitions")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
+ if(page.section==="expertise"&&page.record.id==="grg")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
  html=html.replaceAll('href="/approach/"','href="/approach.html"');
  files[(page.url==="/"?"":page.url.slice(1))+"index.html"]=html;
 }
