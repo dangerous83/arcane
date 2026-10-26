@@ -1,0 +1,41 @@
+<dialog id="enquiry-dialog" class="enquiry-dialog" aria-labelledby="enquiry-title" aria-describedby="enquiry-intro">
+ <div class="enquiry-shell">
+  <aside class="enquiry-concierge">
+   <p class="enquiry-wordmark">arcane<span>.</span></p>
+   <p class="enquiry-system-label"><span></span> PROJECT CONCIERGE</p>
+   <div class="enquiry-orbit" aria-hidden="true"><span class="enquiry-orbit-ring"></span><span class="enquiry-orbit-core"></span><svg viewBox="0 0 180 180"><path d="M90 10v22m0 116v22M10 90h22m116 0h22M33 33l15 15m84 84 15 15M33 147l15-15m84-84 15-15"/><circle cx="90" cy="90" r="58"/><path d="M68 94v-9m9 22V73m9 42V65m9 44V71m9 31V78m9 17V85" class="enquiry-wave"/></svg></div>
+   <div class="enquiry-concierge-copy"><p class="enquiry-small-label">A CONSIDERED START</p><h2>Let's shape<br>what's next.</h2><p id="enquiry-intro">Welcome to Arcane. Tell us a little about your project, and our team will help you take the next step.</p></div>
+   <button type="button" id="enquiry-voice" class="enquiry-voice" aria-label="Play welcome message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 9 5 0 5-4v14l-5-4H4zM17 8q5 4 0 8"/></svg><span>Play welcome</span></button>
+   <a id="enquiry-browse" class="enquiry-browse" href="/#projects">Continue browsing ↗</a>
+   <p class="enquiry-side-note">SCULPTURAL GRG / CEILINGS / PARTITIONS</p>
+  </aside>
+  <section class="enquiry-content">
+   <button type="button" id="enquiry-close" class="enquiry-close" aria-label="Close project enquiry">×</button>
+   <div id="enquiry-form-view">
+    <p class="enquiry-small-label">YOUR PROJECT, OUR NEXT CONVERSATION</p>
+    <h2 id="enquiry-title">Start a conversation.</h2>
+    <p class="enquiry-subtitle">A few details help us connect you with the right team.</p>
+    <form id="enquiry-form" action="/arcane-lead.php" method="post">
+     <input type="hidden" name="source" id="enquiry-source" value="Homepage">
+     <div class="enquiry-field-grid">
+      <label for="enquiry-name">Full name <span>*</span><input id="enquiry-name" name="name" autocomplete="name" maxlength="100" required placeholder="Your full name"></label>
+      <label for="enquiry-email">Email address <span>*</span><input id="enquiry-email" name="email" type="email" autocomplete="email" maxlength="200" required placeholder="you@company.com"></label>
+      <label for="enquiry-phone">Phone number <span>*</span><input id="enquiry-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required placeholder="+971 50 000 0000"></label>
+      <label for="enquiry-company">Company <small>Optional</small><input id="enquiry-company" name="company" autocomplete="organization" maxlength="160" placeholder="Company or organisation"></label>
+     </div>
+     <fieldset class="enquiry-services"><legend>What can we help you with? <span>*</span></legend><div><label><input type="radio" name="service" value="Sculptural GRG" required><span>Sculptural GRG</span></label><label><input type="radio" name="service" value="Ceilings"><span>Ceilings</span></label><label><input type="radio" name="service" value="Partitions"><span>Partitions</span></label><label><input type="radio" name="service" value="Complete project / other"><span>Other / not sure</span></label></div></fieldset>
+     <label class="enquiry-message-label" for="enquiry-message">Project details <small>Optional</small><textarea id="enquiry-message" name="message" rows="3" maxlength="3000" placeholder="Project location, type of space, and what you have in mind…"></textarea></label>
+     <div class="enquiry-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off" maxlength="200"></label></div>
+     <label class="enquiry-consent"><input name="consent" type="checkbox" value="yes" required><span>I agree to be contacted by Arcane about this enquiry.</span></label>
+     <button type="submit" id="enquiry-submit" class="enquiry-submit"><span>Send project enquiry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+     <p id="enquiry-status" class="enquiry-status" role="status" aria-live="polite"></p>
+     <p class="enquiry-privacy">Your details are used to respond to your enquiry.</p>
+    </form>
+    <div class="enquiry-direct">Prefer a direct conversation? <a href="mailto:info@arcane.ae">Email us</a><span aria-hidden="true">/</span><a href="tel:+97145707248">Call our team</a></div>
+   </div>
+   <div id="enquiry-success" class="enquiry-success" hidden>
+    <span class="enquiry-success-mark" aria-hidden="true">✓</span><p class="enquiry-small-label">THANK YOU FOR GETTING IN TOUCH</p><h2 id="enquiry-success-title" tabindex="-1">Your next step<br>starts here.</h2><p>Your enquiry has been received. Our team will review your project details and contact you using the information you provided.</p><p id="enquiry-reference"></p><button type="button" id="enquiry-continue" class="enquiry-submit"><span>Continue exploring</span><span aria-hidden="true">↗</span></button>
+   </div>
+  </section>
+ </div>
+</dialog>

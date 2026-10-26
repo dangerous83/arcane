@@ -194,6 +194,11 @@ for(const page of pages){
  const metadata=`<meta property="og:type" content="website"><meta property="og:site_name" content="Arcane Interior Decorations"><meta property="og:title" content="${esc(page.title)}"><meta property="og:description" content="${esc(page.description)}"><meta property="og:url" content="${url}"><meta property="og:image" content="${base+page.image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(page.title)}"><meta name="twitter:description" content="${esc(page.description)}"><meta name="twitter:image" content="${base+page.image}"><script type="application/ld+json">${JSON.stringify({"@context":"https://schema.org","@graph":graph}).replace(/</g,"\\u003c")}</script>`;
  html=html.replace("</head>",metadata+"</head>");
  if(page.section==="gallery")html=html.replace('</head>','<script defer src="/arcane-gallery.js?v=gallery-categories-24"></script></head>');
+ if(page.section==="home"){
+  html=html.replace('arcane.js?v=navbar-remove-approach-28','arcane.js?v=project-concierge-29');
+  html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-1"><script defer src="/arcane-enquiry.js?v=concierge-1"></script></head>');
+  html=html.replace('</body>',fs.readFileSync(path.join(root,'templates/enquiry-dialog.html'),'utf8')+'\n</body>');
+ }
  html=html.replaceAll('href="/approach/"','href="/approach.html"');
  files[(page.url==="/"?"":page.url.slice(1))+"index.html"]=html;
 }

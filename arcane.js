@@ -103,7 +103,7 @@ theme.addEventListener('click',()=>{
 });
 const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
 function syncMusic(){musicButton?.setAttribute('aria-pressed',String(userMuted));musicButton?.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');if(musicButton)musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
-function startMusic(){if(!userMuted&&!$('#expertise-video-dialog')?.open&&music.paused)music.play().catch(()=>{});}
+function startMusic(){if(!userMuted&&!$('#expertise-video-dialog')?.open&&!$('#enquiry-dialog')?.open&&music.paused)music.play().catch(()=>{});}
 musicButton?.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
 document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
 
