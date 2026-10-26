@@ -152,12 +152,13 @@ companyMain=companyMain.trim().replace(/<\/section>$/,"")+`<div class="section r
 approachMain=approachMain.replace(" hidden","").replace('loading="lazy"','fetchpriority="high"').replace(/<div class="section editorial-next">[\s\S]*?<\/div>/,"");
 approachMain=approachMain.trim().replace(/<\/section>$/,"")+`<div class="section reading-section"><div class="reading-heading"><p class="eyebrow">FROM THE FIRST BRIEF TO THE FINISH</p><p class="lead">${esc(copy.approach.intro)}</p></div><div class="reading-body">${blocks(copy.approach.sections)}</div></div>`+faq(copy.approach.faqs,"Working with our team")+related("Connect the process to the work",serviceLinks(services.map(s=>s.id)))+cta()+"</section>";
 homeMain=homeMain.replace('<section id="careers"','<div class="section overview-process-link"><a class="text-link" href="/approach/">Explore our full approach ↗</a></div><section id="careers"');
+const projectHeroImage=p=>p.id==="palm-jebel-ali"?"/assets/projects/palm-jebel-ali-hero-20261026.webp":`/assets/projects/${p.id}-hero.webp`;
 function detailMain(p,isService){
- const heroImage=p.id==="grg"?"/expertise-ceilings-hero-clean.webp":p.id==="ceilings"?"/assets/ceilings/ceiling-site-10.webp":p.id==="partitions"?"/expertise-partitions.webp":`/assets/projects/${p.id}-hero.webp`;
+ const heroImage=p.id==="grg"?"/expertise-ceilings-hero-clean.webp":p.id==="ceilings"?"/assets/ceilings/ceiling-site-10.webp":p.id==="partitions"?"/expertise-partitions.webp":projectHeroImage(p);
  const c=p.content,image=heroImage;
  const h1=esc(p.name);
- const heroWidth=!isService&&p.id==="serenia-living"?547:isService&&p.id==="ceilings"?1529:1672;
- const heroHeight=!isService&&p.id==="serenia-living"?365:isService&&p.id==="ceilings"?1029:941;
+ const heroWidth=!isService&&p.id==="palm-jebel-ali"?2048:!isService&&p.id==="serenia-living"?547:isService&&p.id==="ceilings"?1529:1672;
+ const heroHeight=!isService&&p.id==="palm-jebel-ali"?1152:!isService&&p.id==="serenia-living"?365:isService&&p.id==="ceilings"?1029:941;
  const heroAlt=isService?(p.id==="ceilings"?"Ceiling with warm cove lighting, linear air slots and integrated downlights":"Illustrative interior concept for "+esc(p.name)):`Project visual for ${esc(p.name)}`;
  if(!isService)return `<section id="project-page" class="project-simple" aria-labelledby="project-hero-title"><div class="hero project-hero"><img id="project-hero-image" class="hero-image" src="${image}" alt="${heroAlt}" width="${heroWidth}" height="${heroHeight}" fetchpriority="high"><div class="hero-shade"></div><div class="hero-copy"><a class="project-back" href="/#projects">← All projects</a><h1 id="project-hero-title" tabindex="-1">${h1}</h1><div class="hero-buttons"><a class="button" href="/#enquiry">Discuss your project ↗</a></div></div></div></section>`;
  const facts=isService?p.facts:[["Location",p.location],["Client / developer",p.client],["Contractor",p.contractor]];
@@ -172,7 +173,7 @@ const pages=[{url:"/",type:"WebPage",section:"home",title:"Sculptural GRG, Ceili
 {url:"/approach/",type:"WebPage",section:"approach",title:copy.approach.title,description:copy.approach.description,name:"Our approach",main:approachMain,image:"/arcane-approach-hero.webp"},
 {url:"/gallery/",type:"CollectionPage",section:"gallery",title:"Gallery | Sculptural GRG, Ceiling & Partition | Arcane",description:"Explore Arcane's Sculptural GRG, ceiling and partition photography, organised by category.",name:"Gallery",main:galleryMain,image:"/assets/grg/grg-site-02.webp"},
 {url:"/careers/",type:"WebPage",section:"careers",title:"Careers in Interior Decoration & Specialist Contracting | Arcane Dubai",description:"Explore careers at Arcane Interior Decorations in Dubai across site craft, engineering, project delivery, commercial and office support roles.",name:"Careers",main:careersMain,image:"/assets/company/company-office-03-team.webp"}];
-for(const p of projects)pages.push({url:projectUrl(p),type:"WebPage",section:"projects",title:p.name+" | Specialist Interior Works | Arcane",description:`Explore Arcane’s specialist scope at ${p.name} in ${p.location}: ${p.scope} View project facts and related expertise.`,name:p.name,main:detailMain(p,false),image:`/assets/projects/${p.id}-hero.webp`,record:p});
+for(const p of projects)pages.push({url:projectUrl(p),type:"WebPage",section:"projects",title:p.name+" | Specialist Interior Works | Arcane",description:`Explore Arcane’s specialist scope at ${p.name} in ${p.location}: ${p.scope} View project facts and related expertise.`,name:p.name,main:detailMain(p,false),image:projectHeroImage(p),record:p});
 for(const s of services)pages.push({url:serviceUrl(s),type:"WebPage",section:"expertise",title:s.content.title,description:s.content.description,name:s.name,main:detailMain(s,true),image:s.id==="grg"?"/expertise-ceilings-hero-clean.webp":s.id==="ceilings"?"/assets/ceilings/ceiling-site-10.webp":"/"+s.image,record:s});
 const files={};
 for(const page of pages){
