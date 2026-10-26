@@ -196,7 +196,7 @@ for(const page of pages){
  if(page.section==="gallery")html=html.replace('</head>','<script defer src="/arcane-gallery.js?v=gallery-categories-24"></script></head>');
  if(page.section==="home"){
   html=html.replace('arcane.js?v=navbar-remove-approach-28','arcane.js?v=project-concierge-29');
-  html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-1"><script defer src="/arcane-enquiry.js?v=concierge-1"></script></head>');
+  html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-motion-2"><script defer src="/arcane-enquiry.js?v=concierge-1"></script></head>');
   html=html.replace('</body>',fs.readFileSync(path.join(root,'templates/enquiry-dialog.html'),'utf8')+'\n</body>');
  }
  html=html.replaceAll('href="/approach/"','href="/approach.html"');

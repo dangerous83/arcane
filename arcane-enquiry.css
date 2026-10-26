@@ -21,3 +21,32 @@
 @media(max-width:760px){.enquiry-dialog{width:calc(100% - 20px);max-height:calc(100dvh - 20px);border-radius:12px}.enquiry-shell{grid-template-columns:1fr;min-height:0}.enquiry-concierge{padding:20px 22px 18px;border-right:0;border-bottom:1px solid var(--eq-line);display:grid;grid-template-columns:1fr auto;gap:0 14px}.enquiry-wordmark{font-size:26px;margin-bottom:12px}.enquiry-system-label{grid-column:1;grid-row:2;font-size:8px}.enquiry-orbit{width:76px;height:76px;grid-column:2;grid-row:1/3;margin:0}.enquiry-orbit-core{width:38px;height:38px}.enquiry-orbit-ring{inset:7px}.enquiry-orbit-ring::after{inset:6px}.enquiry-concierge-copy{grid-column:1/-1;margin-top:15px}.enquiry-concierge-copy>.enquiry-small-label,.enquiry-concierge-copy h2,.enquiry-side-note{display:none}.enquiry-concierge-copy>p:last-child{font-size:11px;line-height:1.7;max-width:100%}.enquiry-voice{grid-column:1/-1;margin-top:12px;padding:7px 11px;font-size:9px}.enquiry-content{padding:32px 22px 22px}.enquiry-close{top:-177px;right:12px;display:none}.enquiry-content .enquiry-close{display:block;position:fixed;top:14px;right:14px;background:#11251b;z-index:2}.enquiry-dialog h2{font-size:29px}.enquiry-subtitle{font-size:11px}.enquiry-success{padding:30px 0}.enquiry-field-grid{gap:14px 12px}.enquiry-dialog label{font-size:10px}.enquiry-dialog input:not([type=radio]):not([type=checkbox]),.enquiry-dialog textarea{font-size:16px;padding:10px;min-height:44px}.enquiry-dialog input::placeholder,.enquiry-dialog textarea::placeholder{font-size:11px}.enquiry-content .enquiry-small-label{font-size:8px;letter-spacing:1.3px}}
 @media(max-width:390px){.enquiry-field-grid{grid-template-columns:1fr}.enquiry-services>div{grid-template-columns:1fr 1fr}.enquiry-content{padding-inline:18px}.enquiry-dialog .enquiry-subtitle{max-width:230px}}
 @media(prefers-reduced-motion:reduce){.enquiry-dialog[open],.enquiry-dialog.is-speaking .enquiry-orbit-core,.enquiry-dialog.is-speaking .enquiry-wave{animation:none}}
+
+/* One inviting home action, with a quiet expanding halo. */
+#home.home-office-hero .home-enquiry-cta{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:24px;min-width:245px;min-height:54px;padding:17px 28px;border:1px solid #d5e0ca66;border-radius:5px;background:#526b49;color:#fff;box-shadow:0 7px 26px #0b211f40;font-size:14px;line-height:1.3}
+#home .home-enquiry-cta::before,#home .home-enquiry-cta::after{content:"";position:absolute;inset:-7px;border:1px solid #d3e5bd99;border-radius:10px;pointer-events:none;z-index:-1;animation:enquiry-cta-pulse 3.6s cubic-bezier(.18,.65,.35,1) infinite}
+#home .home-enquiry-cta::after{animation-delay:1.8s}
+#home .home-enquiry-cta:hover{background:#607a55;box-shadow:0 8px 30px #0b211f55}
+#home .home-enquiry-cta:focus-visible{outline:3px solid #edf3e5;outline-offset:10px}
+#home .home-enquiry-arrow{font:21px/1 Arial,sans-serif;transition:transform .2s}
+#home .home-enquiry-cta:hover .home-enquiry-arrow{transform:translate(2px,-2px)}
+#home.home-office-hero .home-enquiry-prompt{font:400 11px/1.6 Arial,Helvetica,sans-serif;letter-spacing:.45px;text-align:center;color:#fff;margin:18px 0 0;text-shadow:0 1px 7px #102218;max-width:none}
+@keyframes enquiry-cta-pulse{0%{opacity:0;transform:scale(.98)}18%{opacity:.6}80%,100%{opacity:0;transform:scale(1.14,1.4)}}
+
+/* Continuous ambient motion stays in the illustration, away from the fields. */
+.enquiry-dialog[open] .enquiry-concierge::before{animation:enquiry-grid-travel 24s linear infinite}
+.enquiry-concierge::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent 0%,transparent 47%,#b9d6b408 49%,#b9d6b426 50%,transparent 51%,transparent);background-size:100% 220%;opacity:.6}
+.enquiry-dialog[open] .enquiry-concierge::after{animation:enquiry-scan-travel 11s ease-in-out infinite}
+.enquiry-orbit-ring::before{content:"";position:absolute;top:-3px;left:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:#c4ddb9;box-shadow:0 0 10px #b0d3a1b3}
+.enquiry-dialog[open] .enquiry-orbit-ring{animation:enquiry-orbit-turn 22s linear infinite}
+.enquiry-dialog[open] .enquiry-orbit-ring::after{animation:enquiry-orbit-turn 15s linear infinite reverse}
+.enquiry-dialog[open]:not(.is-speaking) .enquiry-orbit-core{animation:enquiry-breathe 5s ease-in-out infinite}
+.enquiry-dialog[open]:not(.is-speaking) .enquiry-wave{animation:enquiry-idle-signal 4s ease-in-out infinite;transform-origin:center}
+.enquiry-dialog[open] .enquiry-system-label>span{animation:enquiry-status-glow 3.5s ease-in-out infinite}
+@keyframes enquiry-grid-travel{to{background-position:34px 34px}}
+@keyframes enquiry-scan-travel{0%,100%{background-position:0 120%}50%{background-position:0 -20%}}
+@keyframes enquiry-orbit-turn{to{transform:rotate(360deg)}}
+@keyframes enquiry-idle-signal{0%,100%{opacity:.65;transform:scaleY(.8)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes enquiry-status-glow{0%,100%{opacity:.65;box-shadow:0 0 5px #9fcf9b55}50%{opacity:1;box-shadow:0 0 13px #9fcf9b}}
+@media(max-width:760px){#home.home-office-hero .home-enquiry-cta{min-width:230px;font-size:13px;padding:16px 24px}#home.home-office-hero .home-enquiry-prompt{font-size:10px;letter-spacing:.25px;margin-top:16px}}
+@media(prefers-reduced-motion:reduce){#home .home-enquiry-cta::before,#home .home-enquiry-cta::after{animation:none;opacity:0}.enquiry-dialog[open] .enquiry-concierge::before,.enquiry-dialog[open] .enquiry-concierge::after,.enquiry-dialog[open] .enquiry-orbit-ring,.enquiry-dialog[open] .enquiry-orbit-ring::after,.enquiry-dialog[open] .enquiry-system-label>span,.enquiry-dialog[open]:not(.is-speaking) .enquiry-orbit-core,.enquiry-dialog[open]:not(.is-speaking) .enquiry-wave{animation:none}#home .home-enquiry-arrow{transition:none}}
