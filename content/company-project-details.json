@@ -1,0 +1,20 @@
+{
+  "workforce": {
+    "asOf": "2026-08-01",
+    "total": 560,
+    "operatives": 528,
+    "support": 32,
+    "operativeRoles": [["Supervisor",25],["Sculptural GRG carpenter",32],["Gypsum carpenter",202],["Painter",144],["Helper",119],["Driver",6]],
+    "supportRoles": [["Site engineer",10],["Staff",22]]
+  },
+  "projects": {
+    "tilal-al-ghaf-alaya": {"name":"Tilal Al Ghaf Alaya","client":"UNEC","amount":"AED 3.5 million","start":"July 2025","end":"September 2026"},
+    "wynn-al-marjan": {"name":"Wynn","client":"ALEC Fit Out","amount":"AED 30 million","start":"June 2025","end":"December 2026"},
+    "district-01-west": {"name":"District One","client":"GINCO","amount":"AED 10 million","start":"November 2025","end":"December 2026"},
+    "dubai-harbour": {"name":"Dubai Harbour","client":"Khansaheb","amount":"AED 6 million","start":"June 2026","end":"December 2026"},
+    "burj-binghatti": {"name":"Burj Binghatti","client":"Binghatti","amount":"AED 20 million","start":"January 2026","end":"May 2027"},
+    "dubai-exhibition": {"name":"DEC","client":"Khansaheb","amount":"AED 4–5 million","start":"August 2026","end":"June 2027"},
+    "palm-jebel-ali": {"name":"Palm Jebel Ali","client":"GINCO","amount":"AED 10–15 million","start":"September 2026","end":"December 2027"},
+    "sky-blade": {"name":"Sky Blade","client":"Binghatti","amount":"AED 5–10 million","start":"October 2026","end":"October 2027"}
+  }
+}

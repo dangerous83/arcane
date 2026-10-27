@@ -58,6 +58,48 @@ const knowledge={
           "Use the project enquiry form to prepare an email draft, email info@arcane.ae, call +971 4 570 7248 or contact WhatsApp at +971 52 104 4958."
         ]
       ]
+    },
+    "workforce": {
+      "asOf": "2026-08-01",
+      "total": 560,
+      "operatives": 528,
+      "support": 32,
+      "operativeRoles": [
+        [
+          "Supervisor",
+          25
+        ],
+        [
+          "Sculptural GRG carpenter",
+          32
+        ],
+        [
+          "Gypsum carpenter",
+          202
+        ],
+        [
+          "Painter",
+          144
+        ],
+        [
+          "Helper",
+          119
+        ],
+        [
+          "Driver",
+          6
+        ]
+      ],
+      "supportRoles": [
+        [
+          "Site engineer",
+          10
+        ],
+        [
+          "Staff",
+          22
+        ]
+      ]
     }
   },
   "contact": {
@@ -128,6 +170,13 @@ const knowledge={
           "grg",
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "Wynn",
+        "client": "ALEC Fit Out",
+        "amount": "AED 30 million",
+        "start": "June 2025",
+        "end": "December 2026"
       }
     },
     {
@@ -164,6 +213,13 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "Burj Binghatti",
+        "client": "Binghatti",
+        "amount": "AED 20 million",
+        "start": "January 2026",
+        "end": "May 2027"
       }
     },
     {
@@ -200,6 +256,13 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "District One",
+        "client": "GINCO",
+        "amount": "AED 10 million",
+        "start": "November 2025",
+        "end": "December 2026"
       }
     },
     {
@@ -236,6 +299,13 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "Dubai Harbour",
+        "client": "Khansaheb",
+        "amount": "AED 6 million",
+        "start": "June 2026",
+        "end": "December 2026"
       }
     },
     {
@@ -308,6 +378,13 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "DEC",
+        "client": "Khansaheb",
+        "amount": "AED 4–5 million",
+        "start": "August 2026",
+        "end": "June 2027"
       }
     },
     {
@@ -735,6 +812,13 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      },
+      "summary": {
+        "name": "Palm Jebel Ali",
+        "client": "GINCO",
+        "amount": "AED 10–15 million",
+        "start": "September 2026",
+        "end": "December 2027"
       }
     },
     {
@@ -805,6 +889,48 @@ const knowledge={
         "services": [
           "ceilings"
         ]
+      }
+    },
+    {
+      "id": "tilal-al-ghaf-alaya",
+      "name": "Tilal Al Ghaf Alaya",
+      "location": "Dubai, UAE",
+      "group": "landmark",
+      "scope": "Specialist interior works.",
+      "client": "UNEC",
+      "contractor": "Contact Arcane for project details",
+      "content": {
+        "sections": [],
+        "services": []
+      },
+      "unpictured": true,
+      "summary": {
+        "name": "Tilal Al Ghaf Alaya",
+        "client": "UNEC",
+        "amount": "AED 3.5 million",
+        "start": "July 2025",
+        "end": "September 2026"
+      }
+    },
+    {
+      "id": "sky-blade",
+      "name": "Sky Blade",
+      "location": "Dubai, UAE",
+      "group": "landmark",
+      "scope": "Specialist interior works.",
+      "client": "Binghatti",
+      "contractor": "Contact Arcane for project details",
+      "content": {
+        "sections": [],
+        "services": []
+      },
+      "unpictured": true,
+      "summary": {
+        "name": "Sky Blade",
+        "client": "Binghatti",
+        "amount": "AED 5–10 million",
+        "start": "October 2026",
+        "end": "October 2027"
       }
     }
   ],
