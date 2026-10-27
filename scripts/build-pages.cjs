@@ -23,7 +23,7 @@ knowledge.profile.access="Use the pulsing circular download button beside Discus
 for(const p of knowledge.projects)p.content=copy.projects[p.id];
 for(const s of knowledge.services)s.content=copy.services[s.id];
 const projects=knowledge.projects,services=knowledge.services;
-const projectUrl=p=>"/projects/"+p.id+"/",serviceUrl=s=>"/expertise/"+s.id+"/";
+const projectUrl=p=>p.unpictured?"/"+p.id+".html":"/projects/"+p.id+"/",serviceUrl=s=>"/expertise/"+s.id+"/";
 const groupLabel=g=>g==="landmark"?"Landmark project":g==="residential"?"Residential portfolio":"Workplace interiors";
 const icons={ongoing:'<path d="M12 3v5l4-2M5 12a7 7 0 1 0 2-5"/><path d="M12 12h5M12 12V8"/>',completed:'<path d="m4 13 4 4L20 5"/><path d="M5 21h14"/>'};
 const ongoingMenu=[
@@ -54,7 +54,7 @@ const homeProjectGroups=[
  {title:"Landmark projects",image:"dubai-harbour",items:[{label:"Wynn",id:"wynn-al-marjan"},{label:"Binghatti",id:"burj-binghatti"},{label:"Dubai Harbour",id:"dubai-harbour"},{label:"Expo Exhibition",id:"dubai-exhibition"}]},
  {title:"Some of the Completed Projects",image:"dubai-exhibition",items:projects.filter(p=>!ongoingIds.has(p.id)).map(p=>({label:p.name,id:p.id}))}
 ];
-shell=shell.replace('<div id="home-project-categories" class="home-project-categories"></div>',`<div id="home-project-categories" class="home-project-categories">${homeProjectGroups.map(group=>`<div class="home-project-category"><img src="/assets/projects/${group.image}-hero.webp" alt="Project visual for ${esc(group.title)}" width="1672" height="941" loading="lazy"><details class="home-project-list"><summary>${esc(group.title)}</summary><div class="home-project-links">${group.items.map(item=>`<a href="/projects/${item.id}/">${esc(item.label)}<span aria-hidden="true">↗</span></a>`).join("")}</div></details></div>`).join("")}</div>`);
+shell=shell.replace('<div id="home-project-categories" class="home-project-categories"></div>',`<div id="home-project-categories" class="home-project-categories">${homeProjectGroups.map(group=>`<div class="home-project-category"><img src="/assets/projects/${group.image}-hero.webp" alt="Project visual for ${esc(group.title)}" width="1672" height="941" loading="lazy"><details class="home-project-list"><summary>${esc(group.title)}</summary><div class="home-project-links">${group.items.map(item=>`<a href="${projectUrl(projects.find(p=>p.id===item.id))}">${esc(item.label)}<span aria-hidden="true">↗</span></a>`).join("")}</div></details></div>`).join("")}</div>`);
 const allMain=shell.match(/<main id="main">([\s\S]*?)<\/main>/)[1];
 let companyMain=allMain.slice(0,allMain.indexOf('<section id="approach-page"'));
 let approachMain=allMain.slice(allMain.indexOf('<section id="approach-page"'),allMain.indexOf('<section id="project-page"'));
@@ -228,7 +228,7 @@ for(const page of pages){
  }
  if(page.section==="expertise"&&page.record.id==="partitions")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
  if(page.section==="expertise"&&page.record.id==="grg")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
- files[(page.url==="/"?"":page.url.slice(1))+"index.html"]=html;
+ files[page.url.endsWith('.html')?page.url.slice(1):(page.url==="/"?"":page.url.slice(1))+"index.html"]=html;
 }
 files["gallery.html"]=files["gallery/index.html"];
 files["approach.html"]=files["approach/index.html"];
