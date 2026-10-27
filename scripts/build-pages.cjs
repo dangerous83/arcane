@@ -223,7 +223,7 @@ for(const page of pages){
  if(page.section==="gallery")html=html.replace('</head>','<script defer src="/arcane-gallery.js?v=gallery-categories-24"></script></head>');
  if(page.section==="home"){
   html=html.replace('arcane.js?v=navbar-remove-approach-28','arcane.js?v=project-concierge-29');
-  html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-motion-2"><script defer src="/arcane-enquiry.js?v=concierge-1"></script></head>');
+  html=html.replace('</head>','<link rel="stylesheet" href="/arcane-enquiry.css?v=concierge-motion-2"><script defer src="/arcane-enquiry.js?v=analytics-actions-2"></script></head>');
   html=html.replace('</body>',fs.readFileSync(path.join(root,'templates/enquiry-dialog.html'),'utf8')+'\n</body>');
  }
  if(page.section==="expertise"&&page.record.id==="partitions")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");

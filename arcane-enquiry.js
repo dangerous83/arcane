@@ -51,6 +51,7 @@
    const response=await fetch('/arcane-lead.php',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(payload),signal:controller.signal});
    const data=await response.json();if(!response.ok||data.ok!==true){if(response.status===403){csrf='';requestId='';}throw new Error(data.message||'unavailable');}
    document.getElementById('enquiry-reference').textContent='Enquiry reference: '+data.reference;formView.hidden=true;success.hidden=false;dialog.setAttribute('aria-labelledby','enquiry-success-title');document.getElementById('enquiry-success-title').focus();form.reset();csrf='';requestId='';
+   document.dispatchEvent(new Event('arcane:enquiry-sent'));
   }catch(error){
    const known=typeof error.message==='string'&&error.message!=='unavailable'&&error.name!=='SyntaxError'&&error.name!=='AbortError'&&error.message.length<220;
    setStatus(known&&/^(Please|Too many|Your enquiry)/.test(error.message)?error.message:'We couldn’t send your enquiry right now. Your details are still here. Please try again, email info@arcane.ae, or call +971 4 570 7248.',true);
