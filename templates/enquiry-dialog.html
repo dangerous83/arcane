@@ -15,7 +15,7 @@
     <p class="enquiry-small-label">YOUR PROJECT, OUR NEXT CONVERSATION</p>
     <h2 id="enquiry-title">Start a conversation.</h2>
     <p class="enquiry-subtitle">A few details help us connect you with the right team.</p>
-    <form id="enquiry-form" action="/arcane-lead.php" method="post">
+    <form id="enquiry-form" action="mailto:info@arcane.ae" method="post" enctype="text/plain">
      <input type="hidden" name="source" id="enquiry-source" value="Homepage">
      <div class="enquiry-field-grid">
       <label for="enquiry-name">Full name <span>*</span><input id="enquiry-name" name="name" autocomplete="name" maxlength="100" required placeholder="Your full name"></label>
@@ -27,15 +27,17 @@
      <label class="enquiry-message-label" for="enquiry-message">Project details <small>Optional</small><textarea id="enquiry-message" name="message" rows="3" maxlength="3000" placeholder="Project location, type of space, and what you have in mind…"></textarea></label>
      <div class="enquiry-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabindex="-1" autocomplete="off" maxlength="200"></label></div>
      <label class="enquiry-consent"><input name="consent" type="checkbox" value="yes" required><span>I agree to be contacted by Arcane about this enquiry.</span></label>
-     <button type="submit" id="enquiry-submit" class="enquiry-submit"><span>Send project enquiry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
+     <button type="submit" id="enquiry-submit" class="enquiry-submit"><span>Open email draft</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button>
      <p id="enquiry-status" class="enquiry-status" role="status" aria-live="polite"></p>
-     <p class="enquiry-privacy">Your details are used to respond to your enquiry.</p>
+     <p class="enquiry-privacy">Opens a draft to info@arcane.ae in your email app. Review it and press Send.</p>
+     <div class="enquiry-direct">Prefer webmail? <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=info%40arcane.ae" target="_blank" rel="noopener noreferrer" data-enquiry-email-app="gmail">Gmail</a><span aria-hidden="true">/</span><a href="https://outlook.office.com/mail/deeplink/compose?to=info%40arcane.ae" target="_blank" rel="noopener noreferrer" data-enquiry-email-app="outlook">Outlook</a></div>
     </form>
     <div class="enquiry-direct">Prefer a direct conversation? <a href="mailto:info@arcane.ae">Email us</a><span aria-hidden="true">/</span><a href="tel:+97145707248">Call our team</a></div>
    </div>
    <div id="enquiry-success" class="enquiry-success" hidden>
-    <span class="enquiry-success-mark" aria-hidden="true">✓</span><p class="enquiry-small-label">THANK YOU FOR GETTING IN TOUCH</p><h2 id="enquiry-success-title" tabindex="-1">Your next step<br>starts here.</h2><p>Your enquiry has been received. Our team will review your project details and contact you using the information you provided.</p><p id="enquiry-reference"></p><button type="button" id="enquiry-continue" class="enquiry-submit"><span>Continue exploring</span><span aria-hidden="true">↗</span></button>
+    <span class="enquiry-success-mark" aria-hidden="true">✓</span><p class="enquiry-small-label">THANK YOU FOR GETTING IN TOUCH</p><h2 id="enquiry-success-title" tabindex="-1">Your next step<br>starts here.</h2><p>Please review your email draft and press Send to contact the Arcane team.</p><p id="enquiry-reference"></p><button type="button" id="enquiry-continue" class="enquiry-submit"><span>Continue exploring</span><span aria-hidden="true">↗</span></button>
    </div>
   </section>
  </div>
 </dialog>
+
