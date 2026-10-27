@@ -105,6 +105,7 @@ const music=$('#background-music');let musicButton=$('#music'),userMuted=false;
 if(music){
  music.volume=.35;music.muted=false;music.loop=true;let fallbackLoading=false,fallbackUrl='';
  if(!musicButton){musicButton=document.createElement('button');musicButton.id='music';musicButton.type='button';musicButton.className='music-control';document.body.appendChild(musicButton);}
+ musicButton.setAttribute('data-music-version','restored-2');
  musicButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path class="music-waves" d="M16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg><span data-music-label>Play music</span>';
  function syncMusic(){
   const playing=!music.paused&&!music.muted;
@@ -121,10 +122,11 @@ if(music){
  }
  function startMusic(event){
   if(event?.target?.closest?.('#music')||userMuted||document.hidden||$('#expertise-video-dialog')?.open||$('#enquiry-dialog')?.open)return;
-  if(music.paused)music.play().then(syncMusic).catch(syncMusic);
+  if(music.error&&!fallbackUrl){loadMusicFallback();return;}
+  if(music.paused)music.play().then(syncMusic).catch(()=>{syncMusic();if(music.error)loadMusicFallback();});
  }
  musicButton.addEventListener('click',()=>{
-  if(!music.paused){userMuted=true;music.pause();}else{userMuted=false;music.muted=false;if(music.error)music.load();music.play().then(syncMusic).catch(syncMusic);}syncMusic();
+  if(!music.paused){userMuted=true;music.pause();}else{userMuted=false;music.muted=false;if(music.error&&!fallbackUrl)loadMusicFallback();else music.play().then(syncMusic).catch(()=>{syncMusic();if(music.error)loadMusicFallback();});}syncMusic();
  });
  document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);document.addEventListener('click',startMusic);
  music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);music.addEventListener('error',()=>{syncMusic();loadMusicFallback();});
