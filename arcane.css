@@ -702,3 +702,5 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 @keyframes arcane-music-wave{50%{opacity:.35}}
 @media(max-width:760px){.music-control{left:15px;bottom:15px;padding:12px}}
 @media(prefers-reduced-motion:reduce){.music-control.is-playing .music-waves{animation:none}}
+
+.music-control{right:auto;width:max-content;min-width:0;max-width:calc(100vw - 40px)}
