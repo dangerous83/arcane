@@ -628,3 +628,9 @@ body.grey .career-apply h2 em{color:#d7d7d7}
 /* Project category lists remain expanded on every screen size. */
 .home-project-list>h3{padding:24px;margin:0;font:25px/1.25 Georgia,serif;color:var(--ink)}
 @media(max-width:1050px){.home-project-list>h3{padding:20px;font-size:22px}}
+
+/* Keep brand controls neutral when the grey theme is active. */
+body.grey .site-header .brand img{filter:grayscale(1)}
+body.grey .mega{border-top-color:#6d6e71}
+body.grey .filters button.active,body.grey .music-control[aria-pressed=true],body.grey .assistant-voice-controls button[aria-pressed=true],body.grey .chat-message.user{background:#444;border-color:#444;color:#fff}
+body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,transparent 0 94px,#6d6e7118 95px 96px),linear-gradient(120deg,var(--paper),var(--wash))}

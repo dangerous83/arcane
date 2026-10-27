@@ -95,11 +95,11 @@ function applyTheme(grey){
  theme.setAttribute('aria-label','Switch to '+destination+' brand theme');
  theme.title='Switch to '+destination+' brand theme';
 }
-try{applyTheme(localStorage.getItem('arcane-theme')==='grey');}catch{applyTheme(false);}
+try{applyTheme(localStorage.getItem('arcane-theme-v2')!=='green');}catch{applyTheme(true);}
 theme.addEventListener('click',()=>{
  const grey=!document.body.classList.contains('grey');
  applyTheme(grey);
- try{localStorage.setItem('arcane-theme',grey?'grey':'green');}catch{}
+ try{localStorage.setItem('arcane-theme-v2',grey?'grey':'green');}catch{}
 });
 const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
 function syncMusic(){musicButton?.setAttribute('aria-pressed',String(userMuted));musicButton?.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');if(musicButton)musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
