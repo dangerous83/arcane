@@ -50,3 +50,9 @@
 @keyframes enquiry-status-glow{0%,100%{opacity:.65;box-shadow:0 0 5px #9fcf9b55}50%{opacity:1;box-shadow:0 0 13px #9fcf9b}}
 @media(max-width:760px){#home.home-office-hero .home-enquiry-cta{min-width:230px;font-size:13px;padding:16px 24px}#home.home-office-hero .home-enquiry-prompt{font-size:10px;letter-spacing:.25px;margin-top:16px}}
 @media(prefers-reduced-motion:reduce){#home .home-enquiry-cta::before,#home .home-enquiry-cta::after{animation:none;opacity:0}.enquiry-dialog[open] .enquiry-concierge::before,.enquiry-dialog[open] .enquiry-concierge::after,.enquiry-dialog[open] .enquiry-orbit-ring,.enquiry-dialog[open] .enquiry-orbit-ring::after,.enquiry-dialog[open] .enquiry-system-label>span,.enquiry-dialog[open]:not(.is-speaking) .enquiry-orbit-core,.enquiry-dialog[open]:not(.is-speaking) .enquiry-wave{animation:none}#home .home-enquiry-arrow{transition:none}}
+
+/* Grey theme for the homepage action and enquiry interface. */
+body.grey #home.home-office-hero .home-enquiry-cta{background:#444;border-color:#999;color:#fff;box-shadow:0 7px 26px #0004}
+body.grey #home.home-office-hero .home-enquiry-cta:hover{background:#6d6e71}
+body.grey #home .home-enquiry-cta::before,body.grey #home .home-enquiry-cta::after{border-color:#ccc9}
+body.grey .enquiry-dialog{filter:grayscale(1)}
