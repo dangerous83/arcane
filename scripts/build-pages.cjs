@@ -12,7 +12,7 @@ const additionalProjects=[
 ];
 for(const id of ['tilal-al-ghaf-alaya','sky-blade']){
  const item=details.data.projects[id];
- additionalProjects.push({id,name:item.name,location:'Dubai, UAE',group:'landmark',scope:'Specialist interior works.',client:item.client,contractor:'Contact Arcane for project details',content:{sections:[],services:[]},unpictured:true});
+ additionalProjects.push({id,name:item.name,location:'Dubai, UAE',group:'landmark',scope:'Specialist interior works.',client:item.client,contractor:'Contact Arcane for project details',content:{sections:[],services:[]}});
 }
 for(const project of additionalProjects){if(!knowledge.projects.some(item=>item.id===project.id))knowledge.projects.push(project);copy.projects[project.id]=project.content;}
 knowledge.company.content=copy.company;knowledge.approachContent=copy.approach;
