@@ -691,3 +691,6 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 @media(prefers-reduced-motion:reduce){.craft-scene *{animation:none!important}}
 
 .menu-build-stage svg.craft-effort{height:190px;stroke:none;stroke-linecap:round}.menu-build-stage{padding:6px 10px 0}.menu-build-label{padding-top:7px}@media(max-width:760px){.menu-build-stage svg.craft-effort{height:190px}}
+
+/* Canvas craft scenes (arcane-craft.js): interactive installers. */
+.menu-build-animation{pointer-events:auto}.menu-build-stage canvas.craft-canvas{display:block;width:100%;height:190px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}

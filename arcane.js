@@ -195,6 +195,3 @@ for(const [id,limit,label] of [['menu-ongoing',4,'ongoing'],['menu-completed',6,
  button.addEventListener('click',()=>render(button.getAttribute('aria-expanded')!=='true'));
  list.insertAdjacentElement('afterend',button);render(false);
 }
-
-/* Pause craft studies when closed; respect reduced motion. */
-(()=>{const menu=document.getElementById('projects-menu');if(!menu)return;const scenes=menu.querySelectorAll('svg.craft-effort'),motion=matchMedia('(prefers-reduced-motion: reduce)');const sync=()=>scenes.forEach(svg=>{if(menu.hidden||document.hidden||motion.matches){svg.pauseAnimations();if(motion.matches)svg.setCurrentTime(2);}else svg.unpauseAnimations();});new MutationObserver(sync).observe(menu,{attributes:true,attributeFilter:['hidden']});motion.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();})();
