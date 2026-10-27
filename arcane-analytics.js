@@ -14,8 +14,9 @@
   const target=event.target instanceof Element?event.target:null;if(!target)return;
   const button=target.closest('[data-enquiry-open]');
   if(button&&document.getElementById('enquiry-dialog')?.open)track('enquiry_open',{form_name:'project_enquiry'});
+  const resourceOpener=target.closest('[data-profile-open]');
+  if(resourceOpener&&document.getElementById('profile-dialog')?.open)track('resource_dialog_open',{resource_type:'company_documents'});
   const link=target.closest('a[href]');if(!link)return;
-  if(link.hasAttribute('data-profile-open')&&document.getElementById('profile-dialog')?.open)track('resource_dialog_open',{resource_type:'company_documents'});
   let url;try{url=new URL(link.href,location.href);}catch{return;}
   const method=url.protocol==='tel:'?'phone':url.protocol==='mailto:'?'email':(['wa.me','api.whatsapp.com','web.whatsapp.com'].includes(url.hostname)?'whatsapp':null);
   if(method)track('contact_click',{contact_method:method});
