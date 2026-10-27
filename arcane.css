@@ -694,3 +694,11 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 
 /* Canvas craft scenes (arcane-craft.js): interactive installers. */
 .menu-build-animation{pointer-events:auto}.menu-build-stage canvas.craft-canvas{display:block;width:100%;height:190px;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+
+/* Accessible background music control, separate from the contact widgets. */
+.music-control{position:fixed;left:20px;bottom:20px;z-index:32;display:flex;align-items:center;gap:8px;padding:11px 15px;border:1px solid var(--line);border-radius:28px;background:var(--white);color:var(--ink);box-shadow:0 4px 20px #0002;font-size:12px;line-height:1.2}
+.music-control svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.music-control.is-playing .music-waves{animation:arcane-music-wave 1.8s ease-in-out infinite}
+@keyframes arcane-music-wave{50%{opacity:.35}}
+@media(max-width:760px){.music-control{left:15px;bottom:15px;padding:12px}}
+@media(prefers-reduced-motion:reduce){.music-control.is-playing .music-waves{animation:none}}

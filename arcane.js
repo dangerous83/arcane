@@ -101,11 +101,29 @@ theme.addEventListener('click',()=>{
  applyTheme(grey);
  try{localStorage.setItem('arcane-theme-v2',grey?'grey':'green');}catch{}
 });
-const music=$('#background-music');const musicButton=$('#music');music.volume=.2;let userMuted=false;
-function syncMusic(){musicButton?.setAttribute('aria-pressed',String(userMuted));musicButton?.setAttribute('aria-label',userMuted?'Unmute background music':'Mute background music');if(musicButton)musicButton.textContent=userMuted?'Sound off':'Sound on';$('#music-status').textContent=!music.paused?'Background music is playing on loop.':userMuted?'Background music is muted.':'Background music starts after your first interaction.';}
-function startMusic(){if(!userMuted&&!$('#expertise-video-dialog')?.open&&!$('#enquiry-dialog')?.open&&music.paused)music.play().catch(()=>{});}
-musicButton?.addEventListener('click',()=>{userMuted=!userMuted;if(userMuted)music.pause();else startMusic();syncMusic();});
-document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);startMusic();syncMusic();
+const music=$('#background-music');let musicButton=$('#music'),userMuted=false;
+if(music){
+ music.volume=.35;music.muted=false;music.loop=true;
+ if(!musicButton){musicButton=document.createElement('button');musicButton.id='music';musicButton.type='button';musicButton.className='music-control';document.body.appendChild(musicButton);}
+ musicButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path class="music-waves" d="M16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg><span data-music-label>Play music</span>';
+ function syncMusic(){
+  const playing=!music.paused&&!music.muted;
+  musicButton.setAttribute('aria-pressed',String(playing));musicButton.setAttribute('aria-label',playing?'Mute background music':'Play background music');
+  musicButton.querySelector('[data-music-label]').textContent=playing?'Music on':'Play music';musicButton.classList.toggle('is-playing',playing);
+  const status=$('#music-status');if(status)status.textContent=playing?'Background music is playing on loop.':music.error?'Press Play music to retry background audio.':userMuted?'Background music is muted.':'Select Play music or interact with the page to start background music.';
+ }
+ function startMusic(event){
+  if(event?.target?.closest?.('#music')||userMuted||document.hidden||$('#expertise-video-dialog')?.open||$('#enquiry-dialog')?.open)return;
+  if(music.paused)music.play().then(syncMusic).catch(syncMusic);
+ }
+ musicButton.addEventListener('click',()=>{
+  if(!music.paused){userMuted=true;music.pause();}else{userMuted=false;music.muted=false;if(music.error)music.load();music.play().then(syncMusic).catch(syncMusic);}syncMusic();
+ });
+ document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);document.addEventListener('click',startMusic);
+ music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);music.addEventListener('error',syncMusic);
+ for(const id of ['enquiry-dialog','expertise-video-dialog'])$('#'+id)?.addEventListener('close',()=>startMusic());
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)music.pause();else startMusic();});startMusic();syncMusic();
+}
 
 $('#lead-form')?.addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget;if(!form.reportValidity())return;const values=new FormData(form);const subject='Project enquiry — '+values.get('service');const message='Hello Arcane team,\n\nI would like to discuss a project.\n\nName: '+values.get('name')+'\nEmail: '+values.get('email')+'\nPhone: '+(values.get('phone')||'Not supplied')+'\nExpertise: '+values.get('service')+'\n\nProject details:\n'+values.get('message');window.location.href='mailto:info@arcane.ae?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(message);$('#lead-status').textContent='Your email draft is ready. Review the details and select Send in your email app.';});
 // Scroll motion never blocks access to the page content.
@@ -195,3 +213,4 @@ for(const [id,limit,label] of [['menu-ongoing',4,'ongoing'],['menu-completed',6,
  button.addEventListener('click',()=>render(button.getAttribute('aria-expanded')!=='true'));
  list.insertAdjacentElement('afterend',button);render(false);
 }
+
