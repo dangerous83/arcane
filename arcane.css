@@ -634,3 +634,8 @@ body.grey .site-header .brand img{filter:grayscale(1)}
 body.grey .mega{border-top-color:#6d6e71}
 body.grey .filters button.active,body.grey .music-control[aria-pressed=true],body.grey .assistant-voice-controls button[aria-pressed=true],body.grey .chat-message.user{background:#444;border-color:#444;color:#fff}
 body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,transparent 0 94px,#6d6e7118 95px 96px),linear-gradient(120deg,var(--paper),var(--wash))}
+
+/* Keep social links aligned to the right after removing the footer button. */
+.footer-bottom{grid-template-columns:minmax(0,1fr) auto}
+.footer-social-slot{grid-column:2;justify-self:end}
+@media(max-width:760px){.footer-bottom>span{grid-column:1}.footer-social-slot{grid-column:2}}
