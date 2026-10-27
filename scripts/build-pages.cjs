@@ -214,7 +214,6 @@ for(const page of pages){
  }
  if(page.section==="expertise"&&page.record.id==="partitions")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
  if(page.section==="expertise"&&page.record.id==="grg")html=html.replace("arcane.css?v=navbar-remove-approach-28","arcane.css?v=gallery-image-fit-32");
- html=html.replaceAll('href="/approach/"','href="/approach.html"');
  files[(page.url==="/"?"":page.url.slice(1))+"index.html"]=html;
 }
 files["gallery.html"]=files["gallery/index.html"];
