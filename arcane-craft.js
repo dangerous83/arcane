@@ -300,16 +300,6 @@
     if (spin) { c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = .6; c.beginPath(); for (let i = 0; i < 3; i++) { const x = 22 + ((spin * 40 + i * 2.3) % 6); c.moveTo(x, -6); c.lineTo(x + 1, -4); } c.stroke(); }
     c.restore();
   }
-  function bucket(c, x, y, alpha) {
-    c.save(); c.globalAlpha = alpha; blob(c, x, y + 1, 12, 3, .25);
-    c.fillStyle = lin(c, x - 8, 0, x + 8, 0, ['#bfc6b8', '#e6e9df', '#9da696']);
-    c.beginPath(); c.moveTo(x - 8.5, y - 18); c.lineTo(x + 8.5, y - 18); c.lineTo(x + 7, y); c.quadraticCurveTo(x, y + 2.4, x - 7, y); c.closePath(); c.fill();
-    c.fillStyle = '#f3f1e8'; c.beginPath(); c.ellipse(x, y - 18, 8.5, 2.6, 0, 0, TAU); c.fill();
-    c.fillStyle = '#d9d6c8'; c.beginPath(); c.ellipse(x, y - 17.6, 7.2, 1.9, 0, 0, TAU); c.fill();
-    c.strokeStyle = 'rgba(80,90,78,.35)'; c.lineWidth = .7; c.beginPath(); c.moveTo(x - 8, y - 12); c.lineTo(x + 8, y - 12); c.stroke();
-    c.strokeStyle = '#4a554d'; c.lineWidth = 1; c.beginPath(); c.moveTo(x - 8.5, y - 17); c.quadraticCurveTo(x, y - 33, x + 8.5, y - 17); c.stroke();
-    c.restore();
-  }
   function toolbox(c, x, y) {
     blob(c, x + 2, y + 1, 26, 4, .28);
     c.fillStyle = lin(c, 0, y - 15, 0, y, ['#5f7c66', '#3f5747']); rrect(c, x - 18, y - 14, 36, 14, 2); c.fill();
@@ -318,6 +308,17 @@
     c.fillStyle = '#c9c6b5'; c.fillRect(x - 13, y - 13.5, 3, 3); c.fillRect(x + 10, y - 13.5, 3, 3);
     c.fillStyle = '#d4c15a'; c.fillRect(x + 21, y - 4, 22, 3); c.fillStyle = '#7ea06f'; c.beginPath(); c.arc(x + 32, y - 2.5, 1, 0, TAU); c.fill();
   }
+
+  function platform(c, deck, floor) { // rolling work platform shared by the overhead scenes
+    blob(c, 186, floor + 1, 70, 6, .25);
+    c.strokeStyle = '#8fa092'; c.lineWidth = 2.2; c.beginPath();
+    for (const x of [134, 232]) { c.moveTo(x, deck + 3); c.lineTo(x, floor - 2); }
+    c.moveTo(136, deck + 6); c.lineTo(230, floor - 4); c.moveTo(136, floor - 4); c.lineTo(230, deck + 6); c.stroke();
+    c.fillStyle = lin(c, 0, deck - 3, 0, deck + 5, ['#e0e5da', '#a8b4a6']); rrect(c, 128, deck - 1, 110, 6, 1.5); c.fill();
+    c.fillStyle = '#d0d8cb'; poly(c, [[134, deck - 1], [232, deck - 1], [244, deck - 6], [146, deck - 6]]); c.fill();
+    c.fillStyle = '#3c4640'; for (const x of [134, 232]) { c.beginPath(); c.arc(x, floor - 1.5, 3, 0, TAU); c.fill(); }
+  }
+  function platformRail(c, deck) { c.strokeStyle = 'rgba(120,138,122,.75)'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(128, deck + 7); c.lineTo(238, deck + 7); c.stroke(); }
 
   /* ---------- scene: partition framing ---------- */
   function partitionScene() {
@@ -448,14 +449,7 @@
     return {
       dur: timeline.dur, top, pose: timeline, line: 'Grid aligned.',
       back(c, t, r) {
-        // platform
-        c.fillStyle = 'rgba(40,60,45,.18)'; blob(c, 186, floor + 1, 70, 6, .25);
-        c.strokeStyle = '#8fa092'; c.lineWidth = 2.2; c.beginPath();
-        for (const x of [134, 232]) { c.moveTo(x, deck + 3); c.lineTo(x, floor - 2); }
-        c.moveTo(136, deck + 6); c.lineTo(230, floor - 4); c.moveTo(136, floor - 4); c.lineTo(230, deck + 6); c.stroke();
-        c.fillStyle = lin(c, 0, deck - 3, 0, deck + 5, ['#e0e5da', '#a8b4a6']); rrect(c, 128, deck - 1, 110, 6, 1.5); c.fill();
-        c.fillStyle = '#d0d8cb'; poly(c, [[134, deck - 1], [232, deck - 1], [244, deck - 6], [146, deck - 6]]); c.fill();
-        c.fillStyle = '#3c4640'; for (const x of [134, 232]) { c.beginPath(); c.arc(x, floor - 1.5, 3, 0, TAU); c.fill(); }
+        platform(c, deck, floor);
         // ceiling plenum, services and tiles
         const plane = [at(0, 0), at(1, 0), at(1, 1), at(0, 1)];
         c.fillStyle = lin(c, 0, 0, 0, 70, ['#4a5650', '#66726a']); poly(c, plane); c.fill();
@@ -479,7 +473,7 @@
       front(c, t, r) {
         const tile = tileAt(t, r.p);
         if (tile.front) drawTile(c, tile.q, 1, true);
-        c.strokeStyle = 'rgba(120,138,122,.75)'; c.lineWidth = 1.6; c.beginPath(); c.moveTo(128, deck + 7); c.lineTo(238, deck + 7); c.stroke();
+        platformRail(c, deck);
       },
       emit(t, r, add) {
         if (t > 6.15 && t < 6.35) for (let i = 0; i < 3; i++) { const pt = quadPt(target, Math.random(), rand(.6, 1)); add(pt[0], pt[1], rand(-8, 8), rand(2, 12), rand(.8, 1.4), rand(.6, 1.5), '236,236,226'); }
@@ -497,94 +491,144 @@
     }
   }
 
-  /* ---------- scene: sculptural GRG ---------- */
+  /* ---------- scene: sculptural GRG ceiling ---------- */
   function grgScene() {
-    const gy = 184, top = 43;
-    const tY = x => top - 21 * (x - 22) / 243, bY = x => 166 - 19 * (x - 22) / 243;
-    const flutes = [196, 212, 228, 244], y0 = x => tY(x) + 14, y1 = x => bY(x) - 8;
-    const along = (i, v) => { const x0 = flutes[i], x = x0 + Math.sin(v * PI * 1.6 + i * .7) * 4.5; return [x, lerp(y0(x0), y1(x0), v)]; };
-    const strokeT = [4.4, 5.6, 7.4, 8.6];
-    const ang = -.55, off = rot([12, 3], ang);
-    const contact = (i, q) => along(i, 1 - q);
-    const handFor = (p, pt) => toLocal(p, [pt[0] - off[0], pt[1] - off[1]]);
-    const crouch = (p, hand) => { const k = clamp((hand[1] + 85) / 36, 0, 1); p.hip = [p.hip[0] + 3 * k, lerp(-65.5, -48, k)]; p.lean = .08 + .2 * k; p.fN = [9, -3, 0]; p.fF = [-6, -7, 0]; };
-    const hawk = p => { p.hF = [9, p.hip[1] - 22]; p.eF = -1; };
-    const work = (x, first) => (u, lt) => {
-      const p = pose({ x, gy, look: .14 }), t = strokeT[first] + lt;
-      const i = t < strokeT[first + 1] ? first : first + 1, q = span(t, strokeT[i], strokeT[i] + .94), back = span(t, strokeT[i] + .94, strokeT[i] + 1.2);
-      let hand = handFor(p, contact(i, ease(q)));
-      if (back > 0) { const next = i + 1 < 4 ? contact(i + 1, 0) : contact(i, 0), from = contact(i, 1); const pt = mixPt(from, next, ease(back)); hand = handFor(p, [pt[0] - Math.sin(PI * back) * 10, pt[1]]); }
-      p.hN = hand; p.eN = -1; crouch(p, hand); hawk(p);
-      p.head = clamp((hand[1] - (p.hip[1] - 50)) / 70, -.45, .45); p.trowel = q > 0 && q < 1 && back === 0 ? contact(i, ease(q)) : null;
+    const floor = 206, deck = 186, top = 18;
+    // Circular GRG feature on the soffit: a dropped ring of curved segments around a raised, cove-lit dome.
+    const C = [196, 30], RA = 100, RB = 20, TILT = -.06, cT = Math.cos(TILT), sT = Math.sin(TILT);
+    const K0 = .68, FASCIA = 5, LIFT = 7, SEG = PI / 4, G0 = PI / 2 - SEG / 2, G1 = PI / 2 + SEG / 2;
+    const E = (k, th, dy) => { const x = RA * k * Math.cos(th), y = RB * k * Math.sin(th); return [C[0] + x * cT - y * sT, C[1] + x * sT + y * cT + dy]; };
+    const P = (k, th, d) => { const e = E(k, th, 0); return [e[0] + d[0], e[1] + d[1]]; };
+    const sY = x => 78 - 21 * (x - 22) / 243;
+    const mid = E(.84, PI / 2, 0), UNDER = [0, 16], XR = 186, X2 = 206;
+    const held = p => [p.x + p.hip[0] + 8 - mid[0], p.gy + p.hip[1] - 14 - mid[1]];
+    const segAt = (t, p) => {
+      if (t < 4.4) return { d: held(p), front: 1 };
+      if (t < 5.1) { const k = ease(span(t, 4.4, 5.1)); return { d: mixPt(held(p), UNDER, k), front: k < .9 }; }
+      if (t < 5.6) return { d: mixPt(UNDER, [0, 0], outBack(span(t, 5.1, 5.6))), front: 0 };
+      return { d: [0, 0], front: 0 };
+    };
+    const grips = (p, d) => { p.hN = toLocal(p, P(1, PI / 2 - .2, [d[0], d[1] + FASCIA])); p.hF = toLocal(p, P(1, PI / 2 + .3, [d[0], d[1] + FASCIA])); p.eN = -1; p.eF = -1; p.gN = 1; p.gF = 1; return p; };
+    const holster = p => [8, p.hip[1] + 3];
+    const jointPt = (th, q) => E(lerp(K0 - .03, 1.03, q), th + Math.sin(q * TAU) * .035, 0);
+    const toolHand = (p, pt) => toLocal(p, [pt[0] - 4, pt[1] + 9]); // trowel blade rides 9px above the grip
+    const P0 = x => pose({ x, gy: deck });
+    const joint = (x, th) => (u, lt) => {
+      const p = P0(x); p.look = .15; p.lean = -.04; p.head = -.42;
+      const grab = span(lt, 0, .3), s = span(lt, .3, 1.3), back = span(lt, 1.3, 1.6), pass = s * 3, f = pass % 1;
+      const pt = jointPt(th, sine(Math.floor(pass) % 2 ? 1 - f : f));
+      p.hN = grab < 1 ? mixPt(holster(p), toolHand(p, jointPt(th, 0)), ease(grab)) : back > 0 ? mixPt(toolHand(p, pt), holster(p), ease(back)) : toolHand(p, pt);
+      p.eN = -1; p.gN = 1; p.tool = grab > .5 && back < .5 ? 1 : 0;
+      p.hF = toLocal(p, P(1, PI / 2, [0, FASCIA])); p.eF = -1; p.gF = 1;
+      p.trowel = s > 0 && s < 1 ? pt : null;
       return p;
     };
-    const bucketDown = [146, 182];
     const timeline = seq([
-      [2.8, walk(-95, 132, gy, p => { p.hF = [-1, p.hip[1] + 3]; p.eF = -.3; p.bucket = 1; return p; })],
-      [1.0, u => {
-        const p = pose({ x: 132, gy }), k = Math.sin(PI * clamp(u * 1.05, 0, 1));
-        p.hip = [3 * k, -65.5 + 20 * k]; p.lean = .34 * k; p.fN = [9, -3, 0]; p.fF = [-6, -7, 0]; p.head = .25 * k;
-        p.hF = u < .45 ? mixPt([-1, -62.5], toLocal(p, [bucketDown[0], bucketDown[1] - 25]), ease(u / .45)) : mixPt(toLocal(p, [bucketDown[0] - 4, bucketDown[1] - 20]), [9, -87.5], ease(span(u, .55, 1)));
-        p.hN = mixPt([6, -63.5], toLocal(p, [bucketDown[0] + 2, bucketDown[1] - 22]), Math.sin(PI * span(u, .3, .9)));
-        p.eF = -1; p.bucket = u < .45 ? 1 : 0; p.hawk = u > .62 ? 1 : 0; return p;
-      }],
-      [.6, walk(132, 164, gy, p => { hawk(p); p.hawk = 1; return p; })],
-      [2.4, work(164, 0)],
-      [.6, walk(164, 196, gy, p => { hawk(p); p.hawk = 1; return p; })],
-      [2.4, work(196, 2)],
-      [1.0, u => { const p = pose({ x: 196, gy }); hawk(p); p.lean = -.05; p.head = -.22 + Math.sin(u * PI * 2) * .07; p.look = .4; p.hN = [4, -67.5]; p.smile = smooth(u); return p; }],
-      [2.8, walk(196, 475, gy, p => { hawk(p); return p; })],
-      [1.4, stand(475, gy)]
+      [2.8, walk(-95, 120, floor, p => { p.carry = 1; return grips(p, held(p)); })],
+      [.9, u => { const p = climb(120, floor, [[142, deck]])(u); p.carry = 1; return grips(p, held(p)); }],
+      [.7, walk(137, XR, deck, p => { p.carry = 1; return grips(p, held(p)); })],
+      [.7, u => { const p = P0(XR); p.carry = 1; p.lean = -.04 * u; p.head = -.35 * smooth(u); p.look = .15; return grips(p, segAt(4.4 + u * .7, p).d); }],
+      [.5, u => { const p = P0(XR); p.carry = 1; p.lean = -.06; p.head = -.42; p.hip = [0, -65.5 - Math.sin(PI * u) * 2]; p.fN = [5, -3 - Math.sin(PI * u) * 4, Math.sin(PI * u) * .5]; p.fF = [-4, -7 - Math.sin(PI * u) * 3, Math.sin(PI * u) * .45]; return grips(p, segAt(5.1 + u * .5, p).d); }],
+      [.6, u => { const p = P0(XR); p.lean = -.05; p.head = -.42; return grips(p, [0, -Math.abs(Math.sin(u * PI * 3)) * 1.2]); }],
+      [1.6, joint(XR, G1)],
+      [.6, walk(XR, X2, deck)],
+      [1.6, joint(X2, G0)],
+      [1.3, u => { const p = P0(X2); p.head = -.38 + Math.sin(u * PI * 2) * .05; p.look = .45; p.smile = smooth(u); p.hN = [19, -98.5 - Math.sin(PI * span(u, .2, .5)) * 3]; p.eN = -1; p.gN = 2; return p; }],
+      [.5, walk(X2, 216, deck)],
+      [.8, climb(216, deck, [[238, floor]])],
+      [2.6, walk(233, 475, floor)],
+      [1.2, stand(475, floor)]
     ]);
-    const speck = [];
-    for (let i = 0; i < 4; i++) for (let k = 0; k < 9; k++) speck.push([i, Math.random(), rand(-4, 4)]);
+    const JOINTS = [[G1, 6.5], [G0, 8.7]], LIGHT = 10.2, RESET = 15.2;
+    const lights = [0, 1, 2, 3, 4, 5, 6, 7].map(i => E(.44, i * SEG + SEG / 2, -LIFT));
     return {
-      dur: timeline.dur, top, pose: timeline, line: 'Smooth finish.',
+      dur: timeline.dur, top, pose: timeline, line: 'Perfect circle.',
       back(c, t, r) {
-        const panel = [[186, tY(186) + 8], [258, tY(258) + 8], [258, bY(258) - 3], [186, bY(186) - 3]];
-        c.fillStyle = 'rgba(60,78,62,.16)'; poly(c, shiftQuad(panel, 3, 2)); c.fill();
-        c.fillStyle = lin(c, 186, 0, 258, 0, ['#e3e6da', '#eff1e8']); poly(c, panel); c.fill();
-        const reset = 1 - span(t, 13.8, 14.6);
-        for (let i = 0; i < 4; i++) {
-          flute(c, i, false);
-          const prog = t < strokeT[i] ? 0 : t >= 13.8 ? 1 : ease(span(t, strokeT[i], strokeT[i] + .94));
-          if (prog > 0 && reset > 0) {
-            const pt = contact(i, prog);
-            c.save(); c.globalAlpha = reset; c.beginPath(); c.rect(flutes[i] - 9.5, pt[1], 19, 200); c.clip(); flute(c, i, true); c.restore();
-          }
+        const reset = 1 - span(t, RESET, RESET + .8), glow = span(t, LIGHT, LIGHT + .6) * reset, seg = segAt(t, r.p);
+        platform(c, deck, floor);
+        // soffit with a cut-away front edge
+        c.fillStyle = lin(c, 0, -10, 0, 80, ['#e6e9df', '#f3f4ee']); poly(c, [[-400, -300], [800, -300], [800, sY(800)], [-400, sY(-400)]]); c.fill();
+        c.fillStyle = lin(c, 0, 50, 0, 70, ['#d3d9cc', '#bfc7b8']); poly(c, [[-400, sY(-400)], [800, sY(800)], [800, sY(800) + 5], [-400, sY(-400) + 5]]); c.fill();
+        c.fillStyle = 'rgba(40,58,45,.14)'; poly(c, [[-400, sY(-400) + 5], [800, sY(800) + 5], [800, sY(800) + 12], [-400, sY(-400) + 12]]); c.fill();
+        blob(c, C[0] + 3, C[1] + 6, 116, 30, .13);
+        // raised dome inside the ring: cove reveal shows below the dome edge
+        c.save(); ellipse(c, K0, 0); c.clip();
+        c.fillStyle = lin(c, 0, C[1] - 12, 0, C[1] + 16, ['#b9bfb1', '#d3d7ca']); c.fill();
+        if (glow) { c.fillStyle = lin(c, 0, C[1], 0, C[1] + 15, ['rgba(255,214,150,' + (.55 * glow) + ')', 'rgba(255,232,190,' + (.95 * glow) + ')']); c.fill(); }
+        ellipse(c, K0, -LIFT); const dg = c.createRadialGradient(C[0] - 12, C[1] - LIFT - 4, 2, C[0], C[1] - LIFT, RA * K0);
+        dg.addColorStop(0, '#fdfdf9'); dg.addColorStop(.7, '#eff1e9'); dg.addColorStop(1, '#dde0d5'); c.fillStyle = dg; c.fill();
+        if (glow) { const wg = c.createRadialGradient(C[0], C[1] - LIFT + 14, 0, C[0], C[1] - LIFT + 14, 64); wg.addColorStop(0, 'rgba(255,228,176,' + (.55 * glow) + ')'); wg.addColorStop(1, 'rgba(255,228,176,0)'); c.fillStyle = wg; c.fill(); }
+        c.strokeStyle = 'rgba(150,158,140,.38)'; c.lineWidth = .7; ellipse(c, .46, -LIFT); c.stroke();
+        c.strokeStyle = 'rgba(48,58,52,.55)'; c.lineWidth = 1; arc(c, K0, -LIFT, .05, PI - .05); c.stroke();
+        for (const l of lights) {
+          if (glow) { const lg = c.createRadialGradient(l[0], l[1], 0, l[0], l[1], 6); lg.addColorStop(0, 'rgba(255,246,220,' + glow + ')'); lg.addColorStop(1, 'rgba(255,246,220,0)'); c.fillStyle = lg; c.fillRect(l[0] - 6, l[1] - 6, 12, 12); }
+          c.fillStyle = glow > .5 ? '#fffaf0' : '#9aa094'; c.beginPath(); c.ellipse(l[0], l[1], 1.7, .9, 0, 0, TAU); c.fill();
         }
-        if (t >= 3.25 && t < 14.6) bucket(c, bucketDown[0], bucketDown[1], t < 13.8 ? 1 : reset);
-        if (r.p.bucket && t < 3.25) { const w = r.world(r.wF); c.save(); c.translate(w[0], w[1]); c.rotate(this.swing || 0); bucket(c, 0, 26, 1); c.restore(); }
+        c.restore();
+        c.strokeStyle = 'rgba(120,128,112,.5)'; c.lineWidth = .6; ellipse(c, K0, 0); c.stroke();
+        // dropped ring: open bay with framing until the last segment is fitted
+        sector(c, K0, 1, G0, G1, 0, 0, [0, 0]); c.fillStyle = '#56625b'; c.fill();
+        c.strokeStyle = '#a9b3a6'; c.lineWidth = 1.2; for (const k of [.76, .94]) { arc(c, k, -1.5, G0 + .04, G1 - .04); c.stroke(); }
+        c.strokeStyle = 'rgba(169,179,166,.7)'; c.lineWidth = .8; c.beginPath(); for (const th of [G0 + .2, PI / 2, G1 - .2]) { const a = E(.72, th, -1.5), b = E(.98, th, -1.5); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); } c.stroke();
+        for (let i = 1; i < 8; i++) fascia(c, G0 + i * SEG, G1 + i * SEG, [0, 0]);
+        for (let i = 1; i < 8; i++) underside(c, G0 + i * SEG, G1 + i * SEG, [0, 0]);
+        c.strokeStyle = 'rgba(150,158,142,.28)'; c.lineWidth = .6; c.beginPath();
+        for (let i = 2; i < 8; i++) { const th = G0 + i * SEG, a = E(K0, th, 0), b = E(1, th, 0); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); if (Math.sin(th) > 0) c.lineTo(b[0], b[1] + FASCIA); }
+        c.stroke();
+        if (!seg.front && t < RESET + .8) {
+          const alpha = t < 5.6 ? 1 : reset;
+          c.save(); c.globalAlpha = alpha; fascia(c, G0, G1, seg.d); underside(c, G0, G1, seg.d);
+          if (t >= 5.6) for (const [th, st] of JOINTS) {
+            const done = span(t, st, st + 1), a = E(K0, th, 0), b = E(1, th, 0);
+            c.lineCap = 'round'; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.lineTo(b[0], b[1] + FASCIA);
+            c.strokeStyle = 'rgba(62,74,66,' + (.85 * (1 - done)) + ')'; c.lineWidth = 1.3; c.stroke();
+            if (done) { c.strokeStyle = 'rgba(255,255,251,' + done + ')'; c.lineWidth = 2.4; c.stroke(); }
+          }
+          c.restore();
+        }
+        if (glow) {
+          c.save(); c.globalCompositeOperation = 'lighter';
+          for (const l of [lights[0], lights[1], lights[2]]) { c.fillStyle = lin(c, 0, l[1], 0, floor, ['rgba(255,240,205,' + (.13 * glow) + ')', 'rgba(255,240,205,0)']); poly(c, [[l[0] - 1.5, l[1]], [l[0] + 1.5, l[1]], [l[0] + 30, floor + 4], [l[0] - 30, floor + 4]]); c.fill(); }
+          c.restore();
+        }
       },
       front(c, t, r) {
-        const p = r.p, w = r.world(r.wN);
-        if (t > 3.6 || p.hawk) { const h = r.world(r.wF); c.save(); c.translate(h[0], h[1]); c.fillStyle = '#6c5a44'; c.fillRect(-1, -7, 2.2, 7); c.fillStyle = lin(c, -11, 0, 11, 0, ['#c9cdc5', '#f0f1ec', '#9fa59b']); poly(c, [[-11, -8], [9, -8], [12, -10.5], [-8, -10.5]]); c.fill(); c.fillStyle = '#f2f0e6'; c.beginPath(); c.ellipse(0, -11, 6, 2.4, 0, PI, 0); c.fill(); c.restore(); }
-        c.save(); c.translate(w[0], w[1]); c.rotate(ang);
-        c.fillStyle = '#7a5f42'; rrect(c, -2, -2.2, 7, 4.4, 2); c.fill();
-        c.strokeStyle = '#555c55'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(4, 0); c.lineTo(6, 3); c.stroke();
-        c.fillStyle = lin(c, 4, 2, 4, 6, ['#f4f5f1', '#b9bdb6', '#8e938b']); poly(c, [[5, 2.4], [20, 2.4], [21.5, 4], [20, 5.6], [5, 5.6]]); c.fill();
-        if (t > 3.4 && t < 9.8) { c.fillStyle = '#f3f1e7'; c.beginPath(); c.ellipse(13, 2.2, 4.5, 1.3, 0, PI, 0); c.fill(); }
-        c.restore();
-        if (p.trowel) { const g = c.createRadialGradient(p.trowel[0], p.trowel[1], 0, p.trowel[0], p.trowel[1], 10); g.addColorStop(0, 'rgba(255,255,250,.75)'); g.addColorStop(1, 'rgba(255,255,250,0)'); c.fillStyle = g; c.beginPath(); c.arc(p.trowel[0], p.trowel[1], 10, 0, TAU); c.fill(); }
+        const p = r.p, seg = segAt(t, p);
+        if (seg.front) { fascia(c, G0, G1, seg.d); underside(c, G0, G1, seg.d); }
+        if (p.tool) {
+          const w = r.world(r.wN);
+          c.fillStyle = '#7a5f42'; rrect(c, w[0] + 2.4, w[1] - 6, 3.2, 7, 1.4); c.fill();
+          c.fillStyle = lin(c, 0, w[1] - 10, 0, w[1] - 7, ['#f4f5f1', '#b9bdb6', '#8e938b']); rrect(c, w[0] - 5, w[1] - 9.6, 18, 2.8, .8); c.fill();
+          c.fillStyle = '#f3f1e7'; c.beginPath(); c.ellipse(w[0] + 4, w[1] - 9.6, 5, 1.2, 0, PI, 0); c.fill();
+        } else {
+          const h = r.world(r.T(7, 3));
+          c.save(); c.translate(h[0] - 2, h[1] + 3); c.rotate(1.35);
+          c.fillStyle = '#7a5f42'; rrect(c, -2, -2.2, 7, 4.4, 2); c.fill();
+          c.fillStyle = lin(c, 4, 2, 4, 6, ['#f4f5f1', '#b9bdb6', '#8e938b']); poly(c, [[5, 2.4], [18, 2.4], [19.5, 4], [18, 5.6], [5, 5.6]]); c.fill();
+          c.restore();
+        }
+        if (p.trowel) { const g = c.createRadialGradient(p.trowel[0], p.trowel[1], 0, p.trowel[0], p.trowel[1], 9); g.addColorStop(0, 'rgba(255,255,250,.75)'); g.addColorStop(1, 'rgba(255,255,250,0)'); c.fillStyle = g; c.beginPath(); c.arc(p.trowel[0], p.trowel[1], 9, 0, TAU); c.fill(); }
+        platformRail(c, deck);
       },
-      emit(t, r, add) { const p = r.p; if (p.trowel && Math.random() < .6) add(p.trowel[0] + rand(-3, 3), p.trowel[1] + 2, rand(-8, 8), rand(-4, 10), rand(.6, 1.2), rand(.5, 1.3), '240,238,228'); },
-      physics(dt, r, t) {
-        const w = r.world(r.wF);
-        if (!r.p.bucket || t >= 3.25 || !this.last) { this.swing = 0; this.vel = 0; this.last = w; this.vx = 0; return; }
-        const vx = (w[0] - this.last[0]) / Math.max(dt, .001), ax = (vx - this.vx) / Math.max(dt, .001);
-        this.vx = vx; this.last = w;
-        this.vel += (-36 * Math.sin(this.swing) - clamp(ax, -900, 900) * .0016 - this.vel * 2.4) * dt;
-        this.swing = clamp(this.swing + this.vel * dt, -.6, .6);
+      emit(t, r, add) {
+        const p = r.p;
+        if (t > 5.45 && t < 5.65) for (let i = 0; i < 3; i++) { const pt = P(1, rand(G0, G1), [0, FASCIA]); add(pt[0], pt[1], rand(-8, 8), rand(2, 12), rand(.8, 1.4), rand(.6, 1.4), '236,236,226'); }
+        if (p.trowel && Math.random() < .6) add(p.trowel[0] + rand(-3, 3), p.trowel[1] + 2, rand(-8, 8), rand(0, 10), rand(.6, 1.2), rand(.5, 1.3), '240,238,228');
       },
-      still: 5.0
+      still: 10.8
     };
-    function flute(c, i, finished) {
-      c.lineCap = 'round'; c.lineJoin = 'round';
-      const path = dx => { c.beginPath(); for (let k = 0; k <= 22; k++) { const pt = along(i, k / 22); if (k) c.lineTo(pt[0] + dx, pt[1]); else c.moveTo(pt[0] + dx, pt[1]); } };
-      path(-.5); c.strokeStyle = finished ? '#c3c8b6' : '#b3b9a6'; c.lineWidth = 15; c.stroke();
-      path(.5); c.strokeStyle = finished ? '#ebebe0' : '#cfd3c3'; c.lineWidth = 11.5; c.stroke();
-      path(2.6); c.strokeStyle = finished ? '#ffffff' : '#dcdfd1'; c.lineWidth = finished ? 3.6 : 2.4; c.stroke();
-      if (!finished) { c.fillStyle = 'rgba(120,128,110,.35)'; for (const [k, v, dx] of speck) if (k === i) { const pt = along(i, v); c.fillRect(pt[0] + dx, pt[1], .9, .9); } }
+    function ellipse(c, k, dy) { c.beginPath(); for (let i = 0; i <= 48; i++) { const p = E(k, i / 48 * TAU, dy); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } c.closePath(); }
+    function arc(c, k, dy, a0, a1) { c.beginPath(); for (let i = 0; i <= 16; i++) { const p = E(k, lerp(a0, a1, i / 16), dy); if (i) c.lineTo(p[0], p[1]); else c.moveTo(p[0], p[1]); } }
+    function sector(c, k0, k1, a0, a1, dy0, dy1, d) { // outer edge (k1, dy1) forward, inner edge (k0, dy0) back
+      c.beginPath();
+      for (let i = 0; i <= 14; i++) { const p = E(k1, lerp(a0, a1, i / 14), dy1); if (i) c.lineTo(p[0] + d[0], p[1] + d[1]); else c.moveTo(p[0] + d[0], p[1] + d[1]); }
+      for (let i = 14; i >= 0; i--) { const p = E(k0, lerp(a0, a1, i / 14), dy0); c.lineTo(p[0] + d[0], p[1] + d[1]); }
+      c.closePath();
+    }
+    function fascia(c, a0, a1, d) { sector(c, 1, 1, a0, a1, FASCIA, 0, d); c.fillStyle = lin(c, 0, C[1] + d[1] + 14, 0, C[1] + d[1] + 26, ['#d2d7ca', '#b6bdae']); c.fill(); }
+    function underside(c, a0, a1, d) {
+      sector(c, K0, 1, a0, a1, 0, 0, d); c.fillStyle = lin(c, C[0] - RA + d[0], 0, C[0] + RA + d[0], 0, ['#e9ebe2', '#fbfbf7', '#e2e5da']); c.fill();
+      c.strokeStyle = 'rgba(150,158,140,.45)'; c.lineWidth = .6; c.save(); c.translate(d[0], d[1]); arc(c, .86, 0, a0, a1); c.stroke(); c.restore();
     }
   }
 
@@ -641,7 +685,6 @@
       if (react) { const e = smooth(span(react.r, 0, .22)) * (1 - smooth(span(react.r, RD - .4, RD))); p = blend(p, reactPose(p, react.kind, react.r), e); }
       else if (look > .01) p = Object.assign({}, p, { look: lerp(p.look, .85, look), smile: Math.max(p.smile, look * .7) });
       rig = solve(p, Math.sin(clock * 2.2) * .45);
-      if (def.physics && !still) def.physics(dt, rig, t);
       c.setTransform(dpr * s, 0, 0, dpr * s, dpr * ox, dpr * oy);
       for (const m of motes) { m.x += (m.vx + Math.sin(clock * .7 + m.ph) * 2) * dt; m.y += m.vy * dt; if (m.y < -10) m.y = 225; if (m.y > 230) m.y = -8; if (m.x < 120) m.x = 400; if (m.x > 410) m.x = 125; }
       room(c, def.top, clock, motes);
