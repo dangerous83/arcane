@@ -672,3 +672,20 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 @media(max-width:1280px) and (min-width:761px){.menu-build-animation{grid-column:1/-1;margin-left:0}}
 @media(max-width:760px){.menu-build-animation{grid-column:1;margin-left:0}.menu-build-stages{gap:8px}.menu-build-stage{padding:0 5px}.menu-build-stage svg{height:85px}.menu-build-label{font-size:9px;gap:5px}.menu-build-heading>span:last-child{font-size:15px}.menu-build-heading>span:first-child{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.menu-build-animation .build-detail{animation:none;stroke-dashoffset:0;opacity:1;transform:none}}
+
+/* PPE craft scenes: continuous tool motion, calm material assembly. */
+.menu-build-stage{background:linear-gradient(145deg,#e7ebe1,#fafbf7);border:1px solid #dce2d5;border-radius:12px;overflow:hidden}
+.menu-build-stage svg.craft-scene{height:172px;stroke-width:1;stroke-linejoin:round}
+.craft-hand{transform-origin:0px -10px;animation:craft-work 2.8s ease-in-out infinite}
+.craft-overhead{transform-origin:0px -12px;animation:craft-reach 3.2s ease-in-out infinite}
+.craft-panel{animation:craft-board 7s ease-in-out infinite}
+.craft-lift{animation:craft-lift 7s ease-in-out infinite}
+.craft-polish{stroke-dasharray:140;animation:craft-polish 5s ease-in-out infinite}
+@keyframes craft-work{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(9deg)}}
+@keyframes craft-reach{0%,100%{transform:translateY(2px)}50%{transform:translateY(-3px)}}
+@keyframes craft-board{0%,100%{transform:translate(7px,3px)}40%,70%{transform:translate(0,0)}}
+@keyframes craft-lift{0%,100%{transform:translateY(6px)}40%,70%{transform:translateY(0)}}
+@keyframes craft-polish{0%,100%{stroke-dashoffset:140;opacity:.2}50%{stroke-dashoffset:0;opacity:1}}
+.projects-menu[hidden] .craft-scene *{animation-play-state:paused}
+@media(max-width:760px){.menu-build-stages{grid-template-columns:1fr}.menu-build-stage svg.craft-scene{height:170px}.menu-build-label{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.craft-scene *{animation:none!important}}
