@@ -8,6 +8,7 @@
   if (!canvases.length || !canvases[0].getContext) return;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const W = 380, H = 230, PI = Math.PI, TAU = PI * 2, LX = .55, LY = -.83, STEP = 36;
+  const OFF_L = -130, STAGE = [-32, 412], MASK = 30; // workers enter and leave beyond the stage mask
 
   const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
   const lerp = (a, b, t) => a + (b - a) * t;
@@ -248,7 +249,8 @@
       t = ((t % a) + a) % a;
       let i = 0; while (i < segs.length - 1 && t >= segs[i].a + segs[i].d) i++;
       const s = segs[i], lt = t - s.a, p = s.fn(clamp(lt / s.d, 0, 1), lt);
-      if (lt < .24) { const q = segs[(i + segs.length - 1) % segs.length]; return blend(q.fn(1, q.d), p, smooth(lt / .24)); }
+      // Ease in from the previous segment, but never across the loop: the worker leaves right and re-enters left off-stage.
+      if (lt < .24 && i > 0) return blend(segs[i - 1].fn(1, segs[i - 1].d), p, smooth(lt / .24));
       return p;
     };
     fn.dur = a;
@@ -352,7 +354,7 @@
       return p;
     };
     const timeline = seq([
-      [3.0, walk(-95, 158, gy, p => { p.carry = 1; p.lean = .03; return handsOn(p, carried(p), 0); })],
+      [3.0, walk(OFF_L, 158, gy, p => { p.carry = 1; p.lean = .03; return handsOn(p, carried(p), 0); })],
       [1.2, (u, lt) => { const p = pose0(158); p.carry = 1; p.lean = .04 + .1 * sine(u); p.hip = [2 * u, -65.5 + 2 * Math.sin(PI * u)]; p.head = -.18 * Math.sin(PI * u); return handsOn(p, boardAt(3 + lt, p), smooth(u)); }],
       [.4, u => { const p = pose0(158); p.lean = .1; const a = toLocal(p, quadPt(mount, MOUNT[0][0], MOUNT[0][1])); p.hN = mixPt(a, holster(p), ease(span(u, 0, .5))); p.hF = toLocal(p, quadPt(mount, .12, .45)); p.eF = -.4; p.gF = 1; return p; }],
       [1.8, work(158, screws.slice(0, 3), .12)],
@@ -430,7 +432,7 @@
     };
     const P0 = x => pose({ x, gy: deck });
     const timeline = seq([
-      [2.8, walk(-95, 120, floor, p => { p.carry = 1; return grips(p, held(p)); })],
+      [2.8, walk(OFF_L, 120, floor, p => { p.carry = 1; return grips(p, held(p)); })],
       [.9, (u, lt) => { const p = climb(120, floor, [[142, deck]])(u); p.carry = 1; return grips(p, held(p)); }],
       [.7, walk(137, X, deck, p => { p.carry = 1; return grips(p, held(p)); })],
       [.7, u => { const p = P0(X); p.carry = 1; p.lean = -.04 * u; p.head = -.35 * smooth(u); p.look = .15; return grips(p, mixQuad(held(p), over(p), ease(u))); }],
@@ -524,7 +526,7 @@
       return p;
     };
     const timeline = seq([
-      [2.8, walk(-95, 120, floor, p => { p.carry = 1; return grips(p, held(p)); })],
+      [2.8, walk(OFF_L, 120, floor, p => { p.carry = 1; return grips(p, held(p)); })],
       [.9, u => { const p = climb(120, floor, [[142, deck]])(u); p.carry = 1; return grips(p, held(p)); }],
       [.7, walk(137, XR, deck, p => { p.carry = 1; return grips(p, held(p)); })],
       [.7, u => { const p = P0(XR); p.carry = 1; p.lean = -.04 * u; p.head = -.35 * smooth(u); p.look = .15; return grips(p, segAt(4.4 + u * .7, p).d); }],
@@ -701,6 +703,9 @@
         const e = smooth(span(react.r, 0, .3)) * (1 - smooth(span(react.r, RD - .3, RD))), hc = rig.world(rig.hc);
         bubble(c, clamp(hc[0] + 20, 40, 340), Math.max(20, hc[1] - 24 - p.hat * .5), react.line, e, outBack(span(react.r, 0, .35)) * .3 + .7);
       }
+      const vy0 = -oy / s - 1, vh = ch / s + 2, sideL = lin(c, STAGE[0] - MASK, 0, STAGE[0], 0, ['rgba(236,239,231,1)', 'rgba(236,239,231,0)']), sideR = lin(c, STAGE[1], 0, STAGE[1] + MASK, 0, ['rgba(236,239,231,0)', 'rgba(236,239,231,1)']);
+      c.fillStyle = sideL; c.fillRect(-ox / s - 1, vy0, STAGE[0] + ox / s + 1, vh);
+      c.fillStyle = sideR; c.fillRect(STAGE[1], vy0, (cw - ox) / s - STAGE[1] + 1, vh);
       c.strokeStyle = 'rgba(160,176,156,.45)'; c.lineWidth = 1.4; c.beginPath(); c.moveTo(30, 225); c.lineTo(350, 225); c.stroke();
       c.strokeStyle = '#7c9274'; c.beginPath(); c.moveTo(30, 225); c.lineTo(30 + 320 * (t / def.dur), 225); c.stroke();
       c.setTransform(dpr, 0, 0, dpr, 0, 0);
