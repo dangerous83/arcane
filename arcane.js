@@ -103,7 +103,7 @@ theme.addEventListener('click',()=>{
 });
 const music=$('#background-music');let musicButton=$('#music'),userMuted=false;
 if(music){
- music.volume=.35;music.muted=false;music.loop=true;
+ music.volume=.35;music.muted=false;music.loop=true;let fallbackLoading=false,fallbackUrl='';
  if(!musicButton){musicButton=document.createElement('button');musicButton.id='music';musicButton.type='button';musicButton.className='music-control';document.body.appendChild(musicButton);}
  musicButton.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z"/><path class="music-waves" d="M16 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg><span data-music-label>Play music</span>';
  function syncMusic(){
@@ -111,6 +111,13 @@ if(music){
   musicButton.setAttribute('aria-pressed',String(playing));musicButton.setAttribute('aria-label',playing?'Mute background music':'Play background music');
   musicButton.querySelector('[data-music-label]').textContent=playing?'Music on':'Play music';musicButton.classList.toggle('is-playing',playing);
   const status=$('#music-status');if(status)status.textContent=playing?'Background music is playing on loop.':music.error?'Press Play music to retry background audio.':userMuted?'Background music is muted.':'Select Play music or interact with the page to start background music.';
+ }
+ // Some hosts reject media byte-range requests. A normal full-file GET keeps the same track playable.
+ function loadMusicFallback(){
+  if(fallbackLoading||fallbackUrl)return;fallbackLoading=true;
+  fetch('/arcane-lounge.mp3',{cache:'force-cache'}).then(response=>{if(!response.ok)throw new Error('Audio unavailable');return response.blob();}).then(blob=>{
+   if(!blob.size)throw new Error('Empty audio');fallbackUrl=URL.createObjectURL(blob);music.src=fallbackUrl;music.load();startMusic();
+  }).catch(()=>syncMusic()).finally(()=>{fallbackLoading=false;});
  }
  function startMusic(event){
   if(event?.target?.closest?.('#music')||userMuted||document.hidden||$('#expertise-video-dialog')?.open||$('#enquiry-dialog')?.open)return;
@@ -120,7 +127,7 @@ if(music){
   if(!music.paused){userMuted=true;music.pause();}else{userMuted=false;music.muted=false;if(music.error)music.load();music.play().then(syncMusic).catch(syncMusic);}syncMusic();
  });
  document.addEventListener('pointerdown',startMusic,{passive:true});document.addEventListener('keydown',startMusic);document.addEventListener('click',startMusic);
- music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);music.addEventListener('error',syncMusic);
+ music.addEventListener('play',syncMusic);music.addEventListener('pause',syncMusic);music.addEventListener('error',()=>{syncMusic();loadMusicFallback();});
  for(const id of ['enquiry-dialog','expertise-video-dialog'])$('#'+id)?.addEventListener('close',()=>startMusic());
  document.addEventListener('visibilitychange',()=>{if(document.hidden)music.pause();else startMusic();});startMusic();syncMusic();
 }
