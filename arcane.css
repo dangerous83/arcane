@@ -639,3 +639,13 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 .footer-bottom{grid-template-columns:minmax(0,1fr) auto}
 .footer-social-slot{grid-column:2;justify-self:end}
 @media(max-width:760px){.footer-bottom>span{grid-column:1}.footer-social-slot{grid-column:2}}
+
+/* Compact project lists and a subtle architectural grid. */
+.projects-menu .menu-project{padding:5px 0;margin-bottom:5px}
+.project-menu-expand{display:inline-flex;align-items:center;margin-top:9px;padding:9px 0;background:transparent;border-bottom:1px solid var(--line);color:var(--ink);font-size:11px;font-weight:600;text-align:left}
+.project-menu-expand:hover{color:var(--sage);border-color:var(--sage)}
+.projects-menu>.menu-column:last-child{position:relative;isolation:isolate}
+.projects-menu>.menu-column:last-child::before{content:"";position:absolute;inset:0 0 0 22px;z-index:-1;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,transparent 5%,#000 45%,transparent 100%);opacity:.35;animation:project-grid-drift 12s ease-in-out infinite alternate}
+@keyframes project-grid-drift{from{background-position:0 0}to{background-position:17px 17px}}
+@media(prefers-reduced-motion:reduce){.projects-menu>.menu-column:last-child::before{animation:none}}
+@media(max-width:1280px){.projects-menu>.menu-column:last-child::before{inset:0}}
