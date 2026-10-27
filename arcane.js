@@ -182,3 +182,16 @@ if(footerSocialSlot&&!$('.footer-socials')){
  socials.forEach(([name,url,icon])=>{const item=document.createElement('a');item.className='footer-social-icon';item.href=url;item.target='_blank';item.rel='noopener';item.setAttribute('role','listitem');item.setAttribute('aria-label','Open Arcane on '+name);item.title=name;item.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icon+'</svg>';group.append(item);});
  footerSocialSlot.append(group);
 }
+
+// Keep long project lists compact without hiding links when JavaScript is unavailable.
+for(const [id,limit,label] of [['menu-ongoing',4,'ongoing'],['menu-completed',6,'completed']]){
+ const list=document.getElementById(id);
+ if(!list)continue;
+ const links=Array.from(list.querySelectorAll(':scope > .menu-project'));
+ if(links.length<=limit)continue;
+ const button=document.createElement('button');
+ button.type='button';button.className='project-menu-expand';button.setAttribute('aria-controls',id);
+ function render(expanded){links.forEach((link,i)=>{link.hidden=!expanded&&i>=limit});button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Show fewer '+label+' projects −':'Show all '+label+' projects +';}
+ button.addEventListener('click',()=>render(button.getAttribute('aria-expanded')!=='true'));
+ list.insertAdjacentElement('afterend',button);render(false);
+}
