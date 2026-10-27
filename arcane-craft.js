@@ -452,25 +452,46 @@
       dur: timeline.dur, top, pose: timeline, line: 'Grid aligned.',
       back(c, t, r) {
         platform(c, deck, floor);
-        // ceiling plenum, services and tiles
-        const plane = [at(0, 0), at(1, 0), at(1, 1), at(0, 1)];
+        // plenum cut-away above the suspended ceiling: slab soffit, services and hangers
+        const U0 = -1, rise = (u, v, h) => { const p = at(u, v); return [p[0], p[1] - h]; };
+        const nearY = x => at(0, 1)[1] + (x - at(0, 1)[0]) * (B0[1] - A0[1]) / (B0[0] - A0[0]), slabY = x => 7 - (x - 22) * .03;
+        c.fillStyle = lin(c, 0, 0, 0, 72, ['#87918a', '#a2aaa0', '#b5bcb1']); poly(c, [[-400, -300], [800, -300], [800, nearY(800)], [-400, nearY(-400)]]); c.fill();
+        c.fillStyle = lin(c, 0, -20, 0, 8, ['#c4cac0', '#b2b9ae']); poly(c, [[-400, -300], [800, -300], [800, slabY(800)], [-400, slabY(-400)]]); c.fill();
+        c.strokeStyle = 'rgba(48,60,52,.35)'; c.lineWidth = 1; c.beginPath(); c.moveTo(-400, slabY(-400)); c.lineTo(800, slabY(800)); c.stroke();
+        c.strokeStyle = 'rgba(60,72,64,.55)'; c.lineWidth = .6; c.beginPath();
+        for (let i = -6; i <= 6; i += 2) for (const j of [0, 1.5, 3]) { const g = at(i / 6, j / 3); c.moveTo(g[0], g[1]); c.lineTo(g[0], slabY(g[0])); }
+        c.stroke();
+        const duct = [rise(U0, .5, 24), rise(1, .5, 24), rise(1, .5, 13), rise(U0, .5, 13)];
+        c.fillStyle = lin(c, 0, duct[0][1] - 4, 0, duct[3][1] + 4, ['#d7dcd4', '#b3bbb0', '#949d92']); poly(c, duct); c.fill();
+        c.strokeStyle = 'rgba(70,82,74,.45)'; c.lineWidth = .7; c.beginPath();
+        for (let u = -.9; u < 1; u += .22) { const p = rise(u, .5, 24), q = rise(u, .5, 13); c.moveTo(p[0], p[1]); c.lineTo(q[0], q[1]); }
+        c.stroke();
+        c.strokeStyle = '#5d6962'; c.lineWidth = 3; c.lineCap = 'round'; c.beginPath(); const p0 = rise(U0, .18, 16), p1 = rise(1, .18, 16); c.moveTo(p0[0], p0[1]); c.lineTo(p1[0], p1[1]); c.stroke();
+        c.strokeStyle = 'rgba(255,255,255,.35)'; c.lineWidth = .8; c.beginPath(); c.moveTo(p0[0], p0[1] - .8); c.lineTo(p1[0], p1[1] - .8); c.stroke();
+        // suspended grid, wall to wall
+        const plane = [at(U0, 0), at(1, 0), at(1, 1), at(U0, 1)];
         c.fillStyle = lin(c, 0, 0, 0, 70, ['#4a5650', '#66726a']); poly(c, plane); c.fill();
         c.save(); poly(c, plane); c.clip();
-        c.fillStyle = lin(c, 0, 26, 0, 40, ['#b9c0b5', '#8b958a', '#6c766c']); poly(c, [at(0, .5), at(1, .5), at(1, .78), at(0, .78)]); c.fill();
+        c.fillStyle = lin(c, 0, 26, 0, 40, ['#b9c0b5', '#8b958a', '#6c766c']); poly(c, [at(U0, .5), at(1, .5), at(1, .78), at(U0, .78)]); c.fill();
         c.strokeStyle = '#2f3833'; c.lineWidth = 1.1; c.beginPath(); const a1 = at(0, .35), a2 = at(1, .35); c.moveTo(a1[0], a1[1]); c.quadraticCurveTo((a1[0] + a2[0]) / 2, (a1[1] + a2[1]) / 2 + 8, a2[0], a2[1]); c.stroke();
         c.restore();
         const reset = 1 - span(t, 12.8, 13.6), tile = tileAt(t, r.p);
         if (!tile.front && t < 13.6) drawTile(c, tile.q, t >= 6.2 ? reset : 1);
-        for (let i = 0; i < 6; i++) for (let j = 0; j < 3; j++) if (i !== 2 || j !== 2) drawTile(c, cell(i, j), 1);
-        c.strokeStyle = '#fbfbf7'; c.lineWidth = 1.6; c.beginPath();
-        for (let i = 0; i <= 6; i++) { const a = at(i / 6, 0), b = at(i / 6, 1); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); }
-        for (let j = 0; j <= 3; j++) { const a = at(0, j / 3), b = at(1, j / 3); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); }
+        for (let i = -6; i < 6; i++) for (let j = 0; j < 3; j++) if (i !== 2 || j !== 2) drawTile(c, cell(i, j), 1);
+        c.strokeStyle = 'rgba(70,84,72,.3)'; c.lineWidth = .6; c.beginPath();
+        for (let i = -6; i <= 6; i++) { const a = at(i / 6, 0), b = at(i / 6, 1); c.moveTo(a[0] + .9, a[1]); c.lineTo(b[0] + .9, b[1]); }
+        for (let j = 1; j <= 3; j++) { const a = at(U0, j / 3), b = at(1, j / 3); c.moveTo(a[0], a[1] + .9); c.lineTo(b[0], b[1] + .9); }
         c.stroke();
-        c.strokeStyle = 'rgba(70,84,72,.35)'; c.lineWidth = .6; c.beginPath();
-        for (let j = 1; j <= 3; j++) { const a = at(0, j / 3), b = at(1, j / 3); c.moveTo(a[0], a[1] + 1); c.lineTo(b[0], b[1] + 1); } c.stroke();
-        c.strokeStyle = 'rgba(90,100,92,.5)'; c.lineWidth = .5; c.beginPath();
-        for (let i = 0; i <= 6; i++) { const a = at(i / 6, 1); c.moveTo(a[0], a[1]); c.lineTo(a[0] + 2, -30); } c.stroke();
-        c.fillStyle = lin(c, 0, 0, 0, 6, ['rgba(40,55,45,.18)', 'rgba(40,55,45,0)']); poly(c, [at(0, 1), at(1, 1), [at(1, 1)[0], at(1, 1)[1] + 6], [at(0, 1)[0], at(0, 1)[1] + 6]]); c.fill();
+        c.strokeStyle = '#f6f6f1'; c.lineWidth = 1.3; c.beginPath();
+        for (let i = -6; i <= 6; i++) { const a = at(i / 6, 0), b = at(i / 6, 1); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); }
+        for (let j = 0; j <= 3; j++) { const a = at(U0, j / 3), b = at(1, j / 3); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); }
+        c.stroke();
+        // wall angle trim where the grid meets the back and side walls
+        c.strokeStyle = 'rgba(48,60,52,.4)'; c.lineWidth = 1; c.beginPath(); c.moveTo(at(U0, 0)[0], at(U0, 0)[1] - 1.4); c.lineTo(at(1, 0)[0], at(1, 0)[1] - 1.4); c.lineTo(at(1, 1)[0] + 1.4, at(1, 1)[1] - 1); c.stroke();
+        c.strokeStyle = '#eef0e9'; c.lineWidth = 2; c.beginPath(); c.moveTo(at(U0, 0)[0], at(U0, 0)[1]); c.lineTo(at(1, 0)[0], at(1, 0)[1]); c.lineTo(at(1, 1)[0], at(1, 1)[1]); c.stroke();
+        // cut edge of the ceiling toward the viewer
+        c.fillStyle = '#cdd2c6'; poly(c, [at(U0, 1), at(1, 1), [at(1, 1)[0], at(1, 1)[1] + 2.4], [at(U0, 1)[0], at(U0, 1)[1] + 2.4]]); c.fill();
+        c.fillStyle = lin(c, 0, 0, 0, 6, ['rgba(40,55,45,.18)', 'rgba(40,55,45,0)']); poly(c, [at(U0, 1), at(1, 1), [at(1, 1)[0], at(1, 1)[1] + 8], [at(U0, 1)[0], at(U0, 1)[1] + 8]]); c.fill();
       },
       front(c, t, r) {
         const tile = tileAt(t, r.p);
@@ -486,8 +507,11 @@
     function drawTile(c, q, alpha, underside) {
       if (alpha <= 0) return;
       c.save(); c.globalAlpha = alpha;
-      c.fillStyle = lin(c, q[3][0], q[3][1], q[1][0], q[1][1], ['#f1f0e8', '#f8f8f2', '#e6e6dc']); poly(c, q); c.fill();
-      c.fillStyle = 'rgba(120,125,110,.35)'; for (const [u, v] of pins) { const s = quadPt(q, u, v); c.fillRect(s[0], s[1], .6, .6); }
+      c.fillStyle = lin(c, q[3][0], q[3][1], q[1][0], q[1][1], ['#ecebe2', '#f5f4ed', '#e0e0d5']); poly(c, q); c.fill();
+      c.fillStyle = 'rgba(120,125,110,.4)'; for (const [u, v] of pins) { const s = quadPt(q, u, v); c.fillRect(s[0], s[1], .7, .7); }
+      c.strokeStyle = 'rgba(130,134,118,.28)'; c.lineWidth = .45; c.beginPath(); // mineral fibre fissures
+      for (let k = 0; k < 6; k++) { const [u, v] = pins[k], a = quadPt(q, u * .8 + .1, v * .8 + .1), b = quadPt(q, u * .8 + .16, v * .8 + .13); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); }
+      c.stroke();
       if (underside) { c.fillStyle = '#c9cbbf'; poly(c, [q[3], q[2], [q[2][0], q[2][1] + 1.8], [q[3][0], q[3][1] + 1.8]]); c.fill(); }
       c.restore();
     }
