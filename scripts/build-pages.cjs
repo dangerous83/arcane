@@ -16,7 +16,7 @@ for(const id of withdrawnProjects)delete copy.projects[id];
 for(const project of additionalProjects){if(!knowledge.projects.some(item=>item.id===project.id))knowledge.projects.push(project);copy.projects[project.id]=project.content;}
 knowledge.company.content=copy.company;knowledge.approachContent=copy.approach;
 knowledge.company.workforce=details.data.workforce;
-knowledge.contact.address="Emaar Business Park, Building No. 1, Office No. 530, Sheikh Zayed Road, Dubai, UAE";
+knowledge.contact.address="Building No. 1, Sheikh Zayed Road, Dubai, UAE";
 for(const project of knowledge.projects)if(details.data.projects[project.id])project.summary=details.data.projects[project.id];
 knowledge.careers={url:"/careers/",email:"info@arcane.ae",application:"Email your CV to info@arcane.ae for current or future opportunities. Include your preferred role or discipline, years of experience and current location.",areas:["Site and craft teams","Engineering and technical","Project and commercial","Office and support"]};
 knowledge.profile.access="Use the pulsing circular download button beside Discuss your project in the navigation. Enter an email to download; the email stays in the browser and is not stored.";
