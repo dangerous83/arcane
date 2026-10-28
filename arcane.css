@@ -724,14 +724,14 @@ body.grey .project-hero-unpictured{background:repeating-linear-gradient(110deg,t
 
 
 /* Keep the Company portrait clear of the editorial copy. */
-#company-page .company-portrait-hero{height:min(92svh,56.28vw);min-height:620px;max-height:1000px;background:var(--paper)}
+#company-page .company-portrait-hero{height:min(92svh,45.1768vw);min-height:620px;max-height:1000px;background:var(--paper)}
 #company-page .company-portrait-hero .hero-image{object-fit:contain;object-position:right center;animation:none;transform:none}
 #company-page .company-portrait-hero .hero-shade{background:linear-gradient(90deg,#f8f7f2eb 0%,#f8f7f2cf 30%,#f8f7f245 48%,transparent 60%)}
 #company-page .company-portrait-hero .hero-copy{width:58%;max-width:800px;padding-right:0}
 #company-page .company-portrait-hero h1{font-size:clamp(44px,4.6vw,76px)}
 @media(max-width:1000px){
  #company-page .company-portrait-hero{height:auto;min-height:0;max-height:none;display:flex;flex-direction:column;background:var(--paper)}
- #company-page .company-portrait-hero .hero-image{position:relative;order:2;width:100%;height:auto;aspect-ratio:1672/941;object-fit:contain;object-position:right center}
+ #company-page .company-portrait-hero .hero-image{position:relative;order:2;width:100%;height:auto;aspect-ratio:1866/843;object-fit:contain;object-position:right center}
  #company-page .company-portrait-hero .hero-copy{order:1;width:100%;max-width:none;padding:42px 6% 32px}
  #company-page .company-portrait-hero .hero-shade{display:none}
  #company-page .company-portrait-hero h1{font-size:clamp(38px,8.8vw,58px)}
