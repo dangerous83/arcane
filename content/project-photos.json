@@ -19,12 +19,6 @@
       "kind": "photograph"
     },
     {
-      "src": "/assets/projects/wynn-al-marjan-photo-04.webp",
-      "width": 733,
-      "height": 577,
-      "kind": "photograph"
-    },
-    {
       "src": "/assets/projects/wynn-al-marjan-photo-05.webp",
       "width": 702,
       "height": 571,
@@ -54,6 +48,18 @@
       "src": "/assets/projects/burj-binghatti-photo-03.webp",
       "width": 553,
       "height": 436,
+      "kind": "photograph"
+    },
+    {
+      "src": "/assets/ceilings/ceiling-site-04.webp",
+      "width": 1280,
+      "height": 855,
+      "kind": "photograph"
+    },
+    {
+      "src": "/assets/partitions/partition-site-07.webp",
+      "width": 1280,
+      "height": 960,
       "kind": "photograph"
     }
   ],
