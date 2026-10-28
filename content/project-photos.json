@@ -10,5 +10,17 @@
       "width": 1280,
       "height": 960
     }
+  ],
+  "wynn-al-marjan": [
+    {
+      "src": "/assets/ceilings/ceiling-site-06.webp",
+      "width": 1280,
+      "height": 861
+    },
+    {
+      "src": "/assets/ceilings/ceiling-detail-02.webp",
+      "width": 1280,
+      "height": 855
+    }
   ]
 }
