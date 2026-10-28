@@ -3,12 +3,14 @@
     {
       "src": "/assets/ceilings/ceiling-site-04.webp",
       "width": 1280,
-      "height": 855
+      "height": 855,
+      "category": "Ceilings"
     },
     {
       "src": "/assets/partitions/partition-site-07.webp",
       "width": 1280,
-      "height": 960
+      "height": 960,
+      "category": "Partitions"
     }
   ],
   "wynn-al-marjan": [
@@ -21,6 +23,280 @@
       "src": "/assets/ceilings/ceiling-detail-02.webp",
       "width": 1280,
       "height": 855
+    }
+  ],
+  "address-zabeel": [
+    {
+      "src": "/assets/ceilings/ceiling-detail-05.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "binghatti-dusk": [
+    {
+      "src": "/assets/projects/binghatti-dusk-photo-01.webp",
+      "width": 651,
+      "height": 461,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "binghatti-orchid": [
+    {
+      "src": "/assets/projects/binghatti-orchid-photo-01.webp",
+      "width": 557,
+      "height": 416,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "boulevard-heights": [
+    {
+      "src": "/assets/projects/boulevard-heights-photo-01.webp",
+      "width": 512,
+      "height": 341,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "district-01-west": [
+    {
+      "src": "/assets/projects/district-01-west-photo-02.webp",
+      "width": 579,
+      "height": 500,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "dubai-exhibition": [
+    {
+      "src": "/assets/ceilings/ceiling-site-02.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/projects/dubai-exhibition-photo-02.webp",
+      "width": 558,
+      "height": 448,
+      "category": "Partitions"
+    }
+  ],
+  "dubai-harbour": [
+    {
+      "src": "/assets/ceilings/ceiling-detail-05.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "empower-headquarters": [
+    {
+      "src": "/assets/ceilings/ceiling-site-02.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/projects/empower-headquarters-photo-01.webp",
+      "width": 406,
+      "height": 467,
+      "category": "Partitions"
+    }
+  ],
+  "forte-towers": [
+    {
+      "src": "/assets/projects/forte-towers-photo-01.webp",
+      "width": 562,
+      "height": 477,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "golf-place": [
+    {
+      "src": "/assets/projects/golf-place-photo-01.webp",
+      "width": 490,
+      "height": 486,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "golf-ville": [
+    {
+      "src": "/assets/projects/golf-ville-photo-01.webp",
+      "width": 480,
+      "height": 489,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "green-view": [
+    {
+      "src": "/assets/projects/green-view-photo-01.webp",
+      "width": 585,
+      "height": 468,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "j-one-tower": [
+    {
+      "src": "/assets/projects/j-one-tower-photo-01.webp",
+      "width": 533,
+      "height": 421,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "murooj-al-furjan": [
+    {
+      "src": "/assets/projects/murooj-al-furjan-photo-01.webp",
+      "width": 525,
+      "height": 477,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "palm-jebel-ali": [
+    {
+      "src": "/assets/ceilings/ceiling-detail-05.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "serena-district": [
+    {
+      "src": "/assets/ceilings/ceiling-detail-05.webp",
+      "width": 1280,
+      "height": 855,
+      "category": "Ceilings",
+      "reference": true
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "serenia-living": [
+    {
+      "src": "/assets/projects/serenia-living-photo-02.webp",
+      "width": 669,
+      "height": 518,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
+    }
+  ],
+  "sheikh-zayed-showroom": [
+    {
+      "src": "/assets/projects/sheikh-zayed-showroom-photo-01.webp",
+      "width": 670,
+      "height": 362,
+      "category": "Ceilings"
+    },
+    {
+      "src": "/assets/partitions/partition-progress-01.webp",
+      "width": 1672,
+      "height": 941,
+      "category": "Partitions",
+      "reference": true
     }
   ]
 }
