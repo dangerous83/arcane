@@ -1,1 +1,14 @@
-{}
+{
+  "burj-binghatti": [
+    {
+      "src": "/assets/ceilings/ceiling-site-04.webp",
+      "width": 1280,
+      "height": 855
+    },
+    {
+      "src": "/assets/partitions/partition-site-07.webp",
+      "width": 1280,
+      "height": 960
+    }
+  ]
+}
