@@ -29,7 +29,7 @@ const knowledge={
           "Experience across the UAE project landscape",
           [
             "The company portfolio spans hospitality, residential, commercial and public-sector environments. It includes specialist packages at Wynn Al Marjan Island in Ras Al Khaimah, residential developments in Dubai, Dubai Exhibition Centre at Expo City and workplace projects such as EMPOWER Headquarters.",
-            "Each project page explains the identified specialist scope and names the client or developer and contractor recorded in the company profile. These references help visitors understand our experience in a particular package. They do not imply that Arcane was the main contractor for every development."
+            "Our project pages present the specialist package and the Main Contractor recorded for the work, alongside project photographs where available."
           ]
         ],
         [
@@ -43,7 +43,7 @@ const knowledge={
       "faqs": [
         [
           "Where is Arcane based?",
-          "Arcane supports interior decoration projects across the United Arab Emirates. For visits and project enquiries, please contact the team directly."
+          "Our Dubai office is in Emaar Business Park, Building No. 1, Office No. 530, Sheikh Zayed Road, Dubai, UAE. Please contact our team to arrange a visit."
         ],
         [
           "What specialist services does Arcane provide?",
@@ -60,50 +60,12 @@ const knowledge={
       ]
     },
     "workforce": {
-      "asOf": "2026-08-01",
-      "total": 560,
-      "operatives": 528,
-      "support": 32,
-      "operativeRoles": [
-        [
-          "Supervisor",
-          25
-        ],
-        [
-          "Sculptural GRG carpenter",
-          32
-        ],
-        [
-          "Gypsum carpenter",
-          202
-        ],
-        [
-          "Painter",
-          144
-        ],
-        [
-          "Helper",
-          119
-        ],
-        [
-          "Driver",
-          6
-        ]
-      ],
-      "supportRoles": [
-        [
-          "Site engineer",
-          10
-        ],
-        [
-          "Staff",
-          22
-        ]
-      ]
+      "operatives": "600+",
+      "support": 50
     }
   },
   "contact": {
-    "address": "United Arab Emirates",
+    "address": "Emaar Business Park, Building No. 1, Office No. 530, Sheikh Zayed Road, Dubai, UAE",
     "email": "info@arcane.ae",
     "phone": "+971 4 570 7248",
     "whatsapp": "+971 52 104 4958",
@@ -173,10 +135,10 @@ const knowledge={
       },
       "summary": {
         "name": "Wynn",
-        "client": "ALEC Fit Out",
         "amount": "AED 30 million",
         "start": "June 2025",
-        "end": "December 2026"
+        "end": "December 2026",
+        "mainContractor": "ALEC Fit Out"
       }
     },
     {
@@ -216,10 +178,10 @@ const knowledge={
       },
       "summary": {
         "name": "Burj Binghatti",
-        "client": "Binghatti",
         "amount": "AED 20 million",
         "start": "January 2026",
-        "end": "May 2027"
+        "end": "May 2027",
+        "mainContractor": "Binghatti"
       }
     },
     {
@@ -259,10 +221,10 @@ const knowledge={
       },
       "summary": {
         "name": "District One",
-        "client": "GINCO",
         "amount": "AED 10 million",
         "start": "November 2025",
-        "end": "December 2026"
+        "end": "December 2026",
+        "mainContractor": "GINCO"
       }
     },
     {
@@ -302,10 +264,10 @@ const knowledge={
       },
       "summary": {
         "name": "Dubai Harbour",
-        "client": "Khansaheb",
         "amount": "AED 6 million",
         "start": "June 2026",
-        "end": "December 2026"
+        "end": "December 2026",
+        "mainContractor": "Khansaheb"
       }
     },
     {
@@ -381,10 +343,10 @@ const knowledge={
       },
       "summary": {
         "name": "DEC",
-        "client": "Khansaheb",
         "amount": "AED 4–5 million",
         "start": "August 2026",
-        "end": "June 2027"
+        "end": "June 2027",
+        "mainContractor": "Khansaheb"
       }
     },
     {
@@ -815,10 +777,10 @@ const knowledge={
       },
       "summary": {
         "name": "Palm Jebel Ali",
-        "client": "GINCO",
         "amount": "AED 10–15 million",
         "start": "September 2026",
-        "end": "December 2027"
+        "end": "December 2027",
+        "mainContractor": "GINCO"
       }
     },
     {
@@ -889,48 +851,6 @@ const knowledge={
         "services": [
           "ceilings"
         ]
-      }
-    },
-    {
-      "id": "tilal-al-ghaf-alaya",
-      "name": "Tilal Al Ghaf Alaya",
-      "location": "Dubai, UAE",
-      "group": "landmark",
-      "scope": "Specialist interior works.",
-      "client": "UNEC",
-      "contractor": "Contact Arcane for project details",
-      "content": {
-        "sections": [],
-        "services": []
-      },
-      "unpictured": true,
-      "summary": {
-        "name": "Tilal Al Ghaf Alaya",
-        "client": "UNEC",
-        "amount": "AED 3.5 million",
-        "start": "July 2025",
-        "end": "September 2026"
-      }
-    },
-    {
-      "id": "sky-blade",
-      "name": "Sky Blade",
-      "location": "Dubai, UAE",
-      "group": "landmark",
-      "scope": "Specialist interior works.",
-      "client": "Binghatti",
-      "contractor": "Contact Arcane for project details",
-      "content": {
-        "sections": [],
-        "services": []
-      },
-      "unpictured": true,
-      "summary": {
-        "name": "Sky Blade",
-        "client": "Binghatti",
-        "amount": "AED 5–10 million",
-        "start": "October 2026",
-        "end": "October 2027"
       }
     }
   ],
