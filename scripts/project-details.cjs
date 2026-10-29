@@ -1,6 +1,20 @@
 'use strict';
 const data=require('../content/company-project-details.json');
 const photos=require('../content/project-photos.json');
+// These standard ceiling assets were visually reviewed. Folder names alone do
+// not distinguish plain ceilings from Sculptural GRG photographs.
+const photoPolicy=require('../content/project-photo-policy.json');
+const standardCeilings=new Set(photoPolicy.standardCeilingSources);
+for(const [id,selected] of Object.entries(photos)){
+ if(selected.length!==2) throw new Error(`${id}: project galleries require exactly two images`);
+ const exception=photoPolicy.approvedProjectExceptions[id];
+ if(exception){
+  if(selected.some((photo,i)=>photo.src!==exception[i])) throw new Error(`${id}: preserve the explicitly approved project photographs`);
+  continue;
+ }
+ if(selected[0].category!=='Ceilings'||!standardCeilings.has(selected[0].src)) throw new Error(`${id}: choose a reviewed standard ceiling photograph, not Sculptural GRG`);
+ if(selected[1].category!=='Partitions'||!selected[1].src.startsWith('/assets/partitions/')) throw new Error(`${id}: the second photograph must show partitions`);
+}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function workforce(){
  const w=data.workforce;

@@ -27,9 +27,9 @@
   ],
   "address-zabeel": [
     {
-      "src": "/assets/ceilings/ceiling-detail-01.webp",
-      "width": 1280,
-      "height": 855,
+      "src": "/ceiling-bento-05.webp",
+      "width": 882,
+      "height": 1280,
       "category": "Ceilings",
       "reference": true
     },
@@ -75,9 +75,9 @@
   ],
   "boulevard-heights": [
     {
-      "src": "/assets/ceilings/ceiling-detail-11.webp",
-      "width": 1280,
-      "height": 853,
+      "src": "/ceiling-bento-17.webp",
+      "width": 563,
+      "height": 1000,
       "category": "Ceilings",
       "reference": true
     },
@@ -123,9 +123,9 @@
   ],
   "dubai-harbour": [
     {
-      "src": "/assets/ceilings/ceiling-detail-09.webp",
-      "width": 1280,
-      "height": 855,
+      "src": "/hpl-ceiling-detail-framing.webp",
+      "width": 720,
+      "height": 1279,
       "category": "Ceilings",
       "reference": true
     },
@@ -171,9 +171,9 @@
   ],
   "golf-place": [
     {
-      "src": "/assets/ceilings/ceiling-detail-12.webp",
-      "width": 1280,
-      "height": 855,
+      "src": "/ceiling-bento-16.webp",
+      "width": 576,
+      "height": 1024,
       "category": "Ceilings",
       "reference": true
     },
@@ -219,9 +219,9 @@
   ],
   "j-one-tower": [
     {
-      "src": "/assets/ceilings/ceiling-detail-10.webp",
-      "width": 1280,
-      "height": 861,
+      "src": "/ceiling-bento-15.webp",
+      "width": 577,
+      "height": 1024,
       "category": "Ceilings",
       "reference": true
     },
@@ -235,9 +235,9 @@
   ],
   "murooj-al-furjan": [
     {
-      "src": "/assets/ceilings/ceiling-detail-04.webp",
-      "width": 1280,
-      "height": 853,
+      "src": "/ceiling-bento-04.webp",
+      "width": 959,
+      "height": 1280,
       "category": "Ceilings",
       "reference": true
     },
@@ -283,9 +283,9 @@
   ],
   "serenia-living": [
     {
-      "src": "/assets/ceilings/ceiling-detail-07.webp",
-      "width": 1280,
-      "height": 853,
+      "src": "/ceiling-bento-09.webp",
+      "width": 960,
+      "height": 1280,
       "category": "Ceilings",
       "reference": true
     },
@@ -299,9 +299,9 @@
   ],
   "sheikh-zayed-showroom": [
     {
-      "src": "/assets/ceilings/ceiling-detail-06.webp",
-      "width": 1280,
-      "height": 861,
+      "src": "/ceiling-bento-06.webp",
+      "width": 853,
+      "height": 1280,
       "category": "Ceilings",
       "reference": true
     },

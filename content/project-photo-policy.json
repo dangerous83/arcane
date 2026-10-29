@@ -1,0 +1,29 @@
+{
+  "standardCeilingSources": [
+    "/assets/ceilings/ceiling-detail-03.webp",
+    "/assets/ceilings/ceiling-detail-05.webp",
+    "/assets/ceilings/ceiling-detail-08.webp",
+    "/assets/ceilings/ceiling-site-01.webp",
+    "/assets/ceilings/ceiling-site-02.webp",
+    "/assets/ceilings/ceiling-site-03.webp",
+    "/assets/ceilings/ceiling-site-04.webp",
+    "/assets/ceilings/ceiling-site-07.webp",
+    "/assets/ceilings/ceiling-site-08.webp",
+    "/assets/ceilings/ceiling-site-09.webp",
+    "/assets/ceilings/ceiling-site-10.webp",
+    "/ceiling-bento-04.webp",
+    "/ceiling-bento-05.webp",
+    "/ceiling-bento-06.webp",
+    "/ceiling-bento-09.webp",
+    "/ceiling-bento-15.webp",
+    "/ceiling-bento-16.webp",
+    "/ceiling-bento-17.webp",
+    "/hpl-ceiling-detail-framing.webp"
+  ],
+  "approvedProjectExceptions": {
+    "wynn-al-marjan": [
+      "/assets/ceilings/ceiling-site-06.webp",
+      "/assets/ceilings/ceiling-detail-02.webp"
+    ]
+  }
+}
